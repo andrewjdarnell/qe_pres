@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Top-level timer progress bar for autoplay -->
+    <div id="timer-progress-bar"></div>
+
     <div id="presentation">
       
       <!-- Slide 1: Title -->
@@ -329,7 +332,7 @@
             <ul>
               <li><strong>Think Big:</strong> If you had a virtual army of 1,000 parallel testers, what would you test? Automation gives you that capability.</li>
               <li><strong>Start Small:</strong> Solve your immediate regression bottleneck first. Take small steps.</li>
-              <li><strong>Leverage AI:</strong> Use AI to write boilerplate and script templates, but maintain critical thinking over the verification logic.</li>
+              <li><strong>Leverage AI:</strong> Use AI to assist with writing scripts where appropriate, but maintain critical thinking over the verification logic.</li>
               <li><strong>Evaluate constantly:</strong> <em>"Are our feedback loops working?"</em></li>
             </ul>
           </div>
@@ -360,10 +363,18 @@
         </div>
       </div>
 
-      <!-- Controls Hint & Progress -->
-      <div class="controls-hint">
-        <span>&larr; Prev / Backspace</span>
-        <span>Next / Space &rarr;</span>
+      <!-- Controls Hint & Progress & Toggle Mode -->
+      <div class="controls-hint" style="left: 40px; transform: none; width: calc(100% - 80px); justify-content: space-between; align-items: center;">
+        <div>
+          <span>&larr; Prev / Backspace</span>
+          <span style="margin-left: 2rem;">Next / Space &rarr;</span>
+        </div>
+        <div>
+          <!-- Manual / Timed Option Button -->
+          <button id="btn-timer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem;">
+            Mode: Manual
+          </button>
+        </div>
       </div>
       <div class="progress-bar" id="progress-bar" style="width: 7.69%;"></div>
 

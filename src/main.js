@@ -3,7 +3,14 @@ import './style.css';
 // Slide Management
 const slides = document.querySelectorAll('.slide');
 const progressBar = document.getElementById('progress-bar');
+const timerProgressBar = document.getElementById('timer-progress-bar');
+const btnTimerToggle = document.getElementById('btn-timer-toggle');
+
 let currentSlideIndex = 0;
+let isTimedMode = false;
+let slideTimeout = null;
+let timerStartTimestamp = null;
+let timerDuration = 0;
 
 function updateSlides() {
   slides.forEach((slide, index) => {
@@ -18,17 +25,24 @@ function updateSlides() {
   const progress = ((currentSlideIndex + 1) / slides.length) * 100;
   progressBar.style.width = `${progress}%`;
   
-  // Trigger animation logic if on the animation slide
+  // Trigger simulation slide logic
   if (slides[currentSlideIndex].id === 'animation-slide') {
     startSimulation();
   } else {
     stopSimulation();
   }
+
+  // Handle Autoplay Timer
+  resetSlideTimer();
 }
 
 function nextSlide() {
   if (currentSlideIndex < slides.length - 1) {
     currentSlideIndex++;
+    updateSlides();
+  } else if (isTimedMode) {
+    // Loop back to start in Timed mode
+    currentSlideIndex = 0;
     updateSlides();
   }
 }
@@ -52,7 +66,12 @@ document.addEventListener('keydown', (e) => {
 // Click Navigation (Left half goes prev, Right half goes next)
 document.addEventListener('click', (e) => {
   // Ignore clicks on buttons/inputs inside the presentation
-  if (e.target.tagName.toLowerCase() === 'button' || e.target.closest('.sim-controls') || e.target.closest('button')) return;
+  if (
+    e.target.tagName.toLowerCase() === 'button' || 
+    e.target.closest('.sim-controls') || 
+    e.target.closest('button') ||
+    e.target.id === 'btn-timer-toggle'
+  ) return;
   
   const width = window.innerWidth;
   if (e.clientX > width / 2) {
@@ -60,6 +79,67 @@ document.addEventListener('click', (e) => {
   } else {
     prevSlide();
   }
+});
+
+
+// ---------------------------------------------------------
+// Autoplay Timer Logic
+// ---------------------------------------------------------
+
+function getSlideDuration(index) {
+  const slide = slides[index];
+  
+  // Custom durations
+  if (slide.id === 'animation-slide') {
+    return 60000; // 60 seconds for Sprint Simulation
+  }
+  if (index === slides.length - 1) {
+    return 30000; // 30 seconds for Contact Slide
+  }
+  
+  return 20000; // 20 seconds default
+}
+
+function resetSlideTimer() {
+  // Clear any existing timeout
+  if (slideTimeout) {
+    clearTimeout(slideTimeout);
+    slideTimeout = null;
+  }
+
+  // Reset progress bar
+  timerProgressBar.style.transition = 'none';
+  timerProgressBar.style.width = '0%';
+  
+  if (!isTimedMode) return;
+
+  // Determine slide duration
+  timerDuration = getSlideDuration(currentSlideIndex);
+  
+  // Animate top progress bar
+  // Force a reflow to reset transition cleanly
+  timerProgressBar.offsetHeight; 
+  timerProgressBar.style.transition = `width ${timerDuration}ms linear`;
+  timerProgressBar.style.width = '100%';
+
+  // Set timeout to advance slide
+  slideTimeout = setTimeout(() => {
+    nextSlide();
+  }, timerDuration);
+}
+
+btnTimerToggle.addEventListener('click', () => {
+  isTimedMode = !isTimedMode;
+  
+  if (isTimedMode) {
+    btnTimerToggle.textContent = 'Mode: Timed';
+    btnTimerToggle.classList.add('timed-active');
+  } else {
+    btnTimerToggle.textContent = 'Mode: Manual';
+    btnTimerToggle.classList.remove('timed-active');
+  }
+  
+  resetSlideTimer();
 });
 
 
@@ -123,7 +203,6 @@ btnResetSprint.addEventListener('click', () => {
 
 // Simulation Metrics configuration
 const sprintData = {
-  // Sprint index: [Features Built per lane, QA manual process limit per lane, QE process limit per lane]
   1: { built: 3, qaLimit: 3, qeLimit: 3, qaDesc: "QA keeps pace. Manual regression testing covers all new features.", qeDesc: "Initial automation scripts are created. Feedback loops begin to form." },
   2: { built: 4, qaLimit: 3, qeLimit: 4, qaDesc: "Codebase grows. QA manual regression takes longer. Stress builds up.", qeDesc: "Automation handles regression. QE has time to build more scripts." },
   3: { built: 5, qaLimit: 3, qeLimit: 5, qaDesc: "QA runs out of time. Risk-based testing starts: minor features are skipped.", qeDesc: "Automation reaches 60% coverage. Tests run on every commit in pipeline." },
@@ -174,12 +253,10 @@ function runSprint(sprint) {
   animateCounters();
   
   // Spawn blocks on lanes
-  // QA Lanes Spawning
   qaLanes.forEach((lane, laneIdx) => {
     spawnBlocksForLane(lane, 'qa', config.built, config.qaLimit, laneIdx);
   });
   
-  // QE Lanes Spawning
   qeLanes.forEach((lane, laneIdx) => {
     spawnBlocksForLane(lane, 'qe', config.built, config.qeLimit, laneIdx);
   });
@@ -196,7 +273,6 @@ function spawnBlocksForLane(lane, mode, count, limit, laneIdx) {
   const startPos = 45;
   const endPos = laneWidth - 65;
   
-  // Active tester glow animation
   const testerEl = lane.querySelector('.sim-actor.tester');
   if (testerEl) {
     testerEl.classList.add('active-tester');
@@ -210,11 +286,9 @@ function spawnBlocksForLane(lane, mode, count, limit, laneIdx) {
     block.className = 'sim-block';
     block.textContent = '{ }';
     
-    // Position blocks staggered slightly
     block.style.transform = `translateX(${startPos}px)`;
     lane.appendChild(block);
     
-    // Determine if this specific block gets verified or skipped
     let destinationState = 'passed';
     if (mode === 'qa' && i >= limit) {
       destinationState = 'skipped';
@@ -226,9 +300,9 @@ function spawnBlocksForLane(lane, mode, count, limit, laneIdx) {
       targetPos: endPos - (i * 20),
       speed: 3 + Math.random() * 2,
       mode: mode,
-      state: 'moving', // moving, testing, passed, skipped
+      state: 'moving',
       destinationState: destinationState,
-      delay: i * 150 // Stagger spawn times
+      delay: i * 150
     });
   }
 }
@@ -238,7 +312,7 @@ function updateSimAnimation() {
   
   activeSimBlocks.forEach(block => {
     if (block.delay > 0) {
-      block.delay -= 16.7; // Approx ms per frame
+      block.delay -= 16.7;
       block.el.style.opacity = '0';
       return;
     }
@@ -250,14 +324,12 @@ function updateSimAnimation() {
       
       if (block.pos >= block.targetPos) {
         if (block.destinationState === 'skipped') {
-          // QA Bottleneck: Turns red, slips off the belt as escaped bug
           block.state = 'skipped';
           block.el.classList.add('skipped');
           setTimeout(() => {
             if (block.el.parentNode) block.el.parentNode.removeChild(block.el);
           }, 400);
         } else {
-          // Normal Verification: Turns green, disappears
           block.state = 'passed';
           block.el.classList.add('passed');
           setTimeout(() => {
@@ -268,7 +340,6 @@ function updateSimAnimation() {
     }
   });
   
-  // Clean up completed blocks
   activeSimBlocks = activeSimBlocks.filter(b => b.state === 'moving');
   
   simAnimationId = requestAnimationFrame(updateSimAnimation);
@@ -289,11 +360,13 @@ function playSimulation() {
   btnPlaySprint.textContent = 'Pause';
   btnPlaySprint.classList.add('active-btn');
   
+  // Automatically trigger Next Sprint or start over if complete
   playInterval = setInterval(() => {
     if (currentSprint < maxSprints) {
       runSprint(currentSprint + 1);
     } else {
-      pauseSimulation();
+      resetSimulation();
+      runSprint(1);
     }
   }, 2500);
 }
@@ -318,7 +391,6 @@ function resetSimulation() {
   qaExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
   qeExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
   
-  // Clear any active blocks from DOM
   activeSimBlocks.forEach(b => {
     if (b.el.parentNode) b.el.parentNode.removeChild(b.el);
   });
@@ -329,6 +401,12 @@ function startSimulation() {
   if (simRunning) return;
   simRunning = true;
   simAnimationId = requestAnimationFrame(updateSimAnimation);
+  
+  // If slide is Timed, trigger autoplay of Sprints so the user sees the animation in action
+  if (isTimedMode) {
+    // Autoplay sprint animation checks
+    playSimulation();
+  }
 }
 
 function stopSimulation() {

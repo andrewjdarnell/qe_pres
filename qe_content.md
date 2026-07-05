@@ -33,8 +33,8 @@
 * Building unit tests and other automated checks into the CI/CD pipeline gives fast feedback to developers and helps them produce better quality code.
 * This short feedback loop is key to the success of QE and enables the team to move faster and with more confidence.
 * This is often called "shifting left," but it isn't about pushing testing into development. It's about Quality Engineering working closely with Development to enable quality.
-* Solid component and integration tests address the combinatorial complexity of the system and ensure that the system is built on solid ground. This means there is less need for extensive end-to-end tests.
-* End-to-end tests are still important and should be used to validate that system components work in concert and for critical business journeys, but they should not be relied upon for the bulk of the testing.
+* Solid component and integration tests address the combinatorial complexity of the system and ensure that the system is being built on solid ground. This means that there is less need for extensive end-to-end tests.
+* End-to-end tests are still important and should be used to validate that the system components work in concert and for critical business journeys, but they should not be relied upon for the bulk of the testing.
 
 ## Slide 6: The Scaling Problem vs. The Automation Engine (Interactive Visual)
 * **Concept:** The scenarios play out over a number of sprints (10 for now) showing both scenarios side by side. This will need compact graphics with some text illustrating the points.
@@ -51,7 +51,11 @@
 
 ## Slide 7: Why Make the Shift?
 * **For the Business (Managers):** More predictable projects, faster time to market, higher confidence in releases, and lower long-term costs by finding bugs earlier (Shift-Left).
-* **For the Team (QAs):** Let machines handle the scripted regression testing, freeing up your time to upskill into engineering, focus on writing higher-value tests, perform exploratory testing, and build tools that empower the whole organization.
+* **For the Team (QAs):** 
+  * Let machines handle the scripted regression testing, freeing up your time.
+  * Upskill into engineering.
+  * Focus on writing higher-value tests and performing exploratory testing.
+  * Build tools that empower the whole organization.
 
 ## Slide 8: Shared Skills & Shared Outcomes
 * Both QA and QE require similar core competencies:
@@ -67,9 +71,9 @@
 ## Slide 9: Debunking the "Automation is Too Expensive" Fallacy
 * Our projects typically take between 6 to 36 months to develop, and run for at least 5 to 10 years in production.
 * Assuming monthly releases, that is between 72 and 120 releases. The upfront cost of automation is paid back many times over in this timeframe.
-* Every project we build means a lot to the people it serves. Life-changing decisions are made on the information these systems provide.
+* Every project we build means a lot to the people it serves. Life-changing decisions are made on the back of the information these systems provide.
 * Given the impact of bugs escaping into the wild, we must protect our customers—our biggest asset.
-* As an organization, our risk appetite is near zero.
+* As an organisation, our risk appetite is near zero.
 
 ## Slide 10: First Line of Defence
 * In traditional QA, we relied on manual judgment to decide what to test and what to skip due to time limits.
@@ -77,8 +81,8 @@
 * *Guideline:* Identify where you are currently limiting your testing due to available effort or time. That is your next automation opportunity.
 
 ## Slide 11: Action Plan: How Do We Go About This?
-* **Learn Automation Skills:** Python is a great place to start due to its rich library ecosystem. Browser E2E testing and API testing are bread and butter. 
-* **Master the Pipeline:** Get comfortable with the CI/CD pipeline and deployment environments. 
+* **Learn Automation Skills:** Python is a great place to start due to its rich library ecosystem. Browser E2E testing and API testing are bread and butter.
+* **Master the Pipeline:** Get comfortable with the CI/CD pipeline and deployment environments.
 * **Collaborate and Ask:** Reach out to colleagues who have made the transition—we are here to help each other grow.
 * **Leverage AI:** Use AI to assist with writing scripts where appropriate, but maintain your critical thinking about what needs to be tested.
 * **Think Big:** Ask yourself: *"If I had a team of 1,000 testers, what would I have them test?"* Automation gives you the tools to do exactly that.

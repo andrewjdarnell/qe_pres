@@ -32,6 +32,18 @@ body {
   width: 100vw;
 }
 
+/* Timer Progress Bar for Autoplay Mode */
+#timer-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--accent-purple);
+  width: 0%;
+  z-index: 1000;
+  box-shadow: 0 0 8px var(--accent-purple-glow);
+}
+
 /* Slide Container */
 #presentation {
   position: relative;
@@ -139,7 +151,7 @@ li::marker {
   display: flex;
   gap: 2.5rem;
   flex: 1;
-  min-height: 0; /* allows flex children to shrink */
+  min-height: 0;
 }
 
 .column {
@@ -154,7 +166,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 th, td {
@@ -324,7 +336,7 @@ th {
 }
 
 .sim-block.testing {
-  background: #f59e0b; /* yellow */
+  background: #f59e0b;
 }
 
 .sim-block.passed {
@@ -415,6 +427,26 @@ button.active-btn {
   background: var(--accent-purple);
   border-color: var(--accent-purple);
   box-shadow: 0 0 12px var(--accent-purple-glow);
+}
+
+#btn-timer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  border-color: rgba(255,255,255,0.1);
+  color: var(--text-muted);
+}
+
+#btn-timer-toggle:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.3);
+}
+
+#btn-timer-toggle.timed-active {
+  border-color: var(--accent-purple);
+  color: #fff;
+  box-shadow: 0 0 10px var(--accent-purple-glow);
 }
 
 /* Controls Hint & Progress */
