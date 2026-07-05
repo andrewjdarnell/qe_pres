@@ -14,7 +14,7 @@
       
       <!-- Slide 1: Title -->
       <div class="slide active">
-        <h1>Quality Engineering vs.<br/>Quality Assurance</h1>
+        <h1>Quality Engineering</h1>
         <p class="subtitle">Evolving from finding bugs to building quality in.</p>
         <p><strong>Speaker:</strong> Andrew Darnell</p>
         <p>Principal Test Engineer</p>
@@ -26,15 +26,18 @@
         <div class="columns">
           <div class="column">
             <p><strong>Concept:</strong> Reactive testing at the end of the development cycle.</p>
-            <ul>
+            <ul style="margin-top: 1rem;">
               <li>Focuses on detecting defects <em>after</em> they are introduced.</li>
               <li>Often a separate phase performed by a distinct, siloed team.</li>
               <li>Heavy reliance on manual execution and repetitive tasks.</li>
+              <li>The unfortunate perception: <em>"Quality is the QA team's responsibility."</em></li>
             </ul>
           </div>
-          <div class="column">
-            <div class="vis-container" style="justify-content: center; align-items: center;">
-              <p style="font-size: 2rem; text-align: center; font-style: italic;">"Quality is the QA team's responsibility."</p>
+          <div class="column" style="justify-content: center;">
+            <div class="sim-panel" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); justify-content: center; align-items: center; min-height: 250px;">
+              <p style="font-size: 2.2rem; text-align: center; font-style: italic; color: #f87171; line-height: 1.3;">
+                "We can't release yet, QA is still testing."
+              </p>
             </div>
           </div>
         </div>
@@ -46,15 +49,19 @@
         <div class="columns">
           <div class="column">
             <p><strong>Concept:</strong> Proactive integration of quality practices throughout the entire software development lifecycle.</p>
-            <ul>
+            <ul style="margin-top: 1rem;">
+              <li>The same QA skills are reused, but instead of reviewing quality just once at the end, they are turned into <strong>continuous assurance</strong>.</li>
               <li>Focuses on <em>preventing</em> defects and improving engineering processes.</li>
               <li>Integrated directly into CI/CD pipelines for continuous feedback.</li>
-              <li>Empowers teams through automation, tooling, and measurable metrics.</li>
+              <li>Repetitive testing is done by machine, preserving human attention for creative testing approaches.</li>
+              <li>The reality: <em>"Quality is everyone's responsibility."</em></li>
             </ul>
           </div>
-          <div class="column">
-            <div class="vis-container" style="justify-content: center; align-items: center; border-color: var(--accent-purple);">
-              <p style="font-size: 2rem; text-align: center; font-style: italic; color: var(--accent-purple);">"Quality is everyone's responsibility."</p>
+          <div class="column" style="justify-content: center;">
+            <div class="sim-panel" style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.2); justify-content: center; align-items: center; min-height: 250px;">
+              <p style="font-size: 2.2rem; text-align: center; font-style: italic; color: #34d399; line-height: 1.3;">
+                "Quality is built into the pipeline, not audited at the end."
+              </p>
             </div>
           </div>
         </div>
@@ -63,57 +70,147 @@
       <!-- Slide 4: Key Differences -->
       <div class="slide">
         <h2>Key Differences <span class="highlight">(The Shift in Mindset)</span></h2>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 1.25rem;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 1.15rem;">
           <tr style="border-bottom: 2px solid var(--glass-border); padding: 1rem;">
             <th style="text-align: left; padding: 1rem; color: var(--text-muted);">From Traditional QA...</th>
             <th style="text-align: left; padding: 1rem; color: var(--accent-purple);">To Quality Engineering...</th>
           </tr>
           <tr>
-            <td style="padding: 1rem;">Reactive finding of bugs</td>
-            <td style="padding: 1rem;">Proactive mitigation of risk</td>
+            <td style="padding: 1rem; font-weight: 600;">Reactive finding of bugs</td>
+            <td style="padding: 1rem; font-weight: 600; color: #fff;">Proactive mitigation of risk</td>
           </tr>
           <tr>
             <td style="padding: 1rem;">Manual Test Execution</td>
-            <td style="padding: 1rem;">Test Automation & Infrastructure creation</td>
+            <td style="padding: 1rem; color: #fff;">Test Automation & Infrastructure creation</td>
           </tr>
           <tr>
             <td style="padding: 1rem;">Siloed gatekeepers</td>
-            <td style="padding: 1rem;">Embedded Quality Experts and enablers</td>
+            <td style="padding: 1rem; color: #fff;">Embedded Quality Experts and enablers</td>
           </tr>
           <tr>
             <td style="padding: 1rem;">A bottleneck to release</td>
-            <td style="padding: 1rem;">An accelerator for speed and scale</td>
+            <td style="padding: 1rem; color: #fff;">An accelerator for speed and scale</td>
           </tr>
         </table>
       </div>
 
-      <!-- Slide 5/6: Interactive Visualization -->
+      <!-- Slide 5: Feedback loops -->
+      <div class="slide">
+        <h2>Accelerating through <span class="highlight">Feedback Loops</span></h2>
+        <div class="columns">
+          <div class="column">
+            <ul>
+              <li><strong>Continuous Feedback:</strong> Building unit tests and automated checks into the CI/CD pipeline gives instant feedback to developers, helping them build better quality code from day one.</li>
+              <li><strong>Shifting Left:</strong> It isn't about pushing testing onto developers. It is about Quality Engineering working collaboratively with Development to enable quality checks early.</li>
+              <li><strong>Addressing Complexity:</strong> Component and integration tests address combinatorial system complexity on solid ground, reducing the need for massive end-to-end regression runs.</li>
+              <li><strong>Strategic E2E:</strong> End-to-end tests remain vital for validating concert operations and critical business journeys, but shouldn't be the primary safety net.</li>
+            </ul>
+          </div>
+          <div class="column" style="justify-content: center; align-items: center;">
+            <div style="width: 320px; height: 320px; border-radius: 50%; border: 3px dashed var(--accent-purple); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; text-align: center; position: relative; background: rgba(157, 78, 221, 0.03); box-shadow: 0 0 30px rgba(157,78,221,0.1);">
+              <div style="font-size: 3rem; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--accent-purple-glow));">🔄</div>
+              <strong style="font-size: 1.4rem; color: white;">The Loop</strong>
+              <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">Code &rarr; Build &rarr; Auto-Test &rarr; Fast Feedback</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Sprint Simulation -->
       <div class="slide" id="animation-slide">
         <h2>The Scaling Problem vs. The Automation Engine</h2>
         
-        <div class="vis-controls">
-          <button id="btn-qa" class="active-btn">QA Mode (The Bottleneck)</button>
-          <button id="btn-qe">QE Mode (Automation Engine)</button>
+        <div class="sim-header">
+          <div class="sim-title">
+            Sprint Timeline Simulation <span class="sim-sprint-badge" id="sim-sprint-num">Sprint 0 / 10</span>
+          </div>
+          <div class="sim-controls">
+            <button id="btn-next-sprint">Next Sprint &rarr;</button>
+            <button id="btn-play-sprint">Autoplay</button>
+            <button id="btn-reset-sprint">Reset</button>
+          </div>
         </div>
 
-        <div class="vis-container">
-          <div class="conveyor-system">
-            <div class="belt-row" id="belt-1">
-              <div class="developer-station">👩‍💻</div>
-              <!-- Code blocks injected here -->
-              <div class="processor-station">🕵️</div>
+        <div class="sim-grid">
+          <!-- QA Panel -->
+          <div class="sim-panel" id="panel-qa">
+            <div class="sim-panel-title">
+              <span>QA Bottleneck (Manual Testing)</span>
+              <span style="color: var(--accent-red); font-size: 0.85rem; font-weight: normal;">Fixed Capacity</span>
             </div>
-            <div class="belt-row" id="belt-2" style="display: none;">
-              <div class="developer-station">👨‍💻</div>
-              <div class="processor-station">🕵️</div>
+            
+            <div class="sim-board">
+              <div class="sim-conveyor">
+                <div class="sim-lane" id="qa-lane-1">
+                  <span class="sim-actor dev">👩‍💻</span>
+                  <!-- Blocks will be dynamically spawned here -->
+                  <div class="sim-actor tester" id="qa-tester-1">🕵️</div>
+                </div>
+                <div class="sim-lane" id="qa-lane-2">
+                  <span class="sim-actor dev">👨‍💻</span>
+                  <div class="sim-actor tester" id="qa-tester-2">🕵️</div>
+                </div>
+              </div>
             </div>
-            <div class="belt-row" id="belt-3" style="display: none;">
-              <div class="developer-station">👩‍💻</div>
-              <div class="processor-station">🕵️</div>
+
+            <div class="sim-stats">
+              <div class="stat-item">
+                <div class="stat-val" id="qa-stat-built">0</div>
+                <div class="stat-label">Built</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val" style="color: var(--accent-green);" id="qa-stat-verified">0</div>
+                <div class="stat-label">Verified</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val" style="color: var(--accent-red);" id="qa-stat-escaped">0</div>
+                <div class="stat-label">Escaped Bugs</div>
+              </div>
+            </div>
+            
+            <div class="panel-explanation" id="qa-explanation">
+              Press "Next Sprint" to start development and testing simulation.
             </div>
           </div>
-          <div style="margin-top: 1rem; font-size: 1.1rem; min-height: 80px;" id="animation-desc">
-            <strong>The Problem:</strong> A fixed number of manual testers trying to keep up. As code volume grows, the testing queue overflows. Testing becomes a bottleneck and teams are forced into "risk-based testing."
+
+          <!-- QE Panel -->
+          <div class="sim-panel" id="panel-qe">
+            <div class="sim-panel-title">
+              <span>QE Automation (Continuous Testing)</span>
+              <span style="color: var(--accent-green); font-size: 0.85rem; font-weight: normal;">Scalable Capacity</span>
+            </div>
+            
+            <div class="sim-board">
+              <div class="sim-conveyor">
+                <div class="sim-lane" id="qe-lane-1">
+                  <span class="sim-actor dev">👩‍💻</span>
+                  <div class="sim-actor tester" id="qe-tester-1">🤖</div>
+                </div>
+                <div class="sim-lane" id="qe-lane-2">
+                  <span class="sim-actor dev">👨‍💻</span>
+                  <div class="sim-actor tester" id="qe-tester-2">🤖</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sim-stats">
+              <div class="stat-item">
+                <div class="stat-val" id="qe-stat-built">0</div>
+                <div class="stat-label">Built</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val" style="color: var(--accent-green);" id="qe-stat-verified">0</div>
+                <div class="stat-label">Verified</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val" style="color: var(--accent-red);" id="qe-stat-escaped">0</div>
+                <div class="stat-label">Escaped Bugs</div>
+              </div>
+            </div>
+            
+            <div class="panel-explanation" id="qe-explanation">
+              Press "Next Sprint" to start development and testing simulation.
+            </div>
           </div>
         </div>
       </div>
@@ -123,51 +220,152 @@
         <h2>Why Make the Shift?</h2>
         <div class="columns">
           <div class="column">
-            <h3 style="color: var(--accent-purple);">For the Business (Managers)</h3>
+            <h3 style="color: var(--accent-purple); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Business (Managers)</h3>
             <ul>
-              <li><strong>Faster Time to Market:</strong> Automation enables continuous delivery.</li>
-              <li><strong>Higher Confidence:</strong> Comprehensive test coverage reduces regressions.</li>
-              <li><strong>Lower Costs:</strong> Finding bugs earlier (Shift-Left) is significantly cheaper.</li>
+              <li><strong>More Predictable Projects:</strong> Consistent delivery velocity.</li>
+              <li><strong>Faster Time to Market:</strong> Automatic regression runs.</li>
+              <li><strong>Higher Confidence:</strong> Less risk in production.</li>
+              <li><strong>Lower Long-Term Costs:</strong> Shift-left identifies bugs when they are cheapest to resolve.</li>
             </ul>
           </div>
           <div class="column">
-            <h3 style="color: var(--accent-purple);">For the Team (QAs)</h3>
+            <h3 style="color: var(--accent-purple); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Team (QAs)</h3>
             <ul>
-              <li><strong>Ditch Repetitive Work:</strong> Eliminate manual regression testing.</li>
-              <li><strong>Upskill & Grow:</strong> Transition into engineering and tool creation.</li>
-              <li><strong>Focus on Value:</strong> Perform high-value exploratory and architectural work.</li>
+              <li><strong>No Scripted Regression:</strong> Let the machines do the repetitive tasks.</li>
+              <li><strong>Upskill Into Engineering:</strong> Grow coding capability.</li>
+              <li><strong>High-Value Scope:</strong> Focus human intellect on exploratory and design-level testing.</li>
+              <li><strong>Empower the Organization:</strong> Create testing frameworks and tools.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Slide 8: Call to Action -->
+      <!-- Slide 8: Shared Skills -->
+      <div class="slide">
+        <h2>Shared Skills & Shared Outcomes</h2>
+        <div class="columns">
+          <div class="column">
+            <p><strong>QA and QE care about the same goals:</strong></p>
+            <ul>
+              <li>Analyzing specifications and requirements (explicit and implicit).</li>
+              <li>Analyzing potential risks and causes of failure.</li>
+              <li>Designing strategies to mitigate and reduce those risks.</li>
+              <li>Communicating issues and impact directly to stakeholders.</li>
+            </ul>
+          </div>
+          <div class="column">
+            <div class="sim-panel" style="justify-content: center; height: 100%;">
+              <h3 style="color: var(--accent-purple);">The Force Multiplier</h3>
+              <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.5;">
+                Manual risk-based testing forces us to compromise on quality early in the lifecycle because of limited time.
+              </p>
+              <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.5rem;">
+                <strong>Automation is like adding a parallel workforce</strong> executing high-value checks 24/7. It allows us to prioritize based on strategy, not because we ran out of hours in the sprint.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Automation Fallacy -->
+      <div class="slide">
+        <h2>Debunking the "Too Expensive" Fallacy</h2>
+        <div class="columns">
+          <div class="column" style="flex: 1.2;">
+            <ul>
+              <li><strong>Long-Term Math:</strong> A typical project takes 6 to 36 months to develop and runs for 5 to 10+ years in production. Monthly releases mean 72 to 120+ cycles. The upfront cost of automation pays back exponential dividends.</li>
+              <li><strong>Zero Risk Appetite:</strong> Our platforms make life-changing decisions. The cost of bugs escaping into production is massive—both in system integrity and customer trust.</li>
+              <li><strong>Protecting Customers:</strong> Our customers are our biggest asset. Preventing bugs in production is our ultimate duty of care.</li>
+            </ul>
+          </div>
+          <div class="column" style="flex: 0.8; justify-content: center;">
+            <div class="sim-panel" style="text-align: center; padding: 2rem; border-color: var(--accent-purple);">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
+              <h3 style="margin-bottom: 0.5rem;">ROI of Automation</h3>
+              <p style="font-size: 1rem; color: var(--text-muted); margin: 0;">Upfront Dev Effort &darr;</p>
+              <p style="font-size: 1rem; color: var(--accent-green); font-weight: bold; margin-top: 0.25rem;">Exponential Long-Term Savings &uarr;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: First Line of Defence -->
+      <div class="slide">
+        <h2>First Line of Defence</h2>
+        <div class="columns">
+          <div class="column">
+            <p>Moving from manual judgment to systematic guardrails:</p>
+            <ul>
+              <li><strong>Old Way (QA):</strong> Relying entirely on manual tester judgment to decide what to check and what to skip under deadline pressure.</li>
+              <li><strong>New Way (QE):</strong> The automated testing framework operates as the first line of defence, the last line of defence, and everything in between.</li>
+            </ul>
+            <div class="sim-panel" style="margin-top: 1rem; background: rgba(157, 78, 221, 0.05); padding: 1rem; border-left: 4px solid var(--accent-purple);">
+              <strong style="color: white; font-size: 1.05rem;">QE Rule of Thumb:</strong>
+              <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">
+                Identify where you currently limit your tests due to available human effort. <strong>That is your next automation target.</strong>
+              </p>
+            </div>
+          </div>
+          <div class="column" style="justify-content: center; align-items: center;">
+            <div style="font-size: 6rem; filter: drop-shadow(0 0 20px var(--accent-purple-glow));">🛡️</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: How do we go about this? -->
+      <div class="slide">
+        <h2>Action Plan: How Do We Go About This?</h2>
+        <div class="columns" style="font-size: 0.95rem;">
+          <div class="column">
+            <h3 style="font-size: 1.25rem; color: var(--accent-purple);">Technical Skillset</h3>
+            <ul>
+              <li><strong>Start with Python:</strong> A powerful, accessible scripting language with a massive test automation ecosystem.</li>
+              <li><strong>Master E2E & API:</strong> Focus on browser end-to-end automation (Playwright/Selenium) and API integration verification.</li>
+              <li><strong>CI/CD Pipelines:</strong> Understand how code is built and deployed. Run tests automatically in the pipeline.</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3 style="font-size: 1.25rem; color: var(--accent-purple);">Mindset Shift</h3>
+            <ul>
+              <li><strong>Think Big:</strong> If you had a virtual army of 1,000 parallel testers, what would you test? Automation gives you that capability.</li>
+              <li><strong>Start Small:</strong> Solve your immediate regression bottleneck first. Take small steps.</li>
+              <li><strong>Leverage AI:</strong> Use AI to write boilerplate and script templates, but maintain critical thinking over the verification logic.</li>
+              <li><strong>Evaluate constantly:</strong> <em>"Are our feedback loops working?"</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Call to Action -->
       <div class="slide">
         <h1 style="text-align: center; margin-bottom: 0.5rem;">Elevate Our Quality.</h1>
-        <div class="vis-container" style="align-items: center; justify-content: center; margin-top: 2rem; background: rgba(157, 78, 221, 0.1); border-color: var(--accent-purple);">
-          <h2 style="border: none; text-align: center; padding: 0;">Join the <span class="highlight">QE Guild</span></h2>
-          <p style="text-align: center; font-size: 1.5rem; max-width: 600px;">
-            Upskill, share knowledge, and reach out to address that tricky automation problem you've been struggling with.
+        <div class="sim-panel" style="align-items: center; justify-content: center; margin-top: 1.5rem; background: rgba(157, 78, 221, 0.08); border-color: var(--accent-purple); padding: 2.5rem;">
+          <h2 style="border: none; text-align: center; padding: 0; margin-bottom: 1rem;">Join the <span class="highlight">QE Guild</span></h2>
+          <p style="text-align: center; font-size: 1.35rem; max-width: 750px; color: var(--text-main); margin-bottom: 1.5rem;">
+            Learn to build Unit tests, Component tests, Browser tests, API tests, and Performance tests. <strong>We are here to help you grow!</strong>
+          </p>
+          <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); margin: 0;">
+            Reach out directly to address that tricky automation problem you've been struggling with.
           </p>
         </div>
       </div>
 
-      <!-- Slide 9: Contact -->
+      <!-- Slide 13: Contact -->
       <div class="slide">
         <h2>Contact</h2>
-        <div style="margin-top: 3rem; font-size: 2rem;">
+        <div style="margin-top: 3rem; font-size: 1.8rem;">
           <p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-purple);">Andrew Darnell</p>
-          <p>Principal Test Engineer</p>
-          <p style="margin-top: 2rem; font-size: 1.5rem; color: var(--text-muted);">Let's connect after the session!</p>
+          <p style="font-size: 1.5rem;">Principal Test Engineer</p>
+          <p style="margin-top: 3rem; font-size: 1.25rem; color: var(--text-muted);">Let's connect after the session!</p>
         </div>
       </div>
 
       <!-- Controls Hint & Progress -->
       <div class="controls-hint">
-        <span>&larr; Prev</span>
-        <span>Next &rarr;</span>
+        <span>&larr; Prev / Backspace</span>
+        <span>Next / Space &rarr;</span>
       </div>
-      <div class="progress-bar" id="progress-bar" style="width: 11.11%;"></div>
+      <div class="progress-bar" id="progress-bar" style="width: 7.69%;"></div>
 
     </div>
     <script type="module" src="/src/main.js"></script>
