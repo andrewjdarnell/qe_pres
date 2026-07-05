@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quality Engineering vs Quality Assurance</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="presentation">
+      
+      <!-- Slide 1: Title -->
+      <div class="slide active">
+        <h1>Quality Engineering vs.<br/>Quality Assurance</h1>
+        <p class="subtitle">Evolving from finding bugs to building quality in.</p>
+        <p><strong>Speaker:</strong> Andrew Darnell</p>
+        <p>Principal Test Engineer</p>
+      </div>
+
+      <!-- Slide 2: QA -->
+      <div class="slide">
+        <h2>The Traditional Approach: <span class="highlight">Quality Assurance (QA)</span></h2>
+        <div class="columns">
+          <div class="column">
+            <p><strong>Concept:</strong> Reactive testing at the end of the development cycle.</p>
+            <ul>
+              <li>Focuses on detecting defects <em>after</em> they are introduced.</li>
+              <li>Often a separate phase performed by a distinct, siloed team.</li>
+              <li>Heavy reliance on manual execution and repetitive tasks.</li>
+            </ul>
+          </div>
+          <div class="column">
+            <div class="vis-container" style="justify-content: center; align-items: center;">
+              <p style="font-size: 2rem; text-align: center; font-style: italic;">"Quality is the QA team's responsibility."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: QE -->
+      <div class="slide">
+        <h2>The Evolution: <span class="highlight">Quality Engineering (QE)</span></h2>
+        <div class="columns">
+          <div class="column">
+            <p><strong>Concept:</strong> Proactive integration of quality practices throughout the entire software development lifecycle.</p>
+            <ul>
+              <li>Focuses on <em>preventing</em> defects and improving engineering processes.</li>
+              <li>Integrated directly into CI/CD pipelines for continuous feedback.</li>
+              <li>Empowers teams through automation, tooling, and measurable metrics.</li>
+            </ul>
+          </div>
+          <div class="column">
+            <div class="vis-container" style="justify-content: center; align-items: center; border-color: var(--accent-purple);">
+              <p style="font-size: 2rem; text-align: center; font-style: italic; color: var(--accent-purple);">"Quality is everyone's responsibility."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Key Differences -->
+      <div class="slide">
+        <h2>Key Differences <span class="highlight">(The Shift in Mindset)</span></h2>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 1.25rem;">
+          <tr style="border-bottom: 2px solid var(--glass-border); padding: 1rem;">
+            <th style="text-align: left; padding: 1rem; color: var(--text-muted);">From Traditional QA...</th>
+            <th style="text-align: left; padding: 1rem; color: var(--accent-purple);">To Quality Engineering...</th>
+          </tr>
+          <tr>
+            <td style="padding: 1rem;">Reactive finding of bugs</td>
+            <td style="padding: 1rem;">Proactive mitigation of risk</td>
+          </tr>
+          <tr>
+            <td style="padding: 1rem;">Manual Test Execution</td>
+            <td style="padding: 1rem;">Test Automation & Infrastructure creation</td>
+          </tr>
+          <tr>
+            <td style="padding: 1rem;">Siloed gatekeepers</td>
+            <td style="padding: 1rem;">Embedded Quality Experts and enablers</td>
+          </tr>
+          <tr>
+            <td style="padding: 1rem;">A bottleneck to release</td>
+            <td style="padding: 1rem;">An accelerator for speed and scale</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Slide 5/6: Interactive Visualization -->
+      <div class="slide" id="animation-slide">
+        <h2>The Scaling Problem vs. The Automation Engine</h2>
+        
+        <div class="vis-controls">
+          <button id="btn-qa" class="active-btn">QA Mode (The Bottleneck)</button>
+          <button id="btn-qe">QE Mode (Automation Engine)</button>
+        </div>
+
+        <div class="vis-container">
+          <div class="conveyor-system">
+            <div class="belt-row" id="belt-1">
+              <div class="developer-station">👩‍💻</div>
+              <!-- Code blocks injected here -->
+              <div class="processor-station">🕵️</div>
+            </div>
+            <div class="belt-row" id="belt-2" style="display: none;">
+              <div class="developer-station">👨‍💻</div>
+              <div class="processor-station">🕵️</div>
+            </div>
+            <div class="belt-row" id="belt-3" style="display: none;">
+              <div class="developer-station">👩‍💻</div>
+              <div class="processor-station">🕵️</div>
+            </div>
+          </div>
+          <div style="margin-top: 1rem; font-size: 1.1rem; min-height: 80px;" id="animation-desc">
+            <strong>The Problem:</strong> A fixed number of manual testers trying to keep up. As code volume grows, the testing queue overflows. Testing becomes a bottleneck and teams are forced into "risk-based testing."
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Why Shift -->
+      <div class="slide">
+        <h2>Why Make the Shift?</h2>
+        <div class="columns">
+          <div class="column">
+            <h3 style="color: var(--accent-purple);">For the Business (Managers)</h3>
+            <ul>
+              <li><strong>Faster Time to Market:</strong> Automation enables continuous delivery.</li>
+              <li><strong>Higher Confidence:</strong> Comprehensive test coverage reduces regressions.</li>
+              <li><strong>Lower Costs:</strong> Finding bugs earlier (Shift-Left) is significantly cheaper.</li>
+            </ul>
+          </div>
+          <div class="column">
+            <h3 style="color: var(--accent-purple);">For the Team (QAs)</h3>
+            <ul>
+              <li><strong>Ditch Repetitive Work:</strong> Eliminate manual regression testing.</li>
+              <li><strong>Upskill & Grow:</strong> Transition into engineering and tool creation.</li>
+              <li><strong>Focus on Value:</strong> Perform high-value exploratory and architectural work.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Call to Action -->
+      <div class="slide">
+        <h1 style="text-align: center; margin-bottom: 0.5rem;">Elevate Our Quality.</h1>
+        <div class="vis-container" style="align-items: center; justify-content: center; margin-top: 2rem; background: rgba(157, 78, 221, 0.1); border-color: var(--accent-purple);">
+          <h2 style="border: none; text-align: center; padding: 0;">Join the <span class="highlight">QE Guild</span></h2>
+          <p style="text-align: center; font-size: 1.5rem; max-width: 600px;">
+            Upskill, share knowledge, and reach out to address that tricky automation problem you've been struggling with.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 9: Contact -->
+      <div class="slide">
+        <h2>Contact</h2>
+        <div style="margin-top: 3rem; font-size: 2rem;">
+          <p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-purple);">Andrew Darnell</p>
+          <p>Principal Test Engineer</p>
+          <p style="margin-top: 2rem; font-size: 1.5rem; color: var(--text-muted);">Let's connect after the session!</p>
+        </div>
+      </div>
+
+      <!-- Controls Hint & Progress -->
+      <div class="controls-hint">
+        <span>&larr; Prev</span>
+        <span>Next &rarr;</span>
+      </div>
+      <div class="progress-bar" id="progress-bar" style="width: 11.11%;"></div>
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
