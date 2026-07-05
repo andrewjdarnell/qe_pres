@@ -1,4 +1,5 @@
 import './style.css';
+import gsap from 'gsap';
 
 // Slide Management
 const slides = document.querySelectorAll('.slide');
@@ -9,8 +10,21 @@ const btnTimerToggle = document.getElementById('btn-timer-toggle');
 let currentSlideIndex = 0;
 let isTimedMode = false;
 let slideTimeout = null;
-let timerStartTimestamp = null;
 let timerDuration = 0;
+
+// Aspect Ratio Scaling
+function resizePresentation() {
+  const wrapper = document.getElementById('presentation-wrapper');
+  const presentation = document.getElementById('presentation');
+  if (!wrapper || !presentation) return;
+  const scale = Math.min(
+    wrapper.clientWidth / 1280,
+    wrapper.clientHeight / 720
+  );
+  presentation.style.transform = `scale(${scale})`;
+}
+window.addEventListener('resize', resizePresentation);
+resizePresentation();
 
 function updateSlides() {
   slides.forEach((slide, index) => {
@@ -21,18 +35,15 @@ function updateSlides() {
     }
   });
 
-  // Update progress bar
   const progress = ((currentSlideIndex + 1) / slides.length) * 100;
   progressBar.style.width = `${progress}%`;
   
-  // Trigger simulation slide logic
   if (slides[currentSlideIndex].id === 'animation-slide') {
     startSimulation();
   } else {
     stopSimulation();
   }
 
-  // Handle Autoplay Timer
   resetSlideTimer();
 }
 
@@ -41,7 +52,6 @@ function nextSlide() {
     currentSlideIndex++;
     updateSlides();
   } else if (isTimedMode) {
-    // Loop back to start in Timed mode
     currentSlideIndex = 0;
     updateSlides();
   }
@@ -54,18 +64,12 @@ function prevSlide() {
   }
 }
 
-// Keyboard Navigation
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight' || e.key === 'Space') {
-    nextSlide();
-  } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
-    prevSlide();
-  }
+  if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+  else if (e.key === 'ArrowLeft' || e.key === 'Backspace') prevSlide();
 });
 
-// Click Navigation (Left half goes prev, Right half goes next)
 document.addEventListener('click', (e) => {
-  // Ignore clicks on buttons/inputs inside the presentation
   if (
     e.target.tagName.toLowerCase() === 'button' || 
     e.target.closest('.sim-controls') || 
@@ -73,86 +77,48 @@ document.addEventListener('click', (e) => {
     e.target.id === 'btn-timer-toggle'
   ) return;
   
-  const width = window.innerWidth;
-  if (e.clientX > width / 2) {
-    nextSlide();
-  } else {
-    prevSlide();
-  }
+  if (e.clientX > window.innerWidth / 2) nextSlide();
+  else prevSlide();
 });
-
-
-// ---------------------------------------------------------
-// Autoplay Timer Logic
-// ---------------------------------------------------------
 
 function getSlideDuration(index) {
   const slide = slides[index];
-  
-  // Custom durations
-  if (slide.id === 'animation-slide') {
-    return 60000; // 60 seconds for Sprint Simulation
-  }
-  if (index === slides.length - 1) {
-    return 30000; // 30 seconds for Contact Slide
-  }
-  
-  return 20000; // 20 seconds default
+  if (slide.id === 'animation-slide') return 60000;
+  if (index === slides.length - 1) return 30000;
+  return 20000;
 }
 
 function resetSlideTimer() {
-  // Clear any existing timeout
   if (slideTimeout) {
     clearTimeout(slideTimeout);
     slideTimeout = null;
   }
-
-  // Reset progress bar
   timerProgressBar.style.transition = 'none';
   timerProgressBar.style.width = '0%';
   
   if (!isTimedMode) return;
-
-  // Determine slide duration
   timerDuration = getSlideDuration(currentSlideIndex);
   
-  // Animate top progress bar
-  // Force a reflow to reset transition cleanly
   timerProgressBar.offsetHeight; 
   timerProgressBar.style.transition = `width ${timerDuration}ms linear`;
   timerProgressBar.style.width = '100%';
 
-  // Set timeout to advance slide
-  slideTimeout = setTimeout(() => {
-    nextSlide();
-  }, timerDuration);
+  slideTimeout = setTimeout(nextSlide, timerDuration);
 }
 
 btnTimerToggle.addEventListener('click', () => {
   isTimedMode = !isTimedMode;
-  
-  if (isTimedMode) {
-    btnTimerToggle.textContent = 'Mode: Timed';
-    btnTimerToggle.classList.add('timed-active');
-  } else {
-    btnTimerToggle.textContent = 'Mode: Manual';
-    btnTimerToggle.classList.remove('timed-active');
-  }
-  
+  btnTimerToggle.textContent = isTimedMode ? 'Mode: Timed' : 'Mode: Manual';
+  btnTimerToggle.classList.toggle('timed-active', isTimedMode);
   resetSlideTimer();
 });
 
-
-// ---------------------------------------------------------
-// Interactive Sprint Simulation Logic (Slide 6)
-// ---------------------------------------------------------
-
+// Interactive Sprint Simulation Logic
 let currentSprint = 0;
 const maxSprints = 10;
 let isPlaying = false;
 let playInterval = null;
 
-// DOM Elements
 const sprintNumBadge = document.getElementById('sim-sprint-num');
 const btnNextSprint = document.getElementById('btn-next-sprint');
 const btnPlaySprint = document.getElementById('btn-play-sprint');
@@ -177,45 +143,33 @@ const qeLanes = [
   document.getElementById('qe-lane-2')
 ];
 
-// State variables for active blocks
 let activeSimBlocks = [];
-let simAnimationId = null;
 let simRunning = false;
 
-// Event Listeners for Simulation controls
 btnNextSprint.addEventListener('click', () => {
-  if (currentSprint < maxSprints) {
-    runSprint(currentSprint + 1);
-  }
+  if (currentSprint < maxSprints) runSprint(currentSprint + 1);
 });
 
 btnPlaySprint.addEventListener('click', () => {
-  if (isPlaying) {
-    pauseSimulation();
-  } else {
-    playSimulation();
-  }
+  if (isPlaying) pauseSimulation();
+  else playSimulation();
 });
 
-btnResetSprint.addEventListener('click', () => {
-  resetSimulation();
-});
+btnResetSprint.addEventListener('click', resetSimulation);
 
-// Simulation Metrics configuration
 const sprintData = {
-  1: { built: 3, qaLimit: 3, qeLimit: 3, qaDesc: "QA keeps pace. Manual regression testing covers all new features.", qeDesc: "Initial automation scripts are created. Feedback loops begin to form." },
-  2: { built: 4, qaLimit: 3, qeLimit: 4, qaDesc: "Codebase grows. QA manual regression takes longer. Stress builds up.", qeDesc: "Automation handles regression. QE has time to build more scripts." },
-  3: { built: 5, qaLimit: 3, qeLimit: 5, qaDesc: "QA runs out of time. Risk-based testing starts: minor features are skipped.", qeDesc: "Automation reaches 60% coverage. Tests run on every commit in pipeline." },
-  4: { built: 6, qaLimit: 3, qeLimit: 6, qaDesc: "QA bottleneck starts. Manual execution cannot process 6 new features.", qeDesc: "Tests run in parallel. Feedback to developers takes only minutes." },
-  5: { built: 7, qaLimit: 3, qeLimit: 7, qaDesc: "Testing queue overflows. QA is forced to skip integration validations.", qeDesc: "Automation covers 80% of codebase. QE works on infrastructure." },
-  6: { built: 8, qaLimit: 3, qeLimit: 8, qaDesc: "Developers wait days for QA results. Feedback loops are broken.", qeDesc: "Continuous delivery is enabled. Releases are stable and frequent." },
-  7: { built: 9, qaLimit: 3, qeLimit: 9, qaDesc: "Only critical path is manually tested. Escaped bugs begin to rise.", qeDesc: "No manual gatekeepers needed. Framework scales instantly." },
-  8: { built: 10, qaLimit: 3, qeLimit: 10, qaDesc: "QA is overwhelmed. Bug fixes take longer because context is lost.", qeDesc: "100% of critical paths automated. Devs build quality directly in." },
-  9: { built: 11, qaLimit: 3, qeLimit: 11, qaDesc: "Testing quality drops. Production incidents occur regularly.", qeDesc: "Testing capacity matches development growth. No friction." },
-  10: { built: 13, qaLimit: 3, qeLimit: 13, qaDesc: "Siloed QA model fails under scale. High costs, slow releases, bugs in wild.", qeDesc: "Predictable, safe, scalable releases. Quality is built into the culture." }
+  1: { built: 3, qaLimit: 3, qeLimit: 3, qaDesc: "Keeps pace. Manual regression covers all new features.", qeDesc: "Initial automation scripts created. CI/CD set up. Initial feedback loops in place." },
+  2: { built: 4, qaLimit: 3, qeLimit: 4, qaDesc: "Codebase grows. QA manual regression takes longer. Stress builds.", qeDesc: "Automation handles regression. QE builds more scripts for new features." },
+  3: { built: 5, qaLimit: 3, qeLimit: 5, qaDesc: "Risk-based testing starts. Minor features (low risk) are skipped.", qeDesc: "Automation reaches 60% coverage. All tests run on every commit." },
+  4: { built: 6, qaLimit: 3, qeLimit: 6, qaDesc: "Bottleneck starts. Manual testing cannot keep up.", qeDesc: "Tests run in parallel. Feedback loop completes in minutes." },
+  5: { built: 7, qaLimit: 3, qeLimit: 7, qaDesc: "Queue overflows. Some integration validations must be skipped to keep schedule.", qeDesc: "Automation hits 80%. QE works on test infrastructure." },
+  6: { built: 8, qaLimit: 3, qeLimit: 8, qaDesc: "Devs wait days for manual results. Feedback loops break.", qeDesc: "Continuous delivery enabled. Releases are stable and frequent." },
+  7: { built: 9, qaLimit: 3, qeLimit: 9, qaDesc: "Only critical path verified. Escaped bugs rise rapidly.", qeDesc: "No manual gatekeepers needed. Framework scales instantly." },
+  8: { built: 10, qaLimit: 3, qeLimit: 10, qaDesc: "QA overwhelmed. Bug fixes slow down as context is lost. Regressions appear in unusual places.", qeDesc: "100% of critical paths automated. Devs build quality in." },
+  9: { built: 11, qaLimit: 3, qeLimit: 11, qaDesc: "Testing quality drops. Production incidents rise.", qeDesc: "Capacity matches development growth. No friction." },
+  10: { built: 13, qaLimit: 3, qeLimit: 13, qaDesc: "Siloed model fails. High costs, slow releases, bugs in wild.", qeDesc: "Predictable, safe, scalable releases. Quality-driven culture. People sleep at night." }
 };
 
-// Cumulative statistics
 let stats = {
   qa: { built: 0, verified: 0, escaped: 0 },
   qe: { built: 0, verified: 0, escaped: 0 }
@@ -227,122 +181,131 @@ function runSprint(sprint) {
   sprintNumBadge.textContent = `Sprint ${currentSprint} / ${maxSprints}`;
   
   const config = sprintData[currentSprint];
-  
-  // Update explanations
   qaExplanation.innerHTML = `<strong>Sprint ${currentSprint}:</strong> ${config.qaDesc}`;
   qeExplanation.innerHTML = `<strong>Sprint ${currentSprint}:</strong> ${config.qeDesc}`;
   
-  // Calculate new stats
-  const qaBuiltThisSprint = config.built * qaLanes.length;
-  const qaVerifiedThisSprint = Math.min(config.built, config.qaLimit) * qaLanes.length;
-  const qaEscapedThisSprint = Math.max(0, config.built - config.qaLimit) * qaLanes.length;
-  
-  const qeBuiltThisSprint = config.built * qeLanes.length;
-  const qeVerifiedThisSprint = Math.min(config.built, config.qeLimit) * qeLanes.length;
-  const qeEscapedThisSprint = Math.max(0, config.built - config.qeLimit) * qeLanes.length;
-  
-  // Update stats counters
-  stats.qa.built += qaBuiltThisSprint;
-  stats.qa.verified += qaVerifiedThisSprint;
-  stats.qa.escaped += qaEscapedThisSprint;
-  
-  stats.qe.built += qeBuiltThisSprint;
-  stats.qe.verified += qeVerifiedThisSprint;
-  stats.qe.escaped += qeEscapedThisSprint;
-  
-  animateCounters();
-  
-  // Spawn blocks on lanes
-  qaLanes.forEach((lane, laneIdx) => {
-    spawnBlocksForLane(lane, 'qa', config.built, config.qaLimit, laneIdx);
-  });
-  
-  qeLanes.forEach((lane, laneIdx) => {
-    spawnBlocksForLane(lane, 'qe', config.built, config.qeLimit, laneIdx);
-  });
-  
-  // Check if reached max sprint
+  const processLanes = (lanes, mode, count, limit) => {
+    lanes.forEach((lane, laneIdx) => {
+      for (let i = 0; i < count; i++) {
+        // 25% chance of rejection (rework loop)
+        const isRejected = Math.random() < 0.25;
+        let destinationState = 'passed';
+        if (mode === 'qa' && i >= limit) destinationState = 'skipped';
+        
+        spawnBlock(lane, mode, destinationState, isRejected, i, laneIdx);
+      }
+    });
+  };
+
+  processLanes(qaLanes, 'qa', config.built, config.qaLimit);
+  processLanes(qeLanes, 'qe', config.built, config.qeLimit);
+
   if (currentSprint === maxSprints) {
     pauseSimulation();
     btnNextSprint.disabled = true;
   }
 }
 
-function spawnBlocksForLane(lane, mode, count, limit, laneIdx) {
+function spawnBlock(lane, mode, destinationState, isRejected, index, laneIdx) {
   const laneWidth = lane.clientWidth || 550;
   const startPos = 45;
-  const endPos = laneWidth - 65;
-  
-  const testerEl = lane.querySelector('.sim-actor.tester');
-  if (testerEl) {
-    testerEl.classList.add('active-tester');
-    setTimeout(() => {
-      testerEl.classList.remove('active-tester');
-    }, 1500);
-  }
+  const testerPos = laneWidth - 65;
+  const pilePos = testerPos + 40;
 
-  for (let i = 0; i < count; i++) {
-    const block = document.createElement('div');
-    block.className = 'sim-block';
-    block.textContent = '{ }';
-    
-    block.style.transform = `translateX(${startPos}px)`;
-    lane.appendChild(block);
-    
-    let destinationState = 'passed';
-    if (mode === 'qa' && i >= limit) {
-      destinationState = 'skipped';
-    }
-    
-    activeSimBlocks.push({
-      el: block,
-      pos: startPos,
-      targetPos: endPos - (i * 20),
-      speed: 3 + Math.random() * 2,
-      mode: mode,
-      state: 'moving',
-      destinationState: destinationState,
-      delay: i * 150
-    });
-  }
-}
+  const block = document.createElement('div');
+  block.className = 'sim-block';
+  block.textContent = '{ }';
+  block.style.transform = `translateX(${startPos}px)`;
+  lane.appendChild(block);
+  activeSimBlocks.push(block);
 
-function updateSimAnimation() {
-  if (!simRunning) return;
+  const delay = index * 0.15;
+  const duration = 0.8 + Math.random() * 0.4;
   
-  activeSimBlocks.forEach(block => {
-    if (block.delay > 0) {
-      block.delay -= 16.7;
-      block.el.style.opacity = '0';
-      return;
-    }
-    block.el.style.opacity = '1';
-    
-    if (block.state === 'moving') {
-      block.pos += block.speed;
-      block.el.style.transform = `translateX(${block.pos}px)`;
-      
-      if (block.pos >= block.targetPos) {
-        if (block.destinationState === 'skipped') {
-          block.state = 'skipped';
-          block.el.classList.add('skipped');
-          setTimeout(() => {
-            if (block.el.parentNode) block.el.parentNode.removeChild(block.el);
-          }, 400);
-        } else {
-          block.state = 'passed';
-          block.el.classList.add('passed');
-          setTimeout(() => {
-            if (block.el.parentNode) block.el.parentNode.removeChild(block.el);
-          }, 400);
-        }
+  const tl = gsap.timeline({ delay: delay });
+
+  tl.to(block, {
+    x: testerPos,
+    duration: duration,
+    ease: "power1.inOut",
+    onComplete: () => {
+      const testerEl = lane.querySelector('.sim-actor.tester');
+      if (testerEl) {
+        gsap.to(testerEl, {
+          backgroundColor: "rgba(14, 165, 233, 0.4)", 
+          boxShadow: "0 0 15px rgba(14,165,233,0.8)", 
+          duration: 0.1, 
+          yoyo: true, 
+          repeat: 1
+        });
       }
     }
   });
+
+  if (destinationState === 'skipped') {
+    tl.to(block, { backgroundColor: "#ef4444", duration: 0.1 });
+    tl.to(block, {
+      x: pilePos,
+      y: 20,
+      opacity: 0,
+      scale: 0.5,
+      duration: 0.4,
+      onComplete: () => {
+        addToPile(lane, mode, 'red');
+        updateStat(mode, 'escaped');
+        block.remove();
+      }
+    });
+  } else if (isRejected) {
+    tl.to(block, { backgroundColor: "#f59e0b", duration: 0.2 });
+    tl.to(block, {
+      x: startPos,
+      duration: duration,
+      ease: "power2.inOut",
+      onComplete: () => {
+        gsap.to(block, { opacity: 0, scale: 0, duration: 0.3, onComplete: () => block.remove() });
+      }
+    });
+  } else {
+    tl.to(block, { backgroundColor: "#10b981", duration: 0.1 });
+    tl.to(block, {
+      x: pilePos,
+      opacity: 0,
+      scale: 0.5,
+      duration: 0.3,
+      onComplete: () => {
+        addToPile(lane, mode, 'green');
+        updateStat(mode, 'verified');
+        block.remove();
+      }
+    });
+  }
   
-  activeSimBlocks = activeSimBlocks.filter(b => b.state === 'moving');
+  updateStat(mode, 'built');
+}
+
+function addToPile(lane, mode, colorClass) {
+  const pileId = `${mode}-pile-${lane.id.slice(-1)}`;
+  let pileContainer = document.getElementById(pileId);
+  if (!pileContainer) return;
   
-  simAnimationId = requestAnimationFrame(updateSimAnimation);
+  const pileItem = document.createElement('div');
+  pileItem.className = `pile-block ${colorClass}`;
+  
+  const childCount = pileContainer.children.length;
+  const cols = 5;
+  const x = (childCount % cols) * 6;
+  const y = -Math.floor(childCount / cols) * 6;
+  
+  pileItem.style.transform = `translate(${x}px, ${y}px)`;
+  pileContainer.appendChild(pileItem);
+  
+  gsap.from(pileItem, { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(1.5)" });
+}
+
+function updateStat(mode, statKey) {
+  stats[mode][statKey]++;
+  animateCounters();
 }
 
 function animateCounters() {
@@ -360,7 +323,6 @@ function playSimulation() {
   btnPlaySprint.textContent = 'Pause';
   btnPlaySprint.classList.add('active-btn');
   
-  // Automatically trigger Next Sprint or start over if complete
   playInterval = setInterval(() => {
     if (currentSprint < maxSprints) {
       runSprint(currentSprint + 1);
@@ -368,7 +330,7 @@ function playSimulation() {
       resetSimulation();
       runSprint(1);
     }
-  }, 2500);
+  }, 3500);
 }
 
 function pauseSimulation() {
@@ -384,37 +346,31 @@ function resetSimulation() {
   sprintNumBadge.textContent = `Sprint 0 / ${maxSprints}`;
   btnNextSprint.disabled = false;
   
-  stats.qa = { built: 0, verified: 0, escaped: 0 };
-  stats.qe = { built: 0, verified: 0, escaped: 0 };
+  stats = {
+    qa: { built: 0, verified: 0, escaped: 0 },
+    qe: { built: 0, verified: 0, escaped: 0 }
+  };
   animateCounters();
   
   qaExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
   qeExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
   
-  activeSimBlocks.forEach(b => {
-    if (b.el.parentNode) b.el.parentNode.removeChild(b.el);
-  });
+  activeSimBlocks.forEach(b => { if (b.parentNode) b.remove() });
   activeSimBlocks = [];
+  
+  document.querySelectorAll('.product-pile').forEach(p => p.innerHTML = '');
 }
 
 function startSimulation() {
   if (simRunning) return;
   simRunning = true;
-  simAnimationId = requestAnimationFrame(updateSimAnimation);
-  
-  // If slide is Timed, trigger autoplay of Sprints so the user sees the animation in action
-  if (isTimedMode) {
-    // Autoplay sprint animation checks
-    playSimulation();
-  }
+  if (isTimedMode) playSimulation();
 }
 
 function stopSimulation() {
   simRunning = false;
   pauseSimulation();
-  cancelAnimationFrame(simAnimationId);
   resetSimulation();
 }
 
-// Initial Setup
 updateSlides();

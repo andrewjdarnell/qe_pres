@@ -7,13 +7,21 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Ambient Background -->
+    <div id="ambient-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="noise-overlay"></div>
+    </div>
     <!-- Top-level timer progress bar for autoplay -->
     <div id="timer-progress-bar"></div>
 
-    <div id="presentation">
+    <div id="presentation-wrapper">
+      <main id="presentation">
       
       <!-- Slide 1: Title -->
       <div class="slide active">
@@ -76,7 +84,7 @@
         <table style="width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 1.15rem;">
           <tr style="border-bottom: 2px solid var(--glass-border); padding: 1rem;">
             <th style="text-align: left; padding: 1rem; color: var(--text-muted);">From Traditional QA...</th>
-            <th style="text-align: left; padding: 1rem; color: var(--accent-purple);">To Quality Engineering...</th>
+            <th style="text-align: left; padding: 1rem; color: var(--accent-color);">To Quality Engineering...</th>
           </tr>
           <tr>
             <td style="padding: 1rem; font-weight: 600;">Reactive finding of bugs</td>
@@ -110,8 +118,8 @@
             </ul>
           </div>
           <div class="column" style="justify-content: center; align-items: center;">
-            <div style="width: 320px; height: 320px; border-radius: 50%; border: 3px dashed var(--accent-purple); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; text-align: center; position: relative; background: rgba(157, 78, 221, 0.03); box-shadow: 0 0 30px rgba(157,78,221,0.1);">
-              <div style="font-size: 3rem; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--accent-purple-glow));">🔄</div>
+            <div style="width: 320px; height: 320px; border-radius: 50%; border: 3px dashed var(--accent-color); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; text-align: center; position: relative; background: rgba(14, 165, 233, 0.03); box-shadow: 0 0 30px rgba(14,165,233,0.1);">
+              <div style="font-size: 3rem; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--accent-glow));">🔄</div>
               <strong style="font-size: 1.4rem; color: white;">The Loop</strong>
               <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">Code &rarr; Build &rarr; Auto-Test &rarr; Fast Feedback</p>
             </div>
@@ -147,11 +155,13 @@
                 <div class="sim-lane" id="qa-lane-1">
                   <span class="sim-actor dev">👩‍💻</span>
                   <!-- Blocks will be dynamically spawned here -->
-                  <div class="sim-actor tester" id="qa-tester-1">🕵️</div>
+                  <div class="sim-actor tester" id="qa-tester-1" aria-label="Tester">🕵️</div>
+                  <div class="product-pile" id="qa-pile-1"></div>
                 </div>
                 <div class="sim-lane" id="qa-lane-2">
                   <span class="sim-actor dev">👨‍💻</span>
-                  <div class="sim-actor tester" id="qa-tester-2">🕵️</div>
+                  <div class="sim-actor tester" id="qa-tester-2" aria-label="Tester">🕵️</div>
+                  <div class="product-pile" id="qa-pile-2"></div>
                 </div>
               </div>
             </div>
@@ -187,11 +197,13 @@
               <div class="sim-conveyor">
                 <div class="sim-lane" id="qe-lane-1">
                   <span class="sim-actor dev">👩‍💻</span>
-                  <div class="sim-actor tester" id="qe-tester-1">🤖</div>
+                  <div class="sim-actor tester" id="qe-tester-1" aria-label="Tester">🤖</div>
+                  <div class="product-pile" id="qe-pile-1"></div>
                 </div>
                 <div class="sim-lane" id="qe-lane-2">
                   <span class="sim-actor dev">👨‍💻</span>
-                  <div class="sim-actor tester" id="qe-tester-2">🤖</div>
+                  <div class="sim-actor tester" id="qe-tester-2" aria-label="Tester">🤖</div>
+                  <div class="product-pile" id="qe-pile-2"></div>
                 </div>
               </div>
             </div>
@@ -223,7 +235,7 @@
         <h2>Why Make the Shift?</h2>
         <div class="columns">
           <div class="column">
-            <h3 style="color: var(--accent-purple); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Business (Managers)</h3>
+            <h3 style="color: var(--accent-color); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Business (Managers)</h3>
             <ul>
               <li><strong>More Predictable Projects:</strong> Consistent delivery velocity.</li>
               <li><strong>Faster Time to Market:</strong> Automatic regression runs.</li>
@@ -232,7 +244,7 @@
             </ul>
           </div>
           <div class="column">
-            <h3 style="color: var(--accent-purple); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Team (QAs)</h3>
+            <h3 style="color: var(--accent-color); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Team (QAs)</h3>
             <ul>
               <li><strong>No Scripted Regression:</strong> Let the machines do the repetitive tasks.</li>
               <li><strong>Upskill Into Engineering:</strong> Grow coding capability.</li>
@@ -258,7 +270,7 @@
           </div>
           <div class="column">
             <div class="sim-panel" style="justify-content: center; height: 100%;">
-              <h3 style="color: var(--accent-purple);">The Force Multiplier</h3>
+              <h3 style="color: var(--accent-color);">The Force Multiplier</h3>
               <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.5;">
                 Manual risk-based testing forces us to compromise on quality early in the lifecycle because of limited time.
               </p>
@@ -282,7 +294,7 @@
             </ul>
           </div>
           <div class="column" style="flex: 0.8; justify-content: center;">
-            <div class="sim-panel" style="text-align: center; padding: 2rem; border-color: var(--accent-purple);">
+            <div class="sim-panel" style="text-align: center; padding: 2rem; border-color: var(--accent-color);">
               <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
               <h3 style="margin-bottom: 0.5rem;">ROI of Automation</h3>
               <p style="font-size: 1rem; color: var(--text-muted); margin: 0;">Upfront Dev Effort &darr;</p>
@@ -302,7 +314,7 @@
               <li><strong>Old Way (QA):</strong> Relying entirely on manual tester judgment to decide what to check and what to skip under deadline pressure.</li>
               <li><strong>New Way (QE):</strong> The automated testing framework operates as the first line of defence, the last line of defence, and everything in between.</li>
             </ul>
-            <div class="sim-panel" style="margin-top: 1rem; background: rgba(157, 78, 221, 0.05); padding: 1rem; border-left: 4px solid var(--accent-purple);">
+            <div class="sim-panel" style="margin-top: 1rem; background: rgba(14, 165, 233, 0.05); padding: 1rem; border-left: 4px solid var(--accent-color);">
               <strong style="color: white; font-size: 1.05rem;">QE Rule of Thumb:</strong>
               <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">
                 Identify where you currently limit your tests due to available human effort. <strong>That is your next automation target.</strong>
@@ -310,7 +322,7 @@
             </div>
           </div>
           <div class="column" style="justify-content: center; align-items: center;">
-            <div style="font-size: 6rem; filter: drop-shadow(0 0 20px var(--accent-purple-glow));">🛡️</div>
+            <div style="font-size: 6rem; filter: drop-shadow(0 0 20px var(--accent-glow));">🛡️</div>
           </div>
         </div>
       </div>
@@ -320,7 +332,7 @@
         <h2>Action Plan: How Do We Go About This?</h2>
         <div class="columns" style="font-size: 0.95rem;">
           <div class="column">
-            <h3 style="font-size: 1.25rem; color: var(--accent-purple);">Technical Skillset</h3>
+            <h3 style="font-size: 1.25rem; color: var(--accent-color);">Technical Skillset</h3>
             <ul>
               <li><strong>Start with Python:</strong> A powerful, accessible scripting language with a massive test automation ecosystem.</li>
               <li><strong>Master E2E & API:</strong> Focus on browser end-to-end automation (Playwright/Selenium) and API integration verification.</li>
@@ -328,7 +340,7 @@
             </ul>
           </div>
           <div class="column">
-            <h3 style="font-size: 1.25rem; color: var(--accent-purple);">Mindset Shift</h3>
+            <h3 style="font-size: 1.25rem; color: var(--accent-color);">Mindset Shift</h3>
             <ul>
               <li><strong>Think Big:</strong> If you had a virtual army of 1,000 parallel testers, what would you test? Automation gives you that capability.</li>
               <li><strong>Start Small:</strong> Solve your immediate regression bottleneck first. Take small steps.</li>
@@ -342,7 +354,7 @@
       <!-- Slide 12: Call to Action -->
       <div class="slide">
         <h1 style="text-align: center; margin-bottom: 0.5rem;">Elevate Our Quality.</h1>
-        <div class="sim-panel" style="align-items: center; justify-content: center; margin-top: 1.5rem; background: rgba(157, 78, 221, 0.08); border-color: var(--accent-purple); padding: 2.5rem;">
+        <div class="sim-panel" style="align-items: center; justify-content: center; margin-top: 1.5rem; background: rgba(14, 165, 233, 0.08); border-color: var(--accent-color); padding: 2.5rem;">
           <h2 style="border: none; text-align: center; padding: 0; margin-bottom: 1rem;">Join the <span class="highlight">QE Guild</span></h2>
           <p style="text-align: center; font-size: 1.35rem; max-width: 750px; color: var(--text-main); margin-bottom: 1.5rem;">
             Learn to build Unit tests, Component tests, Browser tests, API tests, and Performance tests. <strong>We are here to help you grow!</strong>
@@ -357,7 +369,7 @@
       <div class="slide">
         <h2>Contact</h2>
         <div style="margin-top: 3rem; font-size: 1.8rem;">
-          <p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-purple);">Andrew Darnell</p>
+          <p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-color);">Andrew Darnell</p>
           <p style="font-size: 1.5rem;">Principal Test Engineer</p>
           <p style="margin-top: 3rem; font-size: 1.25rem; color: var(--text-muted);">Let's connect after the session!</p>
         </div>
@@ -378,6 +390,7 @@
       </div>
       <div class="progress-bar" id="progress-bar" style="width: 7.69%;"></div>
 
+          </main>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
