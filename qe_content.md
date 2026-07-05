@@ -1,5 +1,7 @@
 # Quality Engineering vs. Quality Assurance Presentation Content
 
+*For details on the design, colors, font, and autoplay mode controls, refer to [qe_aesthetics.md](file:///Users/user/Documents/src/qe_pres/qe_aesthetics.md).*
+
 ## Slide 1: Title Slide
 * **Title:** Quality Engineering
 * **Subtitle:** Evolving from finding bugs to building quality in.
@@ -37,17 +39,8 @@
 * End-to-end tests are still important and should be used to validate that the system components work in concert and for critical business journeys, but they should not be relied upon for the bulk of the testing.
 
 ## Slide 6: The Scaling Problem vs. The Automation Engine (Interactive Visual)
-* **Concept:** The scenarios play out over a number of sprints (10 for now) showing both scenarios side by side. This will need compact graphics with some text illustrating the points.
-* **Scenario A (The QA Bottleneck):**
-  * *Setup:* 5 developers to 1 QA.
-  * *Flow:* Developers produce code. QA manually tests that code while developers wait. Developers then produce more code.
-  * *The Problem:* The code builds up, aggregating into "the product". In successive releases, there is more product to test as the developers have built more code, but the QA still only has a fixed amount of bandwidth.
-  * *The Result:* Testing becomes a bottleneck. Eventually, there is too much code to test, so QA reduces what they test to only the critical path (risk-based testing), leaving the customer to find the remaining bugs.
-* **Scenario B (The QE Automation Engine):**
-  * *Setup:* 5 developers to 1 QE.
-  * *Flow:* Developers produce code. QE builds automated tests to cover it, embedding tests early in the pipeline so the feedback loop is direct and fast.
-  * *The Solution:* As developers produce more code, QE produces more automated tests. QE does not become overwhelmed, and developers get immediate feedback.
-  * *The Result:* The project becomes much more predictable. Early feedback leads to a shorter time to usable delivery for the customer.
+* **Concept:** A side-by-side interactive simulation demonstrating how manual testing capacity hits a wall as development speed scales, whereas automated quality engineering capacities grow alongside it.
+* **Details:** See the full sprint specifications and interactive animations in [qe_interactive.md](file:///Users/user/Documents/src/qe_pres/qe_interactive.md).
 
 ## Slide 7: Why Make the Shift?
 * **For the Business (Managers):** More predictable projects, faster time to market, higher confidence in releases, and lower long-term costs by finding bugs earlier (Shift-Left).
