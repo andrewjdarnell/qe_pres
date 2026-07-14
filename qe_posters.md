@@ -1,69 +1,51 @@
-# Quality Engineering Presentation - A0 Posters
+# Quality Engineering — A0 Poster Series
 
-This document outlines the rationale, design aesthetic, and generation instructions for the four A0 poster options created from the Quality Engineering presentation deck.
+A cohesive set of four A0 **portrait** posters (`841 × 1189 mm`) adapted from the
+Quality Engineering deck. They are designed as a *series*: each shares one visual
+language and is numbered `01 → 04` in the masthead so they read as a wall set.
 
-## 1. Design Rationale & Aesthetic
+## 1. Design system
 
-The goal was to adapt the core concepts from the Reveal.js presentation into high-impact, physical A0 portrait posters (`841mm x 1189mm`). Rather than directly printing the dark-themed slides, the posters were designed with a **premium, visually striking aesthetic** to capture attention in physical spaces (like a conference hall or engineering bullpen).
+The goal was print-first design, not a blown-up slide. Everything is sized for the
+real A0 canvas (~3.2 k px wide when rasterised), so type is bold and legible from
+across a room, and whitespace is deliberate rather than accidental.
 
-Key design decisions:
-- **AI-Generated Artwork:** Each poster features a unique 8k abstract background generated specifically for its theme, moving away from flat CSS backgrounds.
-- **Advanced Glassmorphism:** The content panels utilize strong background blur (`backdrop-filter: blur(40px)`), semi-transparent dark backgrounds, and subtle white inner-borders. This makes the text panels appear as frosted glass floating over the vivid artwork.
-- **Custom CSS Typography:** Headlines utilize `Space Grotesk` with gradient text clipping, while body copy utilizes `Inter` for maximum readability at large print scales.
+- **Layout** — a fixed masthead (brand + `NN / 04` index), a large gradient
+  headline, and content organised into a few strong horizontal bands. No
+  `flex:1 + center` panels (the flaw in the previous version, which collapsed
+  content into the middle of huge empty boxes).
+- **Typography** — `Space Grotesk` for display headlines (with a white→accent
+  gradient on the key word), `Inter` for body copy, and `JetBrains Mono` for
+  technical eyebrows, labels and figures.
+- **Colour** — deep obsidian base (`#08090d`); accents drawn from the deck's
+  palette: cyan `#38bdf8`, emerald `#34d399`, coral `#fb7185`, purple `#c084fc`,
+  amber `#fbbf24`. Each poster leans on one or two accents for identity.
+- **Background** — generated entirely in CSS/SVG (no external art): a masked
+  blueprint grid, a few soft colour glows placed to support the layout, a fine
+  grain overlay, a vignette, and a thin inset frame. This keeps text crisp and
+  never lets the background fight the content.
 
-## 2. The Four Poster Options
+## 2. The four posters
 
-### Option 1: The Shift-Left Infographic (`poster_infographic.html`)
-- **Focus:** Tells the high-level story of moving from reactive Quality Assurance (QA) to proactive Quality Engineering (QE).
-- **Design:** Uses a stacked vertical progression (QA Bottleneck -> Evolution Matrix -> QE Pipeline).
-- **Background Art:** `assets/bg_infographic.png` (Glowing deep purple and neon blue mesh gradients representing a paradigm shift).
+| # | File | Theme | Centrepiece |
+|---|------|-------|-------------|
+| 01 | `poster_1_shift.html` | **The Shift** — QA → QE manifesto | Four "From → To" mindset shifts + pull-quote |
+| 02 | `poster_2_shiftleft.html` | **Shift Left & Feedback Loops** | Cost-of-a-late-defect bar chart (1×→100×) + test pyramid |
+| 03 | `poster_3_roi.html` | **The Economics of Automation** | Giant `504` runs/yr with the release maths + manual-vs-automated bars |
+| 04 | `poster_4_action.html` | **Make the Shift** — call to action | Six-step action plan, build-skills chips, QE Guild CTA + contact |
 
-### Option 2: The Reference Matrix (`poster_reference.html`)
-- **Focus:** Acts as a detailed cheat sheet for engineering teams, containing the full comparison matrix, feedback loop diagrams, and actionable upskilling checklists.
-- **Design:** Dense, multi-column layout optimized for close-up reading.
-- **Background Art:** `assets/bg_reference.png` (Teal and magenta neon data matrix visualization).
+## 3. Regenerating the PNGs
 
-### Option 3: The Delivery Pipeline Flow (`poster_flow.html`)
-- **Focus:** A massive, vertical flowchart visualizing the continuous testing pipeline from Code Commit to Production deployment.
-- **Design:** Split top-to-bottom layout with a custom SVG viewBox grid (`0 0 800 1000`) ensuring the diagram scales perfectly to A0 height.
-- **Background Art:** `assets/bg_flow.png` (Dark cyber aesthetic with glowing green and red circuitry pathways).
+The posters are standalone HTML — **no dev server or external assets required.**
+`render_posters.js` loads each file over `file://`, waits for web fonts, and
+captures a full-page screenshot at A0 portrait resolution.
 
-### Option 4: The Slide Array (`poster_slides.html`)
-- **Focus:** Displays the entire presentation deck at a glance.
-- **Design:** A 3x5 CSS Grid containing high-resolution screenshots of all 15 presentation slides.
-- **Background Art:** `assets/bg_slides.png` (Clean, ethereal deep space aurora mesh gradient, providing a smooth backdrop that doesn't compete with the slide content).
-
----
-
-## 3. How to Generate & Capture the Posters
-
-The posters are built as standalone HTML files within the Vite project. To convert them into printable images, we utilize a headless browser script (Puppeteer) to render the DOM at the exact A0 pixel dimensions and capture full-page screenshots.
-
-### Step 1: Start the Local Development Server
-The scripts rely on the Vite server hosting the assets and HTML files.
 ```bash
-npm run dev
+make posters          # renders all four -> poster_1_shift.png … poster_4_action.png
+# or render a subset:
+node render_posters.js poster_2_shiftleft poster_3_roi
 ```
-*(Ensure it is running on `http://localhost:5173`)*
 
-### Step 2: Capture the Presentation Slides (For Option 4)
-If you update the content in `index.html`, you need to re-capture the 15 slide screenshots before generating the Option 4 poster.
-Run the slide capture script:
-```bash
-node capture_slides.js
-```
-- This script navigates to the presentation, clicks through the navigation buttons, and saves 16:9 screenshots to `assets/slides/slide_1.png` through `slide_15.png`.
-
-### Step 3: Render the A0 Posters
-Once the server is running (and slides are captured if needed), run the master screenshot script:
-```bash
-node poster_screenshot.js
-```
-- This script loads each of the 4 poster HTML files at a scaled A0 Portrait viewport (`1121px x 1585px`).
-- It outputs four high-resolution PNGs into the root directory:
-  - `poster_infographic.png`
-  - `poster_reference.png`
-  - `poster_flow.png`
-  - `poster_slides.png`
-
-These final PNG files can then be sent to a commercial printer.
+Output PNGs are ~3.2 k × 4.5 k px (≈ 96–110 dpi at A0) and print-ready. For a
+commercial printer needing higher dpi, bump `deviceScaleFactor` in
+`render_posters.js` (e.g. `2` for ~200 dpi) — the layout is resolution-independent.

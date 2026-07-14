@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QE Poster 01 — The Shift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090d;
+  --ink:#f3f6fb;
+  --muted:#8b98ab;
+  --dim:#5c6675;
+  --line:rgba(255,255,255,.10);
+  --cyan:#38bdf8;
+  --green:#34d399;
+  --coral:#fb7185;
+  --purple:#c084fc;
+  --amber:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:841mm;height:1189mm;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  position:relative;
+  overflow:hidden;
+  padding:150px 150px 130px;
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+/* ---------- background system ---------- */
+.bg-grid{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:158px 158px;
+  -webkit-mask-image:radial-gradient(ellipse 95% 78% at 50% 42%,#000 52%,transparent 100%);
+          mask-image:radial-gradient(ellipse 95% 78% at 50% 42%,#000 52%,transparent 100%);}
+.glow{position:absolute;border-radius:50%;filter:blur(240px);z-index:0;pointer-events:none;}
+.g1{width:1500px;height:1500px;background:rgba(56,189,248,.20);top:-520px;left:-360px;}
+.g2{width:1400px;height:1400px;background:rgba(52,211,153,.16);bottom:-560px;right:-380px;}
+.g3{width:1000px;height:1000px;background:rgba(192,132,252,.10);top:1500px;left:900px;}
+.vignette{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 105% 100% at 50% 44%,transparent 56%,rgba(0,0,0,.60) 100%);}
+.grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.frame{position:absolute;inset:70px;border:1px solid var(--line);border-radius:20px;z-index:1;pointer-events:none;}
+
+/* ---------- structure ---------- */
+.masthead,main,footer{position:relative;z-index:3;}
+main{flex:1;display:flex;flex-direction:column;padding:74px 0 40px;}
+
+.masthead{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:2px solid var(--line);padding-bottom:40px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:33px;letter-spacing:11px;
+  text-transform:uppercase;color:var(--muted);font-weight:500;}
+.brand b{color:var(--ink);font-weight:700;}
+.index{font-family:'JetBrains Mono',monospace;font-size:33px;letter-spacing:6px;color:var(--cyan);}
+.index span{color:var(--dim);}
+
+/* hero */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:38px;letter-spacing:12px;
+  text-transform:uppercase;color:var(--cyan);font-weight:500;margin-bottom:46px;}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:232px;line-height:.97;
+  letter-spacing:-4px;}
+h1 em{font-style:normal;background:linear-gradient(120deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{font-size:52px;line-height:1.42;color:var(--muted);max-width:2500px;margin-top:66px;font-weight:400;}
+.lead b{color:var(--ink);font-weight:600;}
+
+/* shared foundations strip */
+.common{margin-top:80px;display:flex;align-items:center;gap:48px;
+  border:1px solid var(--line);border-radius:22px;padding:44px 56px;
+  background:linear-gradient(90deg,rgba(56,189,248,.06),rgba(52,211,153,.05));}
+.common .tag{font-family:'JetBrains Mono',monospace;font-size:30px;letter-spacing:5px;
+  color:var(--muted);text-transform:uppercase;white-space:nowrap;line-height:1.3;font-weight:500;}
+.common .tag b{display:block;color:var(--ink);font-size:34px;letter-spacing:3px;}
+.common .rail{width:1px;height:96px;background:var(--line);}
+.chips{display:flex;flex-wrap:wrap;gap:20px 34px;font-size:40px;color:var(--ink);font-weight:500;}
+.chips span{position:relative;padding-left:40px;}
+.chips span::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan);}
+
+/* central pull-quote band (absorbs vertical slack intentionally) */
+.quoteband{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 0;}
+.quote{position:relative;max-width:2560px;text-align:center;padding:0 40px;}
+.quote .mark{font-family:'Space Grotesk',sans-serif;font-size:220px;line-height:.5;
+  color:var(--cyan);opacity:.25;height:120px;display:block;}
+.quote p{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:96px;line-height:1.18;
+  letter-spacing:-1px;color:var(--ink);}
+.quote p b{background:linear-gradient(120deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;}
+.quote .attrib{margin-top:44px;font-family:'JetBrains Mono',monospace;font-size:30px;letter-spacing:6px;
+  text-transform:uppercase;color:var(--dim);}
+
+/* the four shifts */
+.shifts-head{display:grid;grid-template-columns:1fr 150px 1fr;align-items:center;
+  padding-bottom:26px;margin-bottom:6px;}
+.shifts-head .h{font-family:'JetBrains Mono',monospace;font-size:34px;letter-spacing:6px;
+  text-transform:uppercase;font-weight:700;}
+.shifts-head .h.qa{color:var(--coral);}
+.shifts-head .h.qe{color:var(--green);text-align:left;}
+.shift{display:grid;grid-template-columns:1fr 150px 1fr;align-items:center;
+  border-top:1px solid var(--line);padding:50px 0;}
+.shift:last-child{border-bottom:1px solid var(--line);}
+.side{display:flex;align-items:center;gap:34px;}
+.num{font-family:'JetBrains Mono',monospace;font-size:44px;color:var(--dim);font-weight:500;min-width:70px;}
+.from{font-family:'Space Grotesk',sans-serif;font-size:62px;font-weight:500;color:var(--muted);line-height:1.05;}
+.to{font-family:'Space Grotesk',sans-serif;font-size:66px;font-weight:600;color:var(--ink);line-height:1.05;}
+.arrow{display:flex;justify-content:center;}
+.arrow svg{width:96px;height:56px;}
+
+footer{display:flex;justify-content:space-between;align-items:center;
+  border-top:2px solid var(--line);padding-top:38px;margin-top:12px;
+  font-size:34px;color:var(--muted);}
+footer .who b{color:var(--ink);font-weight:700;}
+footer .cta{display:flex;align-items:center;gap:20px;font-weight:700;color:var(--ink);
+  font-family:'JetBrains Mono',monospace;letter-spacing:4px;font-size:31px;text-transform:uppercase;}
+footer .cta .dot{width:16px;height:16px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
+<div class="vignette"></div>
+<div class="frame"></div>
+<div class="grain"></div>
+
+<header class="masthead">
+  <div class="brand">Quality Engineering&nbsp;·&nbsp;<b>The&nbsp;Guild</b></div>
+  <div class="index">01<span>&nbsp;/&nbsp;04</span></div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">The Mindset Shift</p>
+    <h1>Quality isn't a <em>phase.</em><br>It's how we <em>engineer.</em></h1>
+    <p class="lead">Same skills, new timing. QA and QE both exist to <b>reduce risk</b> and <b>protect the customer</b> — Quality Engineering simply moves that expertise upstream, into every commit, every pipeline, every day.</p>
+  </section>
+
+  <section class="common">
+    <div class="tag">Shared<br><b>Foundations</b></div>
+    <div class="rail"></div>
+    <div class="chips">
+      <span>Understand requirements</span>
+      <span>Identify risk</span>
+      <span>Design mitigations</span>
+      <span>Communicate clearly</span>
+    </div>
+  </section>
+
+  <section class="quoteband">
+    <div class="quote">
+      <span class="mark">&ldquo;</span>
+      <p>The difference is never the <b>goal.</b><br>It's the <b>method</b>, the <b>timing</b>, and the level of <b>integration.</b></p>
+      <div class="attrib">Shared purpose&nbsp;·&nbsp;Different practice</div>
+    </div>
+  </section>
+
+  <section class="shifts">
+    <div class="shifts-head">
+      <div class="h qa">From&nbsp;·&nbsp;Quality Assurance</div>
+      <div></div>
+      <div class="h qe">To&nbsp;·&nbsp;Quality Engineering</div>
+    </div>
+
+    <div class="shift">
+      <div class="side"><span class="num">01</span><span class="from">Reactively finding bugs</span></div>
+      <div class="arrow"><svg viewBox="0 0 96 56"><defs><linearGradient id="ar" x1="0" x2="1"><stop offset="0" stop-color="#fb7185"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs><path d="M2 28 H78" stroke="url(#ar)" stroke-width="6" stroke-linecap="round"/><path d="M70 12 L92 28 L70 44" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="to">Proactively mitigating risk</div>
+    </div>
+    <div class="shift">
+      <div class="side"><span class="num">02</span><span class="from">Manual test execution</span></div>
+      <div class="arrow"><svg viewBox="0 0 96 56"><path d="M2 28 H78" stroke="url(#ar)" stroke-width="6" stroke-linecap="round"/><path d="M70 12 L92 28 L70 44" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="to">Automation &amp; observability</div>
+    </div>
+    <div class="shift">
+      <div class="side"><span class="num">03</span><span class="from">Siloed gatekeepers</span></div>
+      <div class="arrow"><svg viewBox="0 0 96 56"><path d="M2 28 H78" stroke="url(#ar)" stroke-width="6" stroke-linecap="round"/><path d="M70 12 L92 28 L70 44" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="to">Embedded quality enablers</div>
+    </div>
+    <div class="shift">
+      <div class="side"><span class="num">04</span><span class="from">A bottleneck to release</span></div>
+      <div class="arrow"><svg viewBox="0 0 96 56"><path d="M2 28 H78" stroke="url(#ar)" stroke-width="6" stroke-linecap="round"/><path d="M70 12 L92 28 L70 44" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="to">An accelerator for speed &amp; scale</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="who"><b>Andrew Darnell</b> &nbsp;—&nbsp; Principal Test Engineer</div>
+  <div class="cta"><span class="dot"></span>Join the QE Guild</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QE Poster 04 — Make the Shift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090d;--ink:#f3f6fb;--muted:#8b98ab;--dim:#5c6675;--line:rgba(255,255,255,.10);
+  --cyan:#38bdf8;--green:#34d399;--coral:#fb7185;--purple:#c084fc;--amber:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:841mm;height:1189mm;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  position:relative;overflow:hidden;padding:150px 150px 130px;display:flex;flex-direction:column;
+  -webkit-font-smoothing:antialiased;}
+.bg-grid{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:158px 158px;
+  -webkit-mask-image:radial-gradient(ellipse 95% 80% at 50% 40%,#000 52%,transparent 100%);
+          mask-image:radial-gradient(ellipse 95% 80% at 50% 40%,#000 52%,transparent 100%);}
+.glow{position:absolute;border-radius:50%;filter:blur(240px);z-index:0;pointer-events:none;}
+.g1{width:1500px;height:1500px;background:rgba(56,189,248,.20);top:-540px;left:-340px;}
+.g2{width:1500px;height:1500px;background:rgba(52,211,153,.18);bottom:-560px;right:-320px;}
+.g3{width:1000px;height:1000px;background:rgba(192,132,252,.10);top:1400px;right:900px;}
+.vignette{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 105% 100% at 50% 44%,transparent 56%,rgba(0,0,0,.60) 100%);}
+.grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.frame{position:absolute;inset:70px;border:1px solid var(--line);border-radius:20px;z-index:1;pointer-events:none;}
+.masthead,main,footer{position:relative;z-index:3;}
+main{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:70px 0 30px;}
+.masthead{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:2px solid var(--line);padding-bottom:40px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:33px;letter-spacing:11px;
+  text-transform:uppercase;color:var(--muted);font-weight:500;}
+.brand b{color:var(--ink);font-weight:700;}
+.index{font-family:'JetBrains Mono',monospace;font-size:33px;letter-spacing:6px;color:var(--cyan);}
+.index span{color:var(--dim);}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:38px;letter-spacing:12px;
+  text-transform:uppercase;color:var(--cyan);font-weight:500;margin-bottom:42px;}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:210px;line-height:.97;letter-spacing:-4px;}
+h1 em{font-style:normal;background:linear-gradient(120deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{font-size:50px;line-height:1.42;color:var(--muted);max-width:2600px;margin-top:56px;}
+.lead b{color:var(--ink);font-weight:600;}
+
+.sec-title{display:flex;align-items:baseline;gap:34px;margin-bottom:36px;}
+.sec-title h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:74px;letter-spacing:-1px;}
+.sec-title .k{font-family:'JetBrains Mono',monospace;font-size:30px;letter-spacing:5px;color:var(--dim);text-transform:uppercase;}
+
+/* action plan grid */
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+.step{border:1px solid var(--line);border-radius:22px;padding:56px 52px;min-height:440px;
+  display:flex;flex-direction:column;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.006));position:relative;overflow:hidden;}
+.step::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(var(--cyan),var(--green));}
+.step .n{font-family:'JetBrains Mono',monospace;font-size:48px;font-weight:700;color:var(--cyan);margin-bottom:auto;}
+.step h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:60px;line-height:1.06;margin:28px 0 18px;}
+.step p{font-size:38px;line-height:1.36;color:var(--muted);}
+.step p b{color:var(--ink);font-weight:600;}
+
+/* build chips */
+.build{display:flex;align-items:center;gap:36px;flex-wrap:wrap;margin-top:56px;}
+.build .lab{font-family:'JetBrains Mono',monospace;font-size:32px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--muted);}
+.chip{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:46px;color:var(--ink);
+  border:1px solid rgba(56,189,248,.4);border-radius:100px;padding:22px 46px;
+  background:rgba(56,189,248,.07);}
+
+/* CTA band */
+.cta-band{display:grid;grid-template-columns:1.05fr 1fr;gap:80px;align-items:center;
+  border:2px solid rgba(52,211,153,.42);border-radius:28px;padding:70px 80px;
+  background:linear-gradient(120deg,rgba(52,211,153,.13),rgba(56,189,248,.07));
+  box-shadow:0 0 100px rgba(52,211,153,.14),inset 0 1px 0 rgba(255,255,255,.10);}
+.cta-band .big{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:120px;line-height:.92;letter-spacing:-2px;}
+.cta-band .big em{font-style:normal;background:linear-gradient(120deg,var(--green),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.cta-band .sub{font-size:44px;color:var(--muted);margin-top:26px;line-height:1.36;}
+.cta-band .sub b{color:var(--ink);font-weight:600;}
+.cta-list{display:flex;flex-direction:column;gap:26px;}
+.cta-list li{list-style:none;display:flex;gap:26px;align-items:flex-start;font-size:42px;line-height:1.28;}
+.cta-list li .mk{color:var(--green);font-family:'Space Grotesk';font-weight:700;flex:none;}
+.cta-list li b{color:var(--ink);font-weight:600;}
+.cta-list li span{color:var(--muted);}
+
+footer{display:flex;justify-content:space-between;align-items:center;
+  border-top:2px solid var(--line);padding-top:38px;margin-top:12px;font-size:34px;color:var(--muted);}
+footer .who b{color:var(--ink);font-weight:700;}
+footer .who .role{color:var(--cyan);}
+footer .cta{display:flex;align-items:center;gap:20px;font-weight:700;color:var(--ink);
+  font-family:'JetBrains Mono',monospace;letter-spacing:4px;font-size:31px;text-transform:uppercase;}
+footer .cta .dot{width:16px;height:16px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+<div class="vignette"></div><div class="frame"></div><div class="grain"></div>
+
+<header class="masthead">
+  <div class="brand">Quality Engineering&nbsp;·&nbsp;<b>The&nbsp;Guild</b></div>
+  <div class="index">04<span>&nbsp;/&nbsp;04</span></div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">Your Move · Make the Shift</p>
+    <h1>Elevate <em>our quality.</em></h1>
+    <p class="lead">The shift to Quality Engineering is a team sport. Here's how any tester starts today — <b>think big, start small,</b> and automate the highest-value checks first.</p>
+  </section>
+
+  <section class="midblock">
+    <div class="sec-title"><h2>The action plan</h2><span class="k">six steps to start</span></div>
+    <div class="plan">
+      <div class="step"><div class="n">01</div><h3>Learn automation</h3><p><b>Python</b>, browser &amp; API testing, and solid test design.</p></div>
+      <div class="step"><div class="n">02</div><h3>Master the pipeline</h3><p><b>CI/CD</b>, deployment environments, and observability.</p></div>
+      <div class="step"><div class="n">03</div><h3>Collaborate &amp; ask</h3><p>Learn from <b>colleagues</b> who've already made the shift.</p></div>
+      <div class="step"><div class="n">04</div><h3>Leverage AI</h3><p>Accelerate scripting — while <b>keeping critical thinking.</b></p></div>
+      <div class="step"><div class="n">05</div><h3>Think big, start small</h3><p>Automate the <b>highest-value</b> checks first, then expand.</p></div>
+      <div class="step"><div class="n">06</div><h3>Evaluate always</h3><p>Are your feedback loops <b>fast, useful &amp; actionable?</b></p></div>
+    </div>
+    <div class="build">
+      <span class="lab">Learn to build&nbsp;→</span>
+      <span class="chip">Unit</span>
+      <span class="chip">Component</span>
+      <span class="chip">Browser</span>
+      <span class="chip">API</span>
+      <span class="chip">Performance</span>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div>
+      <div class="big">Join the<br><em>QE Guild.</em></div>
+      <p class="sub">Upskill together, share what works, and <b>build the tools</b> that raise quality for the whole organisation.</p>
+    </div>
+    <ul class="cta-list">
+      <li><span class="mk">→</span><span><b>We're here to help</b> you write unit, component, browser, API &amp; performance tests.</span></li>
+      <li><span class="mk">→</span><span>Bring us that <b>tricky automation problem</b> you've been fighting.</span></li>
+      <li><span class="mk">→</span><span>Preserve human judgement for <b>exploratory testing &amp; risk analysis.</b></span></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="who"><b>Andrew Darnell</b> &nbsp;—&nbsp; <span class="role">Principal Test Engineer</span> &nbsp;·&nbsp; Let's connect after the session</div>
+  <div class="cta"><span class="dot"></span>Elevate Our Quality</div>
+</footer>
+</body>
+</html>

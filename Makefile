@@ -1,23 +1,22 @@
-.PHONY: posters clean
+.PHONY: posters slides clean
 
-# Target to generate all posters
+# Render the A0 poster series (poster_1..4) straight from the HTML files.
+# No dev server required — render_posters.js loads them over file:// and
+# captures full-page screenshots at A0 portrait resolution.
 posters:
+	@echo "Rendering A0 poster series..."
+	@node render_posters.js
+	@echo "✨ Done. See poster_1_shift.png … poster_4_action.png"
+
+# (Legacy) Capture the 15 presentation slides used by older poster experiments.
+slides:
 	@echo "Starting Vite dev server in the background..."
 	@npm run dev > /dev/null 2>&1 & echo $$! > .vite.pid
-	@echo "Waiting for server to initialize..."
 	@sleep 3
-	@echo "Capturing presentation slides (1-15)..."
 	@node capture_slides.js
-	@echo "Capturing A0 Posters..."
-	@node poster_screenshot.js
-	@echo "Cleaning up dev server..."
 	@kill `cat .vite.pid` && rm .vite.pid
-	@echo "✨ Poster generation complete! Check the root directory for poster_*.png"
 
-# Target to clean up generated assets
 clean:
 	@echo "Removing generated poster images..."
-	@rm -f poster_*.png
-	@echo "Removing captured slides..."
-	@rm -rf assets/slides/*
+	@rm -f poster_1_shift.png poster_2_shiftleft.png poster_3_roi.png poster_4_action.png
 	@echo "Cleanup complete."

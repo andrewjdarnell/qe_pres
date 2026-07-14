@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QE Poster 03 — The Economics of Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090d;--ink:#f3f6fb;--muted:#8b98ab;--dim:#5c6675;--line:rgba(255,255,255,.10);
+  --cyan:#38bdf8;--green:#34d399;--coral:#fb7185;--purple:#c084fc;--amber:#fbbf24;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:841mm;height:1189mm;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  position:relative;overflow:hidden;padding:150px 150px 130px;display:flex;flex-direction:column;
+  -webkit-font-smoothing:antialiased;}
+.bg-grid{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:158px 158px;
+  -webkit-mask-image:radial-gradient(ellipse 95% 78% at 50% 42%,#000 52%,transparent 100%);
+          mask-image:radial-gradient(ellipse 95% 78% at 50% 42%,#000 52%,transparent 100%);}
+.glow{position:absolute;border-radius:50%;filter:blur(240px);z-index:0;pointer-events:none;}
+.g1{width:1500px;height:1500px;background:rgba(192,132,252,.20);top:-540px;right:-320px;}
+.g2{width:1300px;height:1300px;background:rgba(56,189,248,.14);bottom:-460px;left:-360px;}
+.g3{width:1000px;height:1000px;background:rgba(251,191,36,.10);top:1500px;left:200px;}
+.vignette{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 105% 100% at 50% 44%,transparent 56%,rgba(0,0,0,.60) 100%);}
+.grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.frame{position:absolute;inset:70px;border:1px solid var(--line);border-radius:20px;z-index:1;pointer-events:none;}
+.masthead,main,footer{position:relative;z-index:3;}
+main{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:70px 0 30px;}
+.masthead{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:2px solid var(--line);padding-bottom:40px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:33px;letter-spacing:11px;
+  text-transform:uppercase;color:var(--muted);font-weight:500;}
+.brand b{color:var(--ink);font-weight:700;}
+.index{font-family:'JetBrains Mono',monospace;font-size:33px;letter-spacing:6px;color:var(--purple);}
+.index span{color:var(--dim);}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:38px;letter-spacing:12px;
+  text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:42px;}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:170px;line-height:1.0;letter-spacing:-3px;}
+h1 em{font-style:normal;background:linear-gradient(120deg,var(--purple),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.lead{font-size:48px;line-height:1.42;color:var(--muted);max-width:2560px;margin-top:52px;}
+.lead b{color:var(--ink);font-weight:600;}
+
+/* hero split: big number + math */
+.roi{display:grid;grid-template-columns:1180px 1fr;gap:96px;align-items:center;
+  border:1px solid var(--line);border-radius:28px;padding:70px 76px;
+  background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(56,189,248,.05));}
+.bignum{text-align:center;}
+.bignum .val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:440px;line-height:.82;
+  letter-spacing:-8px;background:linear-gradient(150deg,#ffffff 20%,var(--purple) 70%,var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.bignum .cap{font-family:'JetBrains Mono',monospace;font-size:38px;letter-spacing:6px;
+  text-transform:uppercase;color:var(--muted);margin-top:24px;line-height:1.4;}
+.bignum .cap b{color:var(--ink);}
+
+.math{display:flex;flex-direction:column;gap:0;}
+.mrow{padding:30px 0;border-bottom:1px solid var(--line);}
+.mrow:first-child{padding-top:0;}
+.mrow .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;}
+.mrow .lbl{font-size:40px;color:var(--ink);font-weight:600;}
+.mrow .lbl span{font-family:'JetBrains Mono',monospace;color:var(--muted);font-weight:500;font-size:34px;}
+.mrow .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:56px;}
+.mtrack{height:20px;border-radius:10px;background:rgba(255,255,255,.06);overflow:hidden;}
+.mfill{height:100%;border-radius:10px;}
+.mtotal{padding-top:30px;display:flex;justify-content:space-between;align-items:baseline;}
+.mtotal .lbl{font-family:'JetBrains Mono',monospace;font-size:36px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--muted);}
+.mtotal .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:96px;color:var(--green);}
+
+/* manual vs automated comparison */
+.vs{}
+.vs .sec-title{display:flex;align-items:baseline;gap:34px;margin-bottom:40px;}
+.vs .sec-title h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:70px;letter-spacing:-1px;}
+.vs .sec-title .k{font-family:'JetBrains Mono',monospace;font-size:30px;letter-spacing:5px;color:var(--dim);text-transform:uppercase;}
+.vsrow{display:grid;grid-template-columns:520px 1fr 260px;align-items:center;gap:48px;margin-bottom:34px;}
+.vsrow:last-child{margin-bottom:0;}
+.vslabel{display:flex;align-items:center;gap:26px;}
+.vslabel .ic{font-size:64px;}
+.vslabel .t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:52px;line-height:1.05;}
+.vslabel .t small{display:block;font-family:'Inter';font-weight:400;font-size:30px;color:var(--muted);margin-top:6px;}
+.vsbar{height:76px;border-radius:16px;background:rgba(255,255,255,.05);overflow:hidden;position:relative;}
+.vsbar .fill{height:100%;border-radius:16px;display:flex;align-items:center;justify-content:flex-end;}
+.vsval{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:78px;text-align:right;}
+
+/* myth-busting columns */
+.myths{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;}
+.myth{border:1px solid var(--line);border-radius:22px;padding:46px 48px;
+  background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.006));}
+.myth .ic{font-size:60px;margin-bottom:24px;display:block;}
+.myth h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:50px;line-height:1.1;margin-bottom:18px;}
+.myth p{font-size:36px;line-height:1.38;color:var(--muted);}
+.myth p b{color:var(--ink);font-weight:600;}
+
+/* punch band */
+.punch{display:flex;align-items:center;gap:60px;border:2px solid rgba(52,211,153,.45);
+  border-radius:26px;padding:60px 72px;background:linear-gradient(120deg,rgba(52,211,153,.12),rgba(56,189,248,.06));
+  box-shadow:0 0 90px rgba(52,211,153,.14),inset 0 1px 0 rgba(255,255,255,.10);}
+.punch .q{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:100px;line-height:.9;
+  color:var(--green);white-space:nowrap;}
+.punch .txt{font-size:52px;line-height:1.28;color:var(--ink);font-weight:500;}
+.punch .txt b{background:linear-gradient(120deg,var(--green),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;}
+
+footer{display:flex;justify-content:space-between;align-items:center;
+  border-top:2px solid var(--line);padding-top:38px;margin-top:12px;font-size:34px;color:var(--muted);}
+footer .who b{color:var(--ink);font-weight:700;}
+footer .cta{display:flex;align-items:center;gap:20px;font-weight:700;color:var(--ink);
+  font-family:'JetBrains Mono',monospace;letter-spacing:4px;font-size:31px;text-transform:uppercase;}
+footer .cta .dot{width:16px;height:16px;border-radius:50%;background:var(--purple);box-shadow:0 0 20px var(--purple);}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+<div class="vignette"></div><div class="frame"></div><div class="grain"></div>
+
+<header class="masthead">
+  <div class="brand">Quality Engineering&nbsp;·&nbsp;<b>The&nbsp;Guild</b></div>
+  <div class="index">03<span>&nbsp;/&nbsp;04</span></div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">The Economics of Automation</p>
+    <h1>Would you run it<br><em>500+ times</em> by hand?</h1>
+    <p class="lead">Systems are built over years, to run for years, and ship again and again. The upfront cost of a reliable check is <b>recovered many times over</b> — while an escaped defect costs far more than the test that would have caught it.</p>
+  </section>
+
+  <section class="roi">
+    <div class="bignum">
+      <div class="val">504</div>
+      <div class="cap"><b>Executions per year</b><br>for a single test suite</div>
+    </div>
+    <div class="math">
+      <div class="mrow">
+        <div class="top"><div class="lbl">Monthly releases <span>2&nbsp;×&nbsp;12</span></div><div class="v" style="color:var(--cyan)">24</div></div>
+        <div class="mtrack"><div class="mfill" style="width:6%;background:var(--cyan)"></div></div>
+      </div>
+      <div class="mrow">
+        <div class="top"><div class="lbl">Quarterly releases <span>10&nbsp;×&nbsp;4</span></div><div class="v" style="color:var(--purple)">40</div></div>
+        <div class="mtrack"><div class="mfill" style="width:9%;background:var(--purple)"></div></div>
+      </div>
+      <div class="mrow">
+        <div class="top"><div class="lbl">Daily dev &amp; CI runs <span>2&nbsp;×&nbsp;220</span></div><div class="v" style="color:var(--amber)">440</div></div>
+        <div class="mtrack"><div class="mfill" style="width:100%;background:var(--amber)"></div></div>
+      </div>
+      <div class="mtotal">
+        <div class="lbl">Total runs / year</div>
+        <div class="v">= 504</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vs">
+    <div class="sec-title"><h2>Manual capacity hits a wall</h2><span class="k">runs covered per year</span></div>
+    <div class="vsrow">
+      <div class="vslabel"><span class="ic">🧑‍💻</span><span class="t">By hand<small>Only the big releases — daily checks get skipped</small></span></div>
+      <div class="vsbar"><div class="fill" style="width:13%;background:linear-gradient(90deg,rgba(251,113,133,.4),var(--coral))"></div></div>
+      <div class="vsval" style="color:var(--coral)">~64</div>
+    </div>
+    <div class="vsrow">
+      <div class="vslabel"><span class="ic">⚙️</span><span class="t">Automated<small>Every release <em style="font-style:normal;color:#cfe">and</em> every commit</small></span></div>
+      <div class="vsbar"><div class="fill" style="width:100%;background:linear-gradient(90deg,rgba(52,211,153,.5),var(--green))"></div></div>
+      <div class="vsval" style="color:var(--green)">504</div>
+    </div>
+  </section>
+
+  <section class="myths">
+    <div class="myth"><span class="ic">♻️</span><h3>Built to run,<br>again and again</h3><p>Automation written once pays back on <b>every one of those 500+ runs</b> — the cost is spread thin.</p></div>
+    <div class="myth"><span class="ic">💸</span><h3>Escapes cost<br>far more</h3><p>A defect loose in production dwarfs the cost of the <b>reliable check</b> that would have stopped it.</p></div>
+    <div class="myth"><span class="ic">🛡️</span><h3>Near-zero<br>risk appetite</h3><p>In high-impact systems the cost of failure is <b>unacceptable</b> — confidence isn't optional.</p></div>
+  </section>
+
+  <section class="punch">
+    <div class="q">500+</div>
+    <div class="txt">Is it worth automating something you'll do <b>over five hundred times</b>? The math answers itself.</div>
+  </section>
+</main>
+
+<footer>
+  <div class="who"><b>Andrew Darnell</b> &nbsp;—&nbsp; Principal Test Engineer</div>
+  <div class="cta"><span class="dot"></span>Automation pays for itself</div>
+</footer>
+</body>
+</html>
