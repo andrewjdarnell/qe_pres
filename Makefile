@@ -1,36 +1,23 @@
-.DEFAULT_GOAL := help
+.PHONY: posters clean
 
-.PHONY: help
-help: ## Display this help message
-	@echo "Usage: make [target]"
-	@echo ""
-	@echo "Targets:"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+# Target to generate all posters
+posters:
+	@echo "Starting Vite dev server in the background..."
+	@npm run dev > /dev/null 2>&1 & echo $$! > .vite.pid
+	@echo "Waiting for server to initialize..."
+	@sleep 3
+	@echo "Capturing presentation slides (1-15)..."
+	@node capture_slides.js
+	@echo "Capturing A0 Posters..."
+	@node poster_screenshot.js
+	@echo "Cleaning up dev server..."
+	@kill `cat .vite.pid` && rm .vite.pid
+	@echo "✨ Poster generation complete! Check the root directory for poster_*.png"
 
-.PHONY: install
-install: ## Install project dependencies
-	npm install
-
-.PHONY: run
-run: ## Start the Vite development server (shortcut for dev)
-	npm run dev
-
-.PHONY: dev
-dev: ## Start the Vite development server
-	npm run dev
-
-.PHONY: stop
-stop: ## Stop the Vite development server
-	pkill -f "vite" || true
-
-.PHONY: build
-build: ## Build the production-ready static files
-	npm run build
-
-.PHONY: preview
-preview: ## Preview the production build locally
-	npm run preview
-
-.PHONY: clean
-clean: ## Remove build artifacts (dist folder)
-	rm -rf dist
+# Target to clean up generated assets
+clean:
+	@echo "Removing generated poster images..."
+	@rm -f poster_*.png
+	@echo "Removing captured slides..."
+	@rm -rf assets/slides/*
+	@echo "Cleanup complete."

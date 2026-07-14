@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quality Engineering Reference & Cheat Sheet - A0 Portrait Poster</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0f1115;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent-color: #0ea5e9;
+      --accent-glow: rgba(14, 165, 233, 0.4);
+      --accent-purple: #a855f7;
+      --accent-orange: #f97316;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --glass-bg: rgba(26, 29, 36, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: url('assets/bg_reference.png');
+      background-size: cover;
+      background-position: center;
+      color: var(--text-main);
+      line-height: 1.5;
+      width: 841mm;
+      height: 1189mm;
+      overflow: hidden;
+      position: relative;
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient Background Orbs */
+    #ambient-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.35;
+    }
+
+    .orb-1 {
+      width: 50vw;
+      height: 50vw;
+      background: rgba(14, 165, 233, 0.15);
+      top: -10%;
+      left: -10%;
+    }
+
+    .orb-2 {
+      width: 40vw;
+      height: 40vw;
+      background: rgba(168, 85, 247, 0.12);
+      bottom: -10%;
+      right: -5%;
+    }
+
+    .orb-3 {
+      width: 30vw;
+      height: 30vw;
+      background: rgba(16, 185, 129, 0.08);
+      top: 40%;
+      left: 20%;
+    }
+
+    .noise-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.02;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Header */
+    header {
+      z-index: 1;
+      margin-bottom: 2.5rem;
+      border-bottom: 2px solid var(--glass-border);
+      padding-bottom: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      font-size: 1.6rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Vertical Sections */
+    .sections-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      flex: 1;
+      z-index: 1;
+      min-height: 0;
+    }
+
+    .panel {
+      background: rgba(15, 17, 21, 0.7);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      color: #ffffff;
+      border-left: 6px solid var(--accent-color);
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    /* Section 1: Matrix layout */
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .matrix-table th, .matrix-table td {
+      padding: 1.5rem 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .matrix-table th {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .matrix-table td {
+      font-size: 1.2rem;
+    }
+
+    .matrix-table tr:hover td {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    /* Section 2: Split columns */
+    .columns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .column-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      color: var(--accent-color);
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.15rem;
+      color: var(--text-main);
+    }
+
+    ul {
+      padding-left: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    li {
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+
+    li::marker {
+      color: var(--accent-color);
+    }
+
+    /* Sprint metrics table */
+    .metric-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .metric-table th, .metric-table td {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .metric-table th {
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 2.5rem;
+      border-top: 2px solid var(--glass-border);
+      padding-top: 1.5rem;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: bold;
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Background Removed - Using AI Graphic -->
+  <div class="noise-overlay"></div>
+
+  <!-- Header -->
+  <header>
+    <h1>Quality Engineering Reference Matrix</h1>
+    <p>A reference guide for scaling automated safety nets and shifting quality left.</p>
+  </header>
+
+  <!-- Sections -->
+  <div class="sections-container">
+
+    <!-- Section 1: The Evolution Matrix -->
+    <div class="panel">
+      <h2>The Shift in Mindset</h2>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th style="width: 50%;">Traditional Quality Assurance (QA)</th>
+            <th style="width: 50%; color: var(--accent-color);">Modern Quality Engineering (QE)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color: var(--accent-red);">Reactive Gatekeeping:</strong> Auditing and finding defects at the end of the lifecycle.</td>
+            <td><strong style="color: var(--accent-green);">Proactive Mitigation:</strong> Collaborating early to prevent defects from being introduced.</td>
+          </tr>
+          <tr>
+            <td><strong>Manual Regression:</strong> High reliance on human execution for repetitive testing checks.</td>
+            <td><strong>Scalable Automation:</strong> Continuous automated verification pipelines checking regressions on code commit.</td>
+          </tr>
+          <tr>
+            <td><strong>Siloed Team:</strong> Quality is treated as "the QA team's responsibility".</td>
+            <td><strong>Embedded Enablement:</strong> QE acts as enablers, building tooling and helping developers validate code quality.</td>
+          </tr>
+          <tr>
+            <td><strong>Delivery Bottleneck:</strong> Code waits for manual testing phases, delaying production releases.</td>
+            <td><strong>Delivery Accelerator:</strong> Safe parallel validations build confidence to ship quickly and repeatedly.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 2: Pipeline Loops & Sprint Capacity -->
+    <div class="panel">
+      <h2>Feedback Loops & Capacity Scaling</h2>
+      <div class="columns-grid">
+        
+        <!-- Loop Column -->
+        <div class="column-panel">
+          <h3>The Feedback Loop</h3>
+          <p>Continuous testing relies on keeping validation loops as close to the developer as possible. Slow feedback loops break developer context and reduce velocity.</p>
+          
+          <div style="display: flex; justify-content: space-around; background: rgba(0, 0, 0, 0.15); border-radius: 12px; padding: 1.25rem; border: 1px dashed rgba(255, 255, 255, 0.05); align-items: center; margin-top: 0.5rem;">
+            <div style="text-align: center;">
+              <span style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));">💻</span>
+              <p style="font-size: 0.95rem; font-weight: bold; margin-top: 0.4rem; color: #fff;">1. Commit Code</p>
+            </div>
+            <span style="color: var(--text-muted); font-size: 1.5rem; font-weight: bold;">&rarr;</span>
+            <div style="text-align: center;">
+              <span style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.4));">⚙️</span>
+              <p style="font-size: 0.95rem; font-weight: bold; margin-top: 0.4rem; color: #fff;">2. Build Pipeline</p>
+            </div>
+            <span style="color: var(--text-muted); font-size: 1.5rem; font-weight: bold;">&rarr;</span>
+            <div style="text-align: center;">
+              <span style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.4));">🤖</span>
+              <p style="font-size: 0.95rem; font-weight: bold; margin-top: 0.4rem; color: #fff;">3. Auto-Verify</p>
+            </div>
+          </div>
+          <p style="font-size: 1.05rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.4;">
+            <strong>Parallel Executions:</strong> Running integration and unit tests on commit scales capacity instantly. Machines scale horizontally; manual testing stays constant.
+          </p>
+        </div>
+
+        <!-- Metrics Column -->
+        <div class="column-panel">
+          <h3>Simulation Capacity Ceiling</h3>
+          <p>Comparison of manual vs. automated capacity over a 10-sprint timeline as codebase size and features built scale up:</p>
+          
+          <table class="metric-table" style="margin-top: 0.5rem;">
+            <thead>
+              <tr>
+                <th>Sprint</th>
+                <th>Built</th>
+                <th>QA Verified</th>
+                <th>QA Escaped</th>
+                <th>QE Verified</th>
+                <th>QE Escaped</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sprint 1</strong></td>
+                <td>3 features</td>
+                <td style="color: var(--accent-green);">3 (100%)</td>
+                <td style="color: var(--accent-green); font-weight: bold;">0</td>
+                <td style="color: var(--accent-green);">3 (100%)</td>
+                <td style="color: var(--accent-green); font-weight: bold;">0</td>
+              </tr>
+              <tr>
+                <td><strong>Sprint 5</strong></td>
+                <td>7 features</td>
+                <td style="color: var(--accent-orange);">3 (42%)</td>
+                <td style="color: var(--accent-red); font-weight: bold;">4</td>
+                <td style="color: var(--accent-green);">7 (100%)</td>
+                <td style="color: var(--accent-green); font-weight: bold;">0</td>
+              </tr>
+              <tr>
+                <td><strong>Sprint 10</strong></td>
+                <td>13 features</td>
+                <td style="color: var(--accent-red);">3 (23%)</td>
+                <td style="color: var(--accent-red); font-weight: bold;">10</td>
+                <td style="color: var(--accent-green);">13 (100%)</td>
+                <td style="color: var(--accent-green); font-weight: bold;">0</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: 1rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.4;">
+            <strong>Takeaway:</strong> As features accumulate, manual verification fails due to the regression testing burden. Automation absorbs the regression checking workload dynamically.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 3: Checklists & Guidelines -->
+    <div class="panel">
+      <h2>Engineering Checklists</h2>
+      <div class="columns-grid">
+        
+        <!-- Checklist 1 -->
+        <div class="column-panel">
+          <h3 style="color: var(--accent-purple);">Building Tests That Last</h3>
+          <p>Good test automation is designed for longevity and resilience to product adjustments:</p>
+          <ul style="margin-top: 0.5rem;">
+            <li><strong>Resilient Architecture:</strong> Build tests that adapt as the UI/API changes, preventing brittle pipelines.</li>
+            <li><strong>Clarity & Readability:</strong> Write checks that clearly communicate *what* is being verified, acting as living documentation.</li>
+            <li><strong>High Reusability:</strong> Create modular test blocks to accelerate the scripting of new validation pathways.</li>
+            <li><strong>Maintainable Footprint:</strong> Prioritize high-value pathways rather than trying to automate everything immediately.</li>
+          </ul>
+        </div>
+
+        <!-- Checklist 2 -->
+        <div class="column-panel">
+          <h3 style="color: var(--accent-orange);">QE Upskilling Action Plan</h3>
+          <p>Actionable pathways to pivot from manual checking into automation engineering:</p>
+          <ul style="margin-top: 0.5rem;">
+            <li><strong>Technical Foundations:</strong> Learn programmatic testing (Python/JS, browser automation libraries, API frameworks).</li>
+            <li><strong>Pipeline Masterclass:</strong> Master CI/CD practices, build steps, containerization, and observability.</li>
+            <li><strong>Continuous Evaluation:</strong> Regularly evaluate whether feedback loops are fast, useful, and actionable.</li>
+            <li><strong>Start Small, Think Big:</strong> Target the highest-value regression pathways first, then scale the automation set.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <span><strong>Speaker:</strong> Andrew Darnell, Principal Test Engineer</span>
+    </div>
+    <div class="footer-right">
+      <span style="font-size: 1.4rem;">🛡️</span>
+      <span>Join the QE Guild &bull; Elevate Our Quality</span>
+    </div>
+  </footer>
+
+</body>
+</html>
