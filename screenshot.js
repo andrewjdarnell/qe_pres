@@ -6,14 +6,14 @@ import puppeteer from 'puppeteer';
   await page.setViewport({ width: 1280, height: 720 });
   await page.goto('http://localhost:5173', { waitUntil: 'networkidle0' });
   
-  const targetSlides = [1, 2, 4, 6, 7, 10, 11, 12];
+  const targetSlides = Array.from({ length: 15 }, (_, i) => i + 1);
   let currentSlide = 1;
   
   // Wait a bit for initial render
   await new Promise(r => setTimeout(r, 1000));
   await page.screenshot({ path: `slide_1.png` });
   
-  while (currentSlide < 12) {
+  while (currentSlide < 15) {
     await page.keyboard.press('ArrowRight');
     currentSlide++;
     await new Promise(r => setTimeout(r, 600)); // wait for transition

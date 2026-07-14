@@ -24,7 +24,7 @@
       <main id="presentation">
       
       <!-- Slide 1: Title -->
-      <div class="slide active">
+      <div class="slide active centered-slide">
         <h1>Quality Engineering</h1>
         <p class="subtitle">Building confidence throughout the delivery.</p>
         <p><strong>Speaker:</strong> Andrew Darnell, Principal Test Engineer</p>
@@ -82,7 +82,7 @@
       <div class="slide">
         <h2>The Evolution: <span class="highlight">Quality Engineering (QE)</span></h2>
         <div class="columns">
-          <div class="column sparse-content">
+          <div class="column">
             <p><span class="highlight">Proactive integration of quality practices throughout the software lifecycle.</span></p>
             <ul style="margin-top: 1rem;">
               <li>Reuses the same core QA skills, but applies them continuously rather than only at the end.</li>
@@ -105,28 +105,30 @@
       <!-- Slide 5: Key Differences -->
       <div class="slide">
         <h2>Key Differences <span class="highlight">(The Shift in Mindset)</span></h2>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 1.15rem;">
-          <tr style="border-bottom: 2px solid var(--glass-border); padding: 1rem;">
-            <th style="text-align: left; padding: 1rem; color: var(--text-muted);">From QA...</th>
-            <th style="text-align: left; padding: 1rem; color: var(--accent-color);">To QE...</th>
-          </tr>
-          <tr>
-            <td style="padding: 1.1rem; font-weight: 600;">Reactive finding of bugs</td>
-            <td style="padding: 1.1rem; font-weight: 600; color: #fff;">Proactive mitigation of risk</td>
-          </tr>
-          <tr>
-            <td style="padding: 1.1rem;">Manual test execution</td>
-            <td style="padding: 1.1rem; color: #fff;">Automation, tooling, and observability</td>
-          </tr>
-          <tr>
-            <td style="padding: 1.1rem;">Siloed gatekeepers</td>
-            <td style="padding: 1.1rem; color: #fff;">Embedded quality experts and enablers</td>
-          </tr>
-          <tr>
-            <td style="padding: 1.1rem;">Bottleneck to release</td>
-            <td style="padding: 1.1rem; color: #fff;">Accelerator for speed, scale, and confidence</td>
-          </tr>
-        </table>
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>From QA...</th>
+              <th>To QE...</th>
+            </tr>
+            <tr>
+              <td style="font-weight: 600;">Reactive finding of bugs</td>
+              <td style="font-weight: 600; color: #fff;">Proactive mitigation of risk</td>
+            </tr>
+            <tr>
+              <td>Manual test execution</td>
+              <td style="color: #fff;">Automation, tooling, and observability</td>
+            </tr>
+            <tr>
+              <td>Siloed gatekeepers</td>
+              <td style="color: #fff;">Embedded quality experts and enablers</td>
+            </tr>
+            <tr>
+              <td>Bottleneck to release</td>
+              <td style="color: #fff;">Accelerator for speed, scale, and confidence</td>
+            </tr>
+          </table>
+        </div>
       </div>
 
       <!-- Slide 6: Feedback Loops -->
@@ -367,18 +369,18 @@
             </ul>
           </div>
           <div class="column" style="flex: 1.1; justify-content: center;">
-            <div class="sim-panel" style="padding: 1.25rem; border-color: var(--accent-color); background: rgba(14, 165, 233, 0.08); box-shadow: 0 0 20px rgba(14, 165, 233, 0.15); display: flex; flex-direction: column; gap: 0.85rem;">
+            <div class="sim-panel" style="padding: 0.8rem; border-color: var(--accent-color); background: rgba(14, 165, 233, 0.08); box-shadow: 0 0 20px rgba(14, 165, 233, 0.15); display: flex; flex-direction: column; gap: 0.5rem;">
               <div style="text-align: center;">
-                <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">📊</div>
-                <h3 style="margin-bottom: 0.25rem; font-size: 1.3rem; font-family: 'Space Grotesk', system-ui, sans-serif;">Release Scale Comparison</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Visualizing relative frequency & dev runs</p>
+                <div style="font-size: 1.8rem; margin-bottom: 0.15rem;">📊</div>
+                <h3 style="margin-bottom: 0.15rem; font-size: 1.2rem; font-family: 'Space Grotesk', system-ui, sans-serif;">Release Scale Comparison</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Visualizing relative frequency & dev runs</p>
               </div>
               
-              <div style="display: flex; flex-direction: column; gap: 0.85rem; font-family: 'Space Grotesk', sans-serif;">
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif;">
                 
                 <!-- Monthly Releases -->
                 <div>
-                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.1rem;">
                     <span style="color: var(--text-main); flex: 1;">Monthly Releases</span>
                     <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted);">
                       <span style="width: 1.5rem; text-align: right;">2</span>
@@ -388,14 +390,14 @@
                       <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-color);">24</span>
                     </div>
                   </div>
-                  <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
-                    <div style="width: 5.4%; height: 100%; background: var(--accent-color); border-radius: 4px; box-shadow: 0 0 8px var(--accent-glow);"></div>
+                  <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;">
+                    <div style="width: 5.4%; height: 100%; background: var(--accent-color); border-radius: 3px; box-shadow: 0 0 8px var(--accent-glow);"></div>
                   </div>
                 </div>
                 
                 <!-- Quarterly Releases -->
                 <div>
-                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.1rem;">
                     <span style="color: var(--text-main); flex: 1;">Quarterly Releases</span>
                     <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted);">
                       <span style="width: 1.5rem; text-align: right;">10</span>
@@ -405,56 +407,56 @@
                       <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-color);">40</span>
                     </div>
                   </div>
-                  <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
-                    <div style="width: 9%; height: 100%; background: var(--accent-color); border-radius: 4px; box-shadow: 0 0 8px var(--accent-glow);"></div>
+                  <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;">
+                    <div style="width: 9%; height: 100%; background: var(--accent-color); border-radius: 3px; box-shadow: 0 0 8px var(--accent-glow);"></div>
                   </div>
                 </div>
-
+ 
                 <!-- Divider -->
-                <div style="height: 1px; background: var(--glass-border); margin: 0.2rem 0;"></div>
+                <div style="height: 1px; background: var(--glass-border); margin: 0.1rem 0;"></div>
                 
                 <!-- Total Formal Releases -->
                 <div>
-                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem; font-weight: bold;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.1rem; font-weight: bold;">
                     <span style="color: var(--accent-green); flex: 1;">Total Formal Releases</span>
                     <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-weight: normal;">
                       <span style="width: 1.5rem; text-align: right;">24</span>
                       <span>+</span>
                       <span style="width: 1.5rem; text-align: left;">40</span>
                       <span>=</span>
-                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-green); font-size: 1.05rem;">64</span>
+                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-green); font-size: 0.95rem;">64</span>
                     </div>
                   </div>
-                  <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden;">
-                    <div style="width: 14.5%; height: 100%; background: var(--accent-green); border-radius: 5px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);"></div>
+                  <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 14.5%; height: 100%; background: var(--accent-green); border-radius: 4px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);"></div>
                   </div>
                 </div>
-
+ 
                 <!-- Divider -->
-                <div style="height: 1px; background: var(--glass-border); margin: 0.2rem 0;"></div>
+                <div style="height: 1px; background: var(--glass-border); margin: 0.1rem 0;"></div>
                 
                 <!-- Daily Dev & Test Runs -->
                 <div>
-                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.2rem; font-weight: bold;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.1rem; font-weight: bold;">
                     <span style="color: var(--accent-orange); flex: 1;">Daily Dev & Test Runs</span>
                     <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-weight: normal;">
                       <span style="width: 1.5rem; text-align: right;">2</span>
                       <span>&times;</span>
                       <span style="width: 1.5rem; text-align: left;">220</span>
                       <span>=</span>
-                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-orange); font-size: 1.1rem;">440</span>
+                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-orange); font-size: 1rem;">440</span>
                     </div>
                   </div>
-                  <div style="width: 100%; height: 14px; background: rgba(255,255,255,0.06); border-radius: 7px; overflow: hidden;">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(90deg, var(--accent-orange), #ff9800); border-radius: 7px; box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);"></div>
+                  <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden;">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(90deg, var(--accent-orange), #ff9800); border-radius: 5px; box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);"></div>
                   </div>
                 </div>
-
+ 
                 <!-- Highlight Question -->
-                <div style="margin-top: 1rem; text-align: center; padding: 1rem; background: rgba(14, 165, 233, 0.1); border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.3);">
-                  <p style="font-size: 1.15rem; font-weight: bold; color: var(--text-main); margin: 0;">"Do you think its worth automating something that you would do <span style="color: var(--accent-color);">over 500 times?</span>"</p>
+                <div style="margin-top: 0.4rem; text-align: center; padding: 0.65rem; background: rgba(14, 165, 233, 0.1); border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.3);">
+                  <p style="font-size: 1rem; font-weight: bold; color: var(--text-main); margin: 0;">"Do you think its worth automating something that you would do <span style="color: var(--accent-color);">over 500 times?</span>"</p>
                 </div>
-
+ 
               </div>
             </div>
           </div>
@@ -465,7 +467,7 @@
       <div class="slide">
         <h2>First Line of Defence</h2>
         <div class="columns">
-          <div class="column sparse-content">
+          <div class="column">
             <p>Moving from manual judgment to systematic guardrails:</p>
             <ul style="margin-top: 0.5rem;">
               <li><strong>Traditional QA:</strong> Manual judgment often decides what to test and what to skip under time pressure.</li>
@@ -488,7 +490,7 @@
       <div class="slide">
         <h2>Building Tests That Last</h2>
         <div class="columns">
-          <div class="column sparse-content">
+          <div class="column">
             <p><strong>Design for Longevity:</strong> The interesting part is not just building tests, but building them in a way that they stay useful over time.</p>
             <ul style="margin-top: 0.75rem;">
               <li>Good automation is resilient: it adapts as the product changes, supports new scenarios, and avoids becoming brittle.</li>
@@ -540,26 +542,26 @@
       </div>
 
       <!-- Slide 14: Call to Action -->
-      <div class="slide">
-        <h1 style="text-align: center; margin-bottom: 0.5rem;">Elevate Our Quality.</h1>
-        <div class="sim-panel" style="align-items: center; justify-content: center; margin-top: 1.5rem; background: rgba(14, 165, 233, 0.08); border-color: var(--accent-color); padding: 2.5rem;">
-          <h2 style="border: none; text-align: center; padding: 0; margin-bottom: 1rem;">Join the <span class="highlight">QE Guild</span></h2>
-          <p style="text-align: center; font-size: 1.3rem; max-width: 750px; color: var(--text-main); margin-bottom: 1.5rem;">
+      <div class="slide centered-slide">
+        <h1 style="margin-bottom: 0.5rem;">Elevate Our Quality.</h1>
+        <div class="sim-panel" style="align-items: center; justify-content: center; margin-top: 1rem; background: rgba(14, 165, 233, 0.08); border-color: var(--accent-color); padding: 2rem; max-width: 800px; width: 100%;">
+          <h2 style="border: none; text-align: center; padding: 0; margin-bottom: 0.75rem;">Join the <span class="highlight">QE Guild</span></h2>
+          <p style="text-align: center; font-size: 1.2rem; max-width: 700px; color: var(--text-main); margin-bottom: 1.2rem;">
             Learn to build unit tests, component tests, browser tests, API tests, and performance tests. <strong>We are here to help!</strong>
           </p>
-          <p style="text-align: center; font-size: 1.2rem; color: var(--text-muted); margin: 0;">
+          <p style="text-align: center; font-size: 1.1rem; color: var(--text-muted); margin: 0;">
             Reach out directly to address that tricky automation problem you've been struggling with.
           </p>
         </div>
       </div>
 
       <!-- Slide 15: Contact Information -->
-      <div class="slide">
+      <div class="slide centered-slide">
         <h2>Contact Information</h2>
-        <div style="margin-top: 3rem; font-size: 1.8rem;">
-          <p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-color);">Andrew Darnell</p>
-          <p style="font-size: 1.5rem;">Principal Test Engineer</p>
-          <p style="margin-top: 3rem; font-size: 1.25rem; color: var(--text-muted);">Let's connect after the session!</p>
+        <div class="contact-card">
+          <p style="font-size: 2.2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-color);">Andrew Darnell</p>
+          <p style="font-size: 1.3rem; margin-bottom: 0; color: #fff;">Principal Test Engineer</p>
+          <p style="margin-top: 2rem; font-size: 1.15rem; color: var(--text-muted); margin-bottom: 0;">Let's connect after the session!</p>
         </div>
       </div>
 
