@@ -4,19 +4,25 @@ This document specifies the behavior, metrics, and animation flow for the intera
 
 ## Visual Design & Layout
 
-The slide displays a side-by-side split comparison to contrast QA and QE scaling models under identical feature load increases over 10 sprints:
+The slide displays a side-by-side comparison of two scaling models under the same growth in feature delivery over 10 sprints:
 
 * **Left Panel:** QA Bottleneck (Manual Testing)
 * **Right Panel:** QE Automation Engine (Continuous Testing)
 
+The core message is simple: manual testing adds a fixed amount of human capacity, while automation creates reusable checks that can grow with the product. The visual should make that contrast obvious.
+
 Each panel contains:
-1. **Conveyor Belt Board:** Visual lanes with developers (`👩‍💻`/`👨‍💻`) pushing features (code blocks `{ }`) towards a tester (`🕵️` manual, or `🤖` automation node).
-2. **Dashboard Counter:**
-   * **Built:** Cumulative features developed. This is demonstrated by a 'product' block growing larger as the sprints progress as a result of the new dev work being added to the conveyor belt.
-   * **Verified:** Cumulative features successfully verified. This is demonstrated by a 'Verified' block turning from red to green and the product getting larger as the sprints progress as a result of the manual or automated verification of features.
-   * **Escaped Bugs:** Cumulative features shipped to production untested due to bottleneck. This is demonstrated by an 'Escaped Bugs' block growing larger as the sprints progress. Escaped bugs stay red as they are added to the product.
-   * **Rejected Work:** If work is reviewed and rejected (25% chance), it is sent back for rework rather than being added to the product. Visually, the block turns amber and passes back to the devs.
-3. **Explanatory Log:** Text summarizing the sprint's outcome.
+1. **Conveyor Belt Board:** A lane with 5 developers (`👩‍💻`/`👨‍💻`) pushing features (code blocks `{ }`) toward a single tester. In the manual version, that tester is human-only; in the automated version, the tester is supported by an automation node (`🤖`).
+2. **Product Growth:** Each delivered feature adds to the product. As the product grows, the amount of regression work also grows, which is the core scaling challenge.
+3. **Automated Test Set:** In the automation version, the team builds a growing library of automated checks that run against the whole product, covering both new work and cumulative regression risk.
+4. **Dashboard Counters:**
+   * **Built:** Cumulative features developed.
+   * **Verified:** Cumulative features successfully verified.
+   * **Escaped Bugs:** Features that reached production without sufficient verification.
+   * **Rejected Work:** Work sent back for rework after review (25% chance).
+   * **Product Size:** The current product size, split into new features added this sprint and the total amount of product that must be re-checked.
+   * **Test Coverage / Capacity:** A visual indication of how much verification effort is being handled this sprint.
+5. **Explanatory Log:** Text summarizing the sprint outcome and the reason the panel behaved that way.
 
 ---
 
@@ -25,20 +31,20 @@ Each panel contains:
 ### Scenario A (The QA Bottleneck)
 *   **Setup:** 5 developers to 1 QA.
 *   **Flow:** Developers produce code. QA manually tests that code while developers wait. Developers then produce more code.
-*   **The Problem:** The code builds up, aggregating into "the product". In successive releases, there is more product to test as the developers have built more code, but the QA still only has a fixed amount of bandwidth.
-*   **The Result:** Testing becomes a bottleneck. Eventually, there is too much code to test, so QA reduces what they test to only the critical path (risk-based testing), leaving the customer to find the remaining bugs.
+*   **The Problem:** The challenge is not just that more features are being built; it is that the amount of product that must be re-verified also grows. Human testing capacity stays roughly constant, so the system eventually hits a bottleneck.
+*   **The Result:** Testing becomes a constraint on delivery. As the backlog grows, the team has to reduce coverage to the highest-risk paths, and bugs are more likely to escape to customers.
 
 ### Scenario B (The QE Automation Engine)
 *   **Setup:** 5 developers to 1 QE.
-*   **Flow:** Developers produce code. QE builds automated tests to cover it, embedding tests early in the pipeline so the feedback loop is direct and fast.
-*   **The Solution:** As developers produce more code, QE produces more automated tests. QE does not become overwhelmed, and developers get immediate feedback.
-*   **The Result:** The project becomes much more predictable. Early feedback leads to a shorter time to usable delivery for the customer.
+*   **Flow:** Developers produce code. QE builds automated checks to cover it and runs them early in the pipeline so feedback is fast and continuous.
+*   **The Solution:** As the product grows, the test suite grows with it. The check-in process becomes a scalable safety net rather than a fixed human bottleneck.
+*   **The Result:** The project becomes more predictable. Quality feedback arrives quickly, releases can happen more confidently, and the team spends less time repeating manual regression work.
 
 ---
 
 ## Simulation Rules & Sprint Specifications
 
-As Sprints progress from 1 to 10, the volume of features built increases, simulating a growing team/codebase.
+As sprints progress from 1 to 10, the volume of features built increases, simulating a growing team and codebase. The key assumption is that the manual model has fixed human throughput, while the automated model grows its verification capacity as the test suite expands.
 
 | Sprint | Features Built (per lane) | QA Manual Capacity (per lane) | QE Automated Capacity (per lane) | Sprint Description / Visual Impact |
 | :--- | :---: | :---: | :---: | :--- |
@@ -58,15 +64,17 @@ As Sprints progress from 1 to 10, the volume of features built increases, simula
 ## Animation & State Machine
 
 * **Code Blocks (`{ }`):**
-  * Span on left next to dev icons, and move rightward along the conveyor building into the growing product bouncing back to the devs if rework is needed
-  * Staggered spawn delay (`index * 150ms`) to simulate development flow.
+  * Spawn on the left next to the developer icons and move rightward along the conveyor, building into the growing product. If work is rejected, the block bounces back to the developers for rework.
+  * Use a staggered spawn delay (`index * 150ms`) to simulate development flow.
 * **QA Belt Logic:**
   * Blocks move to the manual tester (`🕵️`).
-  * The first 3 blocks are verified (turn green, fade out).
-  * Blocks 4+ turn amber (queued), then turn red (skipped) and slide off the right edge of the screen, representing unchecked code releasing to production. This increments the **Escaped Bugs** counter.
+  * The first 3 blocks are verified (turn green, fade out, and are added to the product).
+  * As the amount of regression work grows, the tester must split attention between new features and the existing product, so later blocks queue up.
+  * Blocks 4+ turn amber (queued), then red (skipped) and slide off the right edge of the screen, representing unchecked code reaching production. This increases the **Escaped Bugs** counter.
 * **QE Belt Logic:**
-  * Blocks move to the automation node (`🤖`).
-  * Automation scales instantly to match count. All blocks are processed rapidly, turn green, and fade out.
-  * **Escaped Bugs** remains at **0**.
+  * Blocks move to the automation node (`🕵️` + `🤖`).
+  * The automated test set grows alongside the product, so the system can keep verifying new work and regression risk without the same human bottleneck.
+  * All blocks are processed rapidly, turn green, and contribute to the growing product while the automation suite continues to expand.
+  * **Escaped Bugs** stays at **0**.
 * **Autoplay:**
-  * In `Timed` mode, the sprints automatically run sequentially from 1 to 10 (with a .5s delay per sprint) to show the full visual progression automatically.
+  * In `Timed` mode, the sprints run automatically from 1 to 10, with an `index * 2s` delay per sprint, so the full progression is visible without interaction.

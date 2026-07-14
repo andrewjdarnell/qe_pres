@@ -1,95 +1,104 @@
 # Quality Engineering vs. Quality Assurance Presentation Content
 
-*For details on the design, colors, font, and autoplay mode controls, refer to [qe_aesthetics.md](file:///Users/user/Documents/src/qe_pres/qe_aesthetics.md).*
+*For details on the design, colors, font, and autoplay mode controls, refer to [qe_aesthetics.md](qe_aesthetics.md).*
 
 ## Slide 1: Title Slide
 * **Title:** Quality Engineering
-* **Subtitle:** Evolving from finding bugs to building quality in.
+* **Subtitle:** Building confidence throughout the delivery.
 * **Speaker:** Andrew Darnell, Principal Test Engineer
 
-## Slide 2: The Traditional Approach: Quality Assurance (QA)
+## Slide 2: Shared Foundations: What QA and QE Have in Common
+* **Concept:** Both disciplines exist to reduce risk, protect the customer, and build confidence in the product.
+* **Key Points:**
+  * Both start with understanding requirements, user needs, and likely failure modes.
+  * Both use analysis, critical thinking, and communication to surface issues clearly.
+  * Both aim to improve quality, not just detect defects.
+  * The difference is not the goal; it is the method, timing, and level of integration.
+
+## Slide 3: The Traditional Approach: Quality Assurance (QA)
 * **Concept:** Reactive testing at the end of the development cycle.
 * **Key Points:**
-  * Focuses on detecting defects *after* they are introduced.
-  * Often a separate phase performed by a distinct, siloed team.
-  * Heavy reliance on manual execution and repetitive tasks.
-  * The unfortunate perception: "Quality is the QA team's responsibility."
+  * Focuses on detecting defects after they are introduced.
+  * Often performed as a separate phase by a distinct team.
+  * Heavy reliance on manual execution, repetitive checks, and late feedback.
+  * The common perception is that quality is "the QA team's responsibility."
 
-## Slide 3: The Evolution: Quality Engineering (QE)
-* **Concept:** Proactive integration of quality practices throughout the entire software development lifecycle.
+## Slide 4: The Evolution: Quality Engineering (QE)
+* **Concept:** Proactive integration of quality practices throughout the software lifecycle.
 * **Key Points:**
-  * The same QA skills are reused, but instead of reviewing quality just once at the end, they are turned into continuous assurance.
-  * Focuses on *preventing* defects and improving engineering processes.
-  * Integrated directly into CI/CD pipelines for continuous feedback.
-  * Empowers teams through automation, tooling, and measurable metrics.
-  * Repetitive testing is done by machine, preserving human attention for more creative testing approaches.
-  * The reality: "Quality is everyone's responsibility."
+  * Reuses the same core QA skills, but applies them continuously rather than only at the end.
+  * Focuses on preventing defects and improving engineering processes.
+  * Embeds quality into CI/CD pipelines, deployment workflows, and development habits.
+  * Uses automation and data to give fast feedback and scale confidence.
+  * Preserves human attention for exploratory testing, risk analysis, and high-value judgment.
 
-## Slide 4: Key Differences (The Shift in Mindset)
+## Slide 5: Key Differences (The Shift in Mindset)
 * **From QA:** Reactive finding of bugs -> **To QE:** Proactive mitigation of risk
-* **From QA:** Manual Test Execution -> **To QE:** Test Automation & Infrastructure creation
-* **From QA:** Siloed gatekeepers -> **To QE:** Embedded Quality Experts and enablers
-* **From QA:** A bottleneck to release -> **To QE:** An accelerator for speed and scale
+* **From QA:** Manual test execution -> **To QE:** Automation, tooling, and observability
+* **From QA:** Siloed gatekeepers -> **To QE:** Embedded quality experts and enablers
+* **From QA:** Bottleneck to release -> **To QE:** Accelerator for speed, scale, and confidence
 
-## Slide 5: Feedback Loops
-* Building unit tests and other automated checks into the CI/CD pipeline gives fast feedback to developers and helps them produce better quality code.
-* This short feedback loop is key to the success of QE and enables the team to move faster and with more confidence.
-* This is often called "shifting left," but it isn't about pushing testing into development. It's about Quality Engineering working closely with Development to enable quality.
-* Solid component and integration tests address the combinatorial complexity of the system and ensure that the system is being built on solid ground. This means that there is less need for extensive end-to-end tests.
-* End-to-end tests are still important and should be used to validate that the system components work in concert and for critical business journeys, but they should not be relied upon for the bulk of the testing.
+## Slide 6: Feedback Loops and "Shifting Left"
+* Fast feedback is essential. Automated checks in CI/CD help developers learn quickly and correct issues before they grow.
+* This is about enabling better decisions, not simply moving testing earlier.
+* Strong component and integration tests reduce the need to rely on brittle end-to-end coverage for everything.
+* End-to-end tests remain important for critical journeys and system-wide validation.
 
-## Slide 6: The Scaling Problem vs. The Automation Engine (Interactive Visual)
-* **Concept:** A side-by-side interactive simulation demonstrating how manual testing capacity hits a wall as development speed scales, whereas automated quality engineering capacities grow alongside it.
-* **Details:** See the full sprint specifications and interactive animations in [qe_interactive.md](file:///Users/user/Documents/src/qe_pres/qe_interactive.md).
+## Slide 7: The Scaling Problem vs. the Automation Engine
+* **Concept:** A side-by-side visual demonstrating how manual testing capacity hits a wall as development speed scales, while automated quality engineering grows with the system.
+* **Details:** See the full sprint specifications and interactive animations in [qe_interactive.md](qe_interactive.md).
 
 ## Slide 7: Why Make the Shift?
-* **For the Business (Managers):** More predictable projects, faster time to market, higher confidence in releases, and lower long-term costs by finding bugs earlier (Shift-Left).
+* **For the Business (Managers):** More predictable projects, faster time to market, higher confidence in releases, and lower long-term costs by finding bugs earlier (Shift-Left)nd proactive prevention of defects
 * **For the Team (QAs):** 
   * Let machines handle the scripted regression testing, freeing up your time.
   * Upskill into engineering.
   * Focus on writing higher-value tests and performing exploratory testing.
   * Build tools that empower the whole organization.
 
-## Slide 8: Shared Skills & Shared Outcomes
-* Both QA and QE require similar core competencies:
-  * Analyzing specifications and requirements (explicit and implicit).
-  * Analyzing potential risks and causes of failure.
-  * Designing strategies to reduce those risks.
-  * Managing, explaining, and communicating these risks and materialized issues (and their impact) to stakeholders.
-* Understanding the likely impact of a change is difficult, which makes moving to manual risk-based testing early in the lifecycle a high-risk gamble.
-* Automation empowers us to avoid making those compromises, giving us more confidence that the code we produce is of a high standard.
-* We still prioritize our efforts, but we do so with significantly greater capacity.
-* Automation acts as a force multiplier—like having a massive, parallel team executing high-value tests across all supported platforms.
+## Slide 9: Shared Skills and Shared Outcomes
+* Both QA and QE rely on:
+  * Understanding requirements, user behavior, and business context
+  * Identifying risk and likely points of failure
+  * Designing practical strategies to reduce those risks
+  * Communicating issues clearly to stakeholders
+* Automation does not replace judgment; it extends it.
+* With more capacity, teams can test more thoroughly and focus effort where it matters most.
 
-## Slide 9: Debunking the "Automation is Too Expensive" Fallacy
-* Our projects typically take between 6 to 36 months to develop, and run for at least 5 to 10 years in production.
-* Assuming monthly releases, that is between 72 and 120 releases. The upfront cost of automation is paid back many times over in this timeframe.
-* Every project we build means a lot to the people it serves. Life-changing decisions are made on the back of the information these systems provide.
-* Given the impact of bugs escaping into the wild, we must protect our customers—our biggest asset.
-* As an organisation, our risk appetite is near zero.
+## Slide 10: Debunking the "Automation Is Too Expensive" Fallacy
+* Many systems are built over years to run for years and ship repeatedly, so the upfront cost of automation is recovered many many times over
+* The cost of defects escaping into production is far greater than the cost of building reliable checks early.
+* In high-impact systems, risk appetite is often near zero and the cost of failure is unacceptable.
+[-- Highlight box - e.g. Build 2 x 12 monthly releases + 10 x 4 quarterly releases = 24 + 40 = 64 formal releases, and 2 x 220 daily dev and test releases --] 
 
-## Slide 10: First Line of Defence
-* In traditional QA, we relied on manual judgment to decide what to test and what to skip due to time limits.
-* With QE, the automation framework becomes the first line of defence, the last line of defence, and everything in between.
-* *Guideline:* Identify where you are currently limiting your testing due to available effort or time. That is your next automation opportunity.
+## Slide 11: First Line of Defence
+* In traditional QA, manual judgment often decides what to test and what to skip under time pressure.
+* In QE, automation becomes the first line of defence, the last line of defence, and everything in between.
+* **Guideline:** Identify the testing you currently avoid because of effort or time, and treat that as your next automation target.
 
-## Slide 11: Action Plan: How Do We Go About This?
-* **Learn Automation Skills:** Python is a great place to start due to its rich library ecosystem. Browser E2E testing and API testing are bread and butter.
-* **Master the Pipeline:** Get comfortable with the CI/CD pipeline and deployment environments.
-* **Collaborate and Ask:** Reach out to colleagues who have made the transition—we are here to help each other grow.
-* **Leverage AI:** Use AI to assist with writing scripts where appropriate, but maintain your critical thinking about what needs to be tested.
-* **Think Big:** Ask yourself: *"If I had a team of 1,000 testers, what would I have them test?"* Automation gives you the tools to do exactly that.
-* **Start Small:** Focus on what tests you can run right now to solve your immediate pain points.
-* **Evaluate:** Constantly ask yourself: *"Are our feedback loops working?"*
+## Slide 12: Building Tests That Last
+* The interesting part is not just building tests, but building them in a way that they stay useful over time.
+* Good automation is resilient: it adapts as the product changes, supports new scenarios, and avoids becoming brittle.
+* Tests should be designed for maintainability, clarity, and reuse, not just short-term success.
+* A healthy automation suite grows with the product rather than collapsing under change.
+* The goal is not to automate everything immediately, but to create a durable foundation for future quality checks.
 
-## Slide 12: Call to Action
+## Slide 13: Action Plan: How Do We Go About This?
+* **Learn automation skills:** Python, browser automation, API testing, and test design.
+* **Master the pipeline:** CI/CD practices, deployment environments, and observability.
+* **Collaborate and ask:** Learn from colleagues who have already made the shift.
+* **Leverage AI thoughtfully:** Use it to accelerate scripting while maintaining critical thinking.
+* **Think big, start small:** Automate the highest-value checks first, then expand.
+* **Evaluate continuously:** Ask whether your feedback loops are fast, useful, and actionable.
+
+## Slide 14: Call to Action
 * **Headline:** Elevate Our Quality.
 * **Action Items:** 
   * Join the **QE Guild** to upskill and share knowledge.
   * Learn to build unit tests, component tests, browser tests, API tests, and performance tests (we are here to help!).
   * Reach out to address that tricky automation problem you've been struggling with.
 
-## Slide 13: Contact Information
+## Slide 15: Contact Information
 * **Name:** Andrew Darnell
 * **Role:** Principal Test Engineer
-* **Contact:** Let's connect after the session!
+* **Contact:** Let’s connect after the session!
