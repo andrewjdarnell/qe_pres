@@ -19,6 +19,10 @@ run: ## Start the Vite development server (shortcut for dev)
 dev: ## Start the Vite development server
 	npm run dev
 
+.PHONY: stop
+stop: ## Stop the Vite development server
+	pkill -f "vite" || true
+
 .PHONY: build
 build: ## Build the production-ready static files
 	npm run build

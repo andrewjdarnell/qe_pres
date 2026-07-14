@@ -44,6 +44,16 @@ function updateSlides() {
     stopSimulation();
   }
 
+  // Update navigation buttons active state
+  const navButtons = document.querySelectorAll('.slide-nav-btn');
+  navButtons.forEach((btn, index) => {
+    if (index === currentSlideIndex) {
+      btn.classList.add('active-nav-btn');
+    } else {
+      btn.classList.remove('active-nav-btn');
+    }
+  });
+
   resetSlideTimer();
 }
 
@@ -127,21 +137,17 @@ const btnResetSprint = document.getElementById('btn-reset-sprint');
 const qaStatBuilt = document.getElementById('qa-stat-built');
 const qaStatVerified = document.getElementById('qa-stat-verified');
 const qaStatEscaped = document.getElementById('qa-stat-escaped');
+const qaStatRejected = document.getElementById('qa-stat-rejected');
 const qaExplanation = document.getElementById('qa-explanation');
 
 const qeStatBuilt = document.getElementById('qe-stat-built');
 const qeStatVerified = document.getElementById('qe-stat-verified');
 const qeStatEscaped = document.getElementById('qe-stat-escaped');
+const qeStatRejected = document.getElementById('qe-stat-rejected');
 const qeExplanation = document.getElementById('qe-explanation');
 
-const qaLanes = [
-  document.getElementById('qa-lane-1'),
-  document.getElementById('qa-lane-2')
-];
-const qeLanes = [
-  document.getElementById('qe-lane-1'),
-  document.getElementById('qe-lane-2')
-];
+const qaLane = document.getElementById('qa-lane');
+const qeLane = document.getElementById('qe-lane');
 
 let activeSimBlocks = [];
 let simRunning = false;
@@ -171,8 +177,8 @@ const sprintData = {
 };
 
 let stats = {
-  qa: { built: 0, verified: 0, escaped: 0 },
-  qe: { built: 0, verified: 0, escaped: 0 }
+  qa: { built: 0, verified: 0, escaped: 0, rejected: 0 },
+  qe: { built: 0, verified: 0, escaped: 0, rejected: 0 }
 };
 
 function runSprint(sprint) {
@@ -184,21 +190,32 @@ function runSprint(sprint) {
   qaExplanation.innerHTML = `<strong>Sprint ${currentSprint}:</strong> ${config.qaDesc}`;
   qeExplanation.innerHTML = `<strong>Sprint ${currentSprint}:</strong> ${config.qeDesc}`;
   
-  const processLanes = (lanes, mode, count, limit) => {
-    lanes.forEach((lane, laneIdx) => {
-      for (let i = 0; i < count; i++) {
-        // 25% chance of rejection (rework loop)
-        const isRejected = Math.random() < 0.25;
-        let destinationState = 'passed';
-        if (mode === 'qa' && i >= limit) destinationState = 'skipped';
-        
-        spawnBlock(lane, mode, destinationState, isRejected, i, laneIdx);
-      }
-    });
+  const processLane = (lane, mode, count, limit) => {
+    for (let i = 0; i < count; i++) {
+      const isRejected = Math.random() < 0.25;
+      let destinationState = 'passed';
+      if (mode === 'qa' && i >= limit) destinationState = 'skipped';
+      
+      spawnBlock(lane, mode, destinationState, isRejected, i);
+    }
   };
 
-  processLanes(qaLanes, 'qa', config.built, config.qaLimit);
-  processLanes(qeLanes, 'qe', config.built, config.qeLimit);
+  processLane(qaLane, 'qa', config.built, config.qaLimit);
+  processLane(qeLane, 'qe', config.built, config.qeLimit);
+
+  // Update automated test suite count representation in QE panel
+  let qeCumulativeBuilt = 0;
+  for (let s = 1; s <= currentSprint; s++) {
+    qeCumulativeBuilt += sprintData[s].built;
+  }
+  const qeCovMap = { 0:0, 1:30, 2:45, 3:60, 4:70, 5:80, 6:85, 7:90, 8:100, 9:100, 10:100 };
+  const currentQeCov = qeCovMap[currentSprint] || 0;
+  const automatedCount = Math.round((qeCumulativeBuilt * currentQeCov) / 100);
+  
+  updateAutomatedTests(qeCumulativeBuilt, automatedCount);
+
+  // Update dynamic stats like coverage and product size details
+  updateSprintStats();
 
   if (currentSprint === maxSprints) {
     pauseSimulation();
@@ -206,11 +223,10 @@ function runSprint(sprint) {
   }
 }
 
-function spawnBlock(lane, mode, destinationState, isRejected, index, laneIdx) {
-  const laneWidth = lane.clientWidth || 550;
-  const startPos = 45;
-  const testerPos = laneWidth - 65;
-  const pilePos = testerPos + 40;
+function spawnBlock(lane, mode, destinationState, isRejected, index) {
+  const startPos = 120;
+  const testerPos = 430;
+  const pilePos = 490;
 
   const block = document.createElement('div');
   block.className = 'sim-block';
@@ -232,8 +248,8 @@ function spawnBlock(lane, mode, destinationState, isRejected, index, laneIdx) {
       const testerEl = lane.querySelector('.sim-actor.tester');
       if (testerEl) {
         gsap.to(testerEl, {
-          backgroundColor: "rgba(14, 165, 233, 0.4)", 
-          boxShadow: "0 0 15px rgba(14,165,233,0.8)", 
+          backgroundColor: mode === 'qe' ? "rgba(16, 185, 129, 0.4)" : "rgba(14, 165, 233, 0.4)", 
+          boxShadow: mode === 'qe' ? "0 0 15px rgba(16,185,129,0.8)" : "0 0 15px rgba(14,165,233,0.8)", 
           duration: 0.1, 
           yoyo: true, 
           repeat: 1
@@ -243,7 +259,7 @@ function spawnBlock(lane, mode, destinationState, isRejected, index, laneIdx) {
   });
 
   if (destinationState === 'skipped') {
-    tl.to(block, { backgroundColor: "#ef4444", duration: 0.1 });
+    tl.to(block, { backgroundColor: "var(--accent-red)", duration: 0.1 });
     tl.to(block, {
       x: pilePos,
       y: 20,
@@ -257,17 +273,25 @@ function spawnBlock(lane, mode, destinationState, isRejected, index, laneIdx) {
       }
     });
   } else if (isRejected) {
-    tl.to(block, { backgroundColor: "#f59e0b", duration: 0.2 });
+    tl.to(block, { backgroundColor: "var(--accent-warning)", duration: 0.2 });
     tl.to(block, {
       x: startPos,
       duration: duration,
       ease: "power2.inOut",
       onComplete: () => {
-        gsap.to(block, { opacity: 0, scale: 0, duration: 0.3, onComplete: () => block.remove() });
+        gsap.to(block, { 
+          opacity: 0, 
+          scale: 0, 
+          duration: 0.3, 
+          onComplete: () => {
+            updateStat(mode, 'rejected');
+            block.remove();
+          } 
+        });
       }
     });
   } else {
-    tl.to(block, { backgroundColor: "#10b981", duration: 0.1 });
+    tl.to(block, { backgroundColor: "var(--accent-green)", duration: 0.1 });
     tl.to(block, {
       x: pilePos,
       opacity: 0,
@@ -285,7 +309,7 @@ function spawnBlock(lane, mode, destinationState, isRejected, index, laneIdx) {
 }
 
 function addToPile(lane, mode, colorClass) {
-  const pileId = `${mode}-pile-${lane.id.slice(-1)}`;
+  const pileId = `${mode}-pile`;
   let pileContainer = document.getElementById(pileId);
   if (!pileContainer) return;
   
@@ -293,9 +317,9 @@ function addToPile(lane, mode, colorClass) {
   pileItem.className = `pile-block ${colorClass}`;
   
   const childCount = pileContainer.children.length;
-  const cols = 5;
-  const x = (childCount % cols) * 6;
-  const y = -Math.floor(childCount / cols) * 6;
+  const cols = 4;
+  const x = (childCount % cols) * 12;
+  const y = -Math.floor(childCount / cols) * 12;
   
   pileItem.style.transform = `translate(${x}px, ${y}px)`;
   pileContainer.appendChild(pileItem);
@@ -312,10 +336,142 @@ function animateCounters() {
   qaStatBuilt.textContent = stats.qa.built;
   qaStatVerified.textContent = stats.qa.verified;
   qaStatEscaped.textContent = stats.qa.escaped;
+  if (qaStatRejected) qaStatRejected.textContent = stats.qa.rejected;
   
   qeStatBuilt.textContent = stats.qe.built;
   qeStatVerified.textContent = stats.qe.verified;
   qeStatEscaped.textContent = stats.qe.escaped;
+  if (qeStatRejected) qeStatRejected.textContent = stats.qe.rejected;
+}
+
+function updateSprintStats() {
+  const config = sprintData[currentSprint] || { built: 0, qaLimit: 0, qeLimit: 0 };
+  
+  let qaCumulativeBuilt = 0;
+  let qeCumulativeBuilt = 0;
+  for (let s = 1; s <= currentSprint; s++) {
+    qaCumulativeBuilt += sprintData[s].built;
+    qeCumulativeBuilt += sprintData[s].built;
+  }
+  
+  const qaReg = currentSprint > 1 ? qaCumulativeBuilt - config.built : 0;
+  const qeReg = currentSprint > 1 ? qeCumulativeBuilt - config.built : 0;
+  
+  const totalQAWork = config.built + qaReg;
+  let qaCoverage = 100;
+  if (currentSprint > 0) {
+    qaCoverage = Math.min(100, Math.round((config.qaLimit / totalQAWork) * 100));
+  }
+  
+  const qeCoverageMap = {
+    0: 0,
+    1: 30,
+    2: 45,
+    3: 60,
+    4: 70,
+    5: 80,
+    6: 85,
+    7: 90,
+    8: 100,
+    9: 100,
+    10: 100
+  };
+  const qeCoverage = qeCoverageMap[currentSprint] || 0;
+  
+  const qaProdVal = document.getElementById('qa-stat-prod-size');
+  const qaProdDetails = document.getElementById('qa-stat-prod-details');
+  const qaBarNew = document.getElementById('qa-prod-bar-new');
+  const qaBarReg = document.getElementById('qa-prod-bar-reg');
+  if (qaProdVal) qaProdVal.textContent = totalQAWork;
+  if (qaProdDetails) qaProdDetails.innerHTML = `New: <span style="color:#fff">${config.built}</span> | Reg: <span style="color:#fff">${qaReg}</span>`;
+  if (qaBarNew) qaBarNew.style.width = `${(config.built / 80) * 100}%`;
+  if (qaBarReg) qaBarReg.style.width = `${(qaReg / 80) * 100}%`;
+  
+  const qaCoverageVal = document.getElementById('qa-stat-coverage');
+  const qaCovBar = document.getElementById('qa-cov-bar');
+  if (qaCoverageVal) {
+    qaCoverageVal.textContent = `${qaCoverage}%`;
+    let color = 'var(--accent-green)';
+    if (qaCoverage < 20) color = 'var(--accent-red)';
+    else if (qaCoverage < 50) color = 'var(--accent-warning)';
+    qaCoverageVal.style.color = color;
+    if (qaCovBar) {
+      qaCovBar.style.width = `${qaCoverage}%`;
+      qaCovBar.style.background = color;
+    }
+  }
+  
+  const qeProdVal = document.getElementById('qe-stat-prod-size');
+  const qeProdDetails = document.getElementById('qe-stat-prod-details');
+  const qeBarNew = document.getElementById('qe-prod-bar-new');
+  const qeBarReg = document.getElementById('qe-prod-bar-reg');
+  const totalQEWork = config.built + qeReg;
+  if (qeProdVal) qeProdVal.textContent = totalQEWork;
+  if (qeProdDetails) qeProdDetails.innerHTML = `New: <span style="color:#fff">${config.built}</span> | Reg: <span style="color:#fff">${qeReg}</span>`;
+  if (qeBarNew) qeBarNew.style.width = `${(config.built / 80) * 100}%`;
+  if (qeBarReg) qeBarReg.style.width = `${(qeReg / 80) * 100}%`;
+  
+  const qeCoverageVal = document.getElementById('qe-stat-coverage');
+  const qeCovBar = document.getElementById('qe-cov-bar');
+  if (qeCoverageVal) {
+    qeCoverageVal.textContent = `${qeCoverage}%`;
+    let color = qeCoverage >= 80 ? 'var(--accent-green)' : 'var(--accent-color)';
+    qeCoverageVal.style.color = color;
+    if (qeCovBar) {
+      qeCovBar.style.width = `${qeCoverage}%`;
+      qeCovBar.style.background = color;
+    }
+  }
+}
+
+function updateAutomatedTests(totalRequired, automatedCount) {
+  const grid = document.getElementById('qe-test-suite-grid');
+  const label = document.getElementById('qe-test-suite-label');
+  if (label) {
+    label.innerHTML = `Automated Test Suite <span style="color:var(--text-muted); font-size:0.75rem; font-weight:normal;">(${automatedCount} / ${totalRequired} covered)</span>`;
+  }
+  if (!grid) return;
+  
+  const currentCount = grid.children.length;
+  
+  if (totalRequired > currentCount) {
+    const diff = totalRequired - currentCount;
+    for (let i = 0; i < diff; i++) {
+      const node = document.createElement('div');
+      node.className = 'test-node pending';
+      grid.appendChild(node);
+      
+      gsap.to(node, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.3,
+        delay: i * 0.03,
+        ease: "back.out(2)"
+      });
+    }
+  }
+  
+  Array.from(grid.children).forEach((node, index) => {
+    if (index < automatedCount) {
+      if (node.classList.contains('pending')) {
+         node.classList.remove('pending');
+         node.classList.add('automated');
+         gsap.fromTo(node, { scale: 0.5 }, { scale: 1, duration: 0.3, ease: "back.out(2)" });
+      }
+    } else {
+      node.classList.remove('automated');
+      node.classList.add('pending');
+    }
+  });
+}
+
+function resetAutomatedTests() {
+  const grid = document.getElementById('qe-test-suite-grid');
+  const label = document.getElementById('qe-test-suite-label');
+  if (label) {
+    label.innerHTML = `Automated Test Suite <span style="color:var(--text-muted); font-size:0.75rem; font-weight:normal;">(0 / 0 covered)</span>`;
+  }
+  if (grid) grid.innerHTML = '';
 }
 
 function playSimulation() {
@@ -347,10 +503,50 @@ function resetSimulation() {
   btnNextSprint.disabled = false;
   
   stats = {
-    qa: { built: 0, verified: 0, escaped: 0 },
-    qe: { built: 0, verified: 0, escaped: 0 }
+    qa: { built: 0, verified: 0, escaped: 0, rejected: 0 },
+    qe: { built: 0, verified: 0, escaped: 0, rejected: 0 }
   };
   animateCounters();
+  
+  const qaProdVal = document.getElementById('qa-stat-prod-size');
+  const qaProdDetails = document.getElementById('qa-stat-prod-details');
+  const qaCoverageVal = document.getElementById('qa-stat-coverage');
+  const qaBarNew = document.getElementById('qa-prod-bar-new');
+  const qaBarReg = document.getElementById('qa-prod-bar-reg');
+  const qaCovBar = document.getElementById('qa-cov-bar');
+  
+  if (qaProdVal) qaProdVal.textContent = '0';
+  if (qaProdDetails) qaProdDetails.innerHTML = 'New: 0 | Reg: 0';
+  if (qaBarNew) qaBarNew.style.width = '0%';
+  if (qaBarReg) qaBarReg.style.width = '0%';
+  if (qaCoverageVal) {
+    qaCoverageVal.textContent = '100%';
+    qaCoverageVal.style.color = 'var(--accent-green)';
+  }
+  if (qaCovBar) {
+    qaCovBar.style.width = '100%';
+    qaCovBar.style.background = 'var(--accent-green)';
+  }
+  
+  const qeProdVal = document.getElementById('qe-stat-prod-size');
+  const qeProdDetails = document.getElementById('qe-stat-prod-details');
+  const qeCoverageVal = document.getElementById('qe-stat-coverage');
+  const qeBarNew = document.getElementById('qe-prod-bar-new');
+  const qeBarReg = document.getElementById('qe-prod-bar-reg');
+  const qeCovBar = document.getElementById('qe-cov-bar');
+  
+  if (qeProdVal) qeProdVal.textContent = '0';
+  if (qeProdDetails) qeProdDetails.innerHTML = 'New: 0 | Reg: 0';
+  if (qeBarNew) qeBarNew.style.width = '0%';
+  if (qeBarReg) qeBarReg.style.width = '0%';
+  if (qeCoverageVal) {
+    qeCoverageVal.textContent = '0%';
+    qeCoverageVal.style.color = 'var(--accent-color)';
+  }
+  if (qeCovBar) {
+    qeCovBar.style.width = '0%';
+    qeCovBar.style.background = 'var(--accent-color)';
+  }
   
   qaExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
   qeExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
@@ -359,6 +555,7 @@ function resetSimulation() {
   activeSimBlocks = [];
   
   document.querySelectorAll('.product-pile').forEach(p => p.innerHTML = '');
+  resetAutomatedTests();
 }
 
 function startSimulation() {
@@ -371,6 +568,22 @@ function stopSimulation() {
   simRunning = false;
   pauseSimulation();
   resetSimulation();
+}
+
+// Generate slide navigation bar buttons
+const slideNavBar = document.getElementById('slide-nav-bar');
+if (slideNavBar) {
+  slides.forEach((_, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'slide-nav-btn';
+    btn.textContent = index + 1;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentSlideIndex = index;
+      updateSlides();
+    });
+    slideNavBar.appendChild(btn);
+  });
 }
 
 updateSlides();

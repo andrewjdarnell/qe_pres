@@ -26,22 +26,46 @@
       <!-- Slide 1: Title -->
       <div class="slide active">
         <h1>Quality Engineering</h1>
-        <p class="subtitle">Evolving from finding bugs to building quality in.</p>
-        <p><strong>Speaker:</strong> Andrew Darnell</p>
-        <p>Principal Test Engineer</p>
+        <p class="subtitle">Building confidence throughout the delivery.</p>
+        <p><strong>Speaker:</strong> Andrew Darnell, Principal Test Engineer</p>
       </div>
 
-      <!-- Slide 2: QA -->
+      <!-- Slide 2: Shared Foundations -->
+      <div class="slide">
+        <h2>Shared Foundations: <span class="highlight">What QA and QE Have in Common</span></h2>
+        <div class="columns">
+          <div class="column sparse-content">
+            <p><span class="highlight">Both disciplines exist to reduce risk, protect the customer, and build confidence in the product.</span></p>
+            <ul style="margin-top: 1rem;">
+              <li>Both start with understanding requirements, user needs, and likely failure modes.</li>
+              <li>Both use analysis, critical thinking, and communication to surface issues clearly.</li>
+              <li>Both aim to improve quality, not just detect defects.</li>
+              <li>The difference is not the goal; it is the method, timing, and level of integration.</li>
+            </ul>
+          </div>
+          <div class="column" style="justify-content: center;">
+            <div class="sim-panel" style="background: rgba(14, 165, 233, 0.05); border-color: rgba(14, 165, 233, 0.2); justify-content: center; align-items: center; min-height: 250px; text-align: center; padding: 2rem;">
+              <div style="font-size: 3.5rem; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--accent-glow));">🤝</div>
+              <p style="font-size: 1.5rem; font-weight: bold; color: white; margin: 0;">Shared Goal</p>
+              <p style="font-size: 1.05rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.4;">
+                To deliver a reliable, secure product that customers can trust, through rigorous critical analysis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: QA -->
       <div class="slide">
         <h2>The Traditional Approach: <span class="highlight">Quality Assurance (QA)</span></h2>
         <div class="columns">
-          <div class="column">
-            <p><strong>Concept:</strong> Reactive testing at the end of the development cycle.</p>
+          <div class="column sparse-content">
+            <p><span class="highlight">Reactive testing at the end of the development cycle.</span></p>
             <ul style="margin-top: 1rem;">
-              <li>Focuses on detecting defects <em>after</em> they are introduced.</li>
-              <li>Often a separate phase performed by a distinct, siloed team.</li>
-              <li>Heavy reliance on manual execution and repetitive tasks.</li>
-              <li>The unfortunate perception: <em>"Quality is the QA team's responsibility."</em></li>
+              <li>Focuses on detecting defects after they are introduced.</li>
+              <li>Often performed as a separate phase by a distinct team.</li>
+              <li>Heavy reliance on manual execution, repetitive checks, and late feedback.</li>
+              <li>The common perception is that quality is "the QA team's responsibility."</li>
             </ul>
           </div>
           <div class="column" style="justify-content: center;">
@@ -54,18 +78,18 @@
         </div>
       </div>
 
-      <!-- Slide 3: QE -->
+      <!-- Slide 4: QE -->
       <div class="slide">
         <h2>The Evolution: <span class="highlight">Quality Engineering (QE)</span></h2>
         <div class="columns">
-          <div class="column">
-            <p><strong>Concept:</strong> Proactive integration of quality practices throughout the entire software development lifecycle.</p>
+          <div class="column sparse-content">
+            <p><span class="highlight">Proactive integration of quality practices throughout the software lifecycle.</span></p>
             <ul style="margin-top: 1rem;">
-              <li>The same QA skills are reused, but instead of reviewing quality just once at the end, they are turned into <strong>continuous assurance</strong>.</li>
-              <li>Focuses on <em>preventing</em> defects and improving engineering processes.</li>
-              <li>Integrated directly into CI/CD pipelines for continuous feedback.</li>
-              <li>Repetitive testing is done by machine, preserving human attention for creative testing approaches.</li>
-              <li>The reality: <em>"Quality is everyone's responsibility."</em></li>
+              <li>Reuses the same core QA skills, but applies them continuously rather than only at the end.</li>
+              <li>Focuses on preventing defects and improving engineering processes.</li>
+              <li>Embeds quality into CI/CD pipelines, deployment workflows, and development habits.</li>
+              <li>Uses automation and data to give fast feedback and scale confidence.</li>
+              <li>Preserves human attention for exploratory testing, risk analysis, and high-value judgment.</li>
             </ul>
           </div>
           <div class="column" style="justify-content: center;">
@@ -78,43 +102,43 @@
         </div>
       </div>
 
-      <!-- Slide 4: Key Differences -->
+      <!-- Slide 5: Key Differences -->
       <div class="slide">
         <h2>Key Differences <span class="highlight">(The Shift in Mindset)</span></h2>
         <table style="width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 1.15rem;">
           <tr style="border-bottom: 2px solid var(--glass-border); padding: 1rem;">
-            <th style="text-align: left; padding: 1rem; color: var(--text-muted);">From Traditional QA...</th>
-            <th style="text-align: left; padding: 1rem; color: var(--accent-color);">To Quality Engineering...</th>
+            <th style="text-align: left; padding: 1rem; color: var(--text-muted);">From QA...</th>
+            <th style="text-align: left; padding: 1rem; color: var(--accent-color);">To QE...</th>
           </tr>
           <tr>
-            <td style="padding: 1rem; font-weight: 600;">Reactive finding of bugs</td>
-            <td style="padding: 1rem; font-weight: 600; color: #fff;">Proactive mitigation of risk</td>
+            <td style="padding: 1.1rem; font-weight: 600;">Reactive finding of bugs</td>
+            <td style="padding: 1.1rem; font-weight: 600; color: #fff;">Proactive mitigation of risk</td>
           </tr>
           <tr>
-            <td style="padding: 1rem;">Manual Test Execution</td>
-            <td style="padding: 1rem; color: #fff;">Test Automation & Infrastructure creation</td>
+            <td style="padding: 1.1rem;">Manual test execution</td>
+            <td style="padding: 1.1rem; color: #fff;">Automation, tooling, and observability</td>
           </tr>
           <tr>
-            <td style="padding: 1rem;">Siloed gatekeepers</td>
-            <td style="padding: 1rem; color: #fff;">Embedded Quality Experts and enablers</td>
+            <td style="padding: 1.1rem;">Siloed gatekeepers</td>
+            <td style="padding: 1.1rem; color: #fff;">Embedded quality experts and enablers</td>
           </tr>
           <tr>
-            <td style="padding: 1rem;">A bottleneck to release</td>
-            <td style="padding: 1rem; color: #fff;">An accelerator for speed and scale</td>
+            <td style="padding: 1.1rem;">Bottleneck to release</td>
+            <td style="padding: 1.1rem; color: #fff;">Accelerator for speed, scale, and confidence</td>
           </tr>
         </table>
       </div>
 
-      <!-- Slide 5: Feedback loops -->
+      <!-- Slide 6: Feedback Loops -->
       <div class="slide">
-        <h2>Accelerating through <span class="highlight">Feedback Loops</span></h2>
+        <h2>Feedback Loops and <span class="highlight">"Shifting Left"</span></h2>
         <div class="columns">
           <div class="column">
             <ul>
-              <li><strong>Continuous Feedback:</strong> Building unit tests and automated checks into the CI/CD pipeline gives instant feedback to developers, helping them build better quality code from day one.</li>
-              <li><strong>Shifting Left:</strong> It isn't about pushing testing onto developers. It is about Quality Engineering working collaboratively with Development to enable quality checks early.</li>
-              <li><strong>Addressing Complexity:</strong> Component and integration tests address combinatorial system complexity on solid ground, reducing the need for massive end-to-end regression runs.</li>
-              <li><strong>Strategic E2E:</strong> End-to-end tests remain vital for validating concert operations and critical business journeys, but shouldn't be the primary safety net.</li>
+              <li><strong>Continuous Feedback:</strong> Fast feedback is essential. Automated checks in CI/CD help developers learn quickly and correct issues before they grow.</li>
+              <li><strong>Shifting Left:</strong> This is about enabling better decisions, not simply moving testing earlier.</li>
+              <li><strong>Addressing Complexity:</strong> Strong component and integration tests reduce the need to rely on brittle end-to-end coverage for everything.</li>
+              <li><strong>Strategic E2E:</strong> End-to-end tests remain important for critical journeys and system-wide validation.</li>
             </ul>
           </div>
           <div class="column" style="justify-content: center; align-items: center;">
@@ -127,7 +151,7 @@
         </div>
       </div>
 
-      <!-- Slide 6: Sprint Simulation -->
+      <!-- Slide 7: Sprint Simulation -->
       <div class="slide" id="animation-slide">
         <h2>The Scaling Problem vs. The Automation Engine</h2>
         
@@ -152,32 +176,53 @@
             
             <div class="sim-board">
               <div class="sim-conveyor">
-                <div class="sim-lane" id="qa-lane-1">
-                  <span class="sim-actor dev">👩‍💻</span>
+                <div class="sim-lane" id="qa-lane">
+                  <div class="sim-devs">
+                    <span class="sim-actor dev">👩‍💻</span>
+                    <span class="sim-actor dev">👨‍💻</span>
+                    <span class="sim-actor dev">👩‍💻</span>
+                    <span class="sim-actor dev">👨‍💻</span>
+                    <span class="sim-actor dev">👩‍💻</span>
+                  </div>
                   <!-- Blocks will be dynamically spawned here -->
-                  <div class="sim-actor tester" id="qa-tester-1" aria-label="Tester">🕵️</div>
-                  <div class="product-pile" id="qa-pile-1"></div>
-                </div>
-                <div class="sim-lane" id="qa-lane-2">
-                  <span class="sim-actor dev">👨‍💻</span>
-                  <div class="sim-actor tester" id="qa-tester-2" aria-label="Tester">🕵️</div>
-                  <div class="product-pile" id="qa-pile-2"></div>
+                  <div class="sim-actor tester" id="qa-tester" aria-label="Tester">🕵️</div>
+                  <div class="product-pile" id="qa-pile"></div>
                 </div>
               </div>
             </div>
 
-            <div class="sim-stats">
-              <div class="stat-item">
+            <div class="sim-stats-grid">
+              <div class="stat-card">
                 <div class="stat-val" id="qa-stat-built">0</div>
                 <div class="stat-label">Built</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-card">
                 <div class="stat-val" style="color: var(--accent-green);" id="qa-stat-verified">0</div>
                 <div class="stat-label">Verified</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-card">
                 <div class="stat-val" style="color: var(--accent-red);" id="qa-stat-escaped">0</div>
                 <div class="stat-label">Escaped Bugs</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-val" style="color: var(--accent-warning);" id="qa-stat-rejected">0</div>
+                <div class="stat-label">Rejected Work</div>
+              </div>
+              <div class="stat-card prod-size-card">
+                <div class="stat-val" id="qa-stat-prod-size">0</div>
+                <div class="stat-label" style="color:var(--accent-purple); font-weight:bold;">Total Tests To Do</div>
+                <div class="prod-bar-wrap">
+                  <div class="prod-bar new" id="qa-prod-bar-new" style="width:0%;"></div>
+                  <div class="prod-bar reg" id="qa-prod-bar-reg" style="width:0%;"></div>
+                </div>
+                <div class="stat-label" id="qa-stat-prod-details" style="font-size: 0.7rem;">New: 0 | Reg: 0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-val" id="qa-stat-coverage" style="color: var(--accent-green);">100%</div>
+                <div class="stat-label">Test Coverage</div>
+                <div class="prod-bar-wrap" style="background: rgba(239, 68, 68, 0.2);">
+                  <div class="prod-bar" id="qa-cov-bar" style="width:100%; background: var(--accent-green);"></div>
+                </div>
               </div>
             </div>
             
@@ -193,33 +238,61 @@
               <span style="color: var(--accent-green); font-size: 0.85rem; font-weight: normal;">Scalable Capacity</span>
             </div>
             
-            <div class="sim-board">
-              <div class="sim-conveyor">
-                <div class="sim-lane" id="qe-lane-1">
-                  <span class="sim-actor dev">👩‍💻</span>
-                  <div class="sim-actor tester" id="qe-tester-1" aria-label="Tester">🤖</div>
-                  <div class="product-pile" id="qe-pile-1"></div>
+            <div class="sim-board" style="display: flex; flex-direction: column;">
+              <div class="sim-conveyor" style="flex: 1;">
+                <div class="sim-lane" id="qe-lane">
+                  <div class="sim-devs">
+                    <span class="sim-actor dev">👩‍💻</span>
+                    <span class="sim-actor dev">👨‍💻</span>
+                    <span class="sim-actor dev">👩‍💻</span>
+                    <span class="sim-actor dev">👨‍💻</span>
+                    <span class="sim-actor dev">👩‍💻</span>
+                  </div>
+                  <!-- Blocks will be dynamically spawned here -->
+                  <div class="sim-actor tester" id="qe-tester" aria-label="Tester" style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                    <span>🕵️</span><span style="margin-left:-4px;">🤖</span>
+                  </div>
+                  <div class="product-pile" id="qe-pile"></div>
                 </div>
-                <div class="sim-lane" id="qe-lane-2">
-                  <span class="sim-actor dev">👨‍💻</span>
-                  <div class="sim-actor tester" id="qe-tester-2" aria-label="Tester">🤖</div>
-                  <div class="product-pile" id="qe-pile-2"></div>
-                </div>
+              </div>
+              <div class="qe-test-suite-container">
+                <div class="qe-test-suite-title" id="qe-test-suite-label">Automated Test Suite (0 scripts)</div>
+                <div class="qe-test-suite-grid" id="qe-test-suite-grid"></div>
               </div>
             </div>
 
-            <div class="sim-stats">
-              <div class="stat-item">
+            <div class="sim-stats-grid">
+              <div class="stat-card">
                 <div class="stat-val" id="qe-stat-built">0</div>
                 <div class="stat-label">Built</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-card">
                 <div class="stat-val" style="color: var(--accent-green);" id="qe-stat-verified">0</div>
                 <div class="stat-label">Verified</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-card">
                 <div class="stat-val" style="color: var(--accent-red);" id="qe-stat-escaped">0</div>
                 <div class="stat-label">Escaped Bugs</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-val" style="color: var(--accent-warning);" id="qe-stat-rejected">0</div>
+                <div class="stat-label">Rejected Work</div>
+              </div>
+              <div class="stat-card prod-size-card">
+                <div class="stat-val" id="qe-stat-prod-size">0</div>
+                <div class="stat-label" style="color:var(--accent-purple); font-weight:bold;">Total Tests To Do</div>
+                <div class="prod-bar-wrap">
+                  <div class="prod-bar new" id="qe-prod-bar-new" style="width:0%;"></div>
+                  <div class="prod-bar reg" id="qe-prod-bar-reg" style="width:0%;"></div>
+                </div>
+                <div class="stat-label" id="qe-stat-prod-details" style="font-size: 0.7rem;">New: 0 | Reg: 0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-val" id="qe-stat-coverage" style="color: var(--accent-color);">0%</div>
+                <div class="stat-label">Test Coverage</div>
+                <div class="prod-bar-wrap" style="background: rgba(239, 68, 68, 0.2);">
+                  <div class="prod-bar" id="qe-cov-bar" style="width:0%; background: var(--accent-green);"></div>
+                </div>
               </div>
             </div>
             
@@ -230,7 +303,7 @@
         </div>
       </div>
 
-      <!-- Slide 7: Why Shift -->
+      <!-- Slide 8: Why Make the Shift? -->
       <div class="slide">
         <h2>Why Make the Shift?</h2>
         <div class="columns">
@@ -240,84 +313,168 @@
               <li><strong>More Predictable Projects:</strong> Consistent delivery velocity.</li>
               <li><strong>Faster Time to Market:</strong> Automatic regression runs.</li>
               <li><strong>Higher Confidence:</strong> Less risk in production.</li>
-              <li><strong>Lower Long-Term Costs:</strong> Shift-left identifies bugs when they are cheapest to resolve.</li>
+              <li><strong>Lower Long-Term Costs:</strong> Finding bugs earlier (Shift-Left) and proactive prevention of defects.</li>
             </ul>
           </div>
           <div class="column">
             <h3 style="color: var(--accent-color); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">For the Team (QAs)</h3>
             <ul>
-              <li><strong>No Scripted Regression:</strong> Let the machines do the repetitive tasks.</li>
-              <li><strong>Upskill Into Engineering:</strong> Grow coding capability.</li>
-              <li><strong>High-Value Scope:</strong> Focus human intellect on exploratory and design-level testing.</li>
-              <li><strong>Empower the Organization:</strong> Create testing frameworks and tools.</li>
+              <li><strong>No Scripted Regression:</strong> Let machines handle the scripted regression testing, freeing up your time.</li>
+              <li><strong>Upskill into Engineering:</strong> Grow coding capability and architectural knowledge.</li>
+              <li><strong>Exploratory Focus:</strong> Focus on writing higher-value tests and performing exploratory testing.</li>
+              <li><strong>Tool Builders:</strong> Build tools that empower the whole organization.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Slide 8: Shared Skills -->
+      <!-- Slide 9: Shared Skills and Shared Outcomes -->
       <div class="slide">
         <h2>Shared Skills & Shared Outcomes</h2>
         <div class="columns">
           <div class="column">
-            <p><strong>QA and QE care about the same goals:</strong></p>
-            <ul>
-              <li>Analyzing specifications and requirements (explicit and implicit).</li>
-              <li>Analyzing potential risks and causes of failure.</li>
-              <li>Designing strategies to mitigate and reduce those risks.</li>
-              <li>Communicating issues and impact directly to stakeholders.</li>
+            <p><strong>Both QA and QE rely on:</strong></p>
+            <ul style="margin-top: 1rem;">
+              <li>Understanding requirements, user behavior, and business context.</li>
+              <li>Identifying risk and likely points of failure.</li>
+              <li>Designing practical strategies to reduce those risks.</li>
+              <li>Communicating issues clearly to stakeholders.</li>
             </ul>
+            <p style="margin-top: 1rem; font-style: italic; font-size: 1.1rem; color: var(--text-muted);">
+              "Automation does not replace judgment; it extends it."
+            </p>
           </div>
           <div class="column">
-            <div class="sim-panel" style="justify-content: center; height: 100%;">
-              <h3 style="color: var(--accent-color);">The Force Multiplier</h3>
+            <div class="sim-panel" style="justify-content: center; height: 100%; padding: 2rem;">
+              <h3 style="color: var(--accent-color); margin-bottom: 0.75rem;">Capacity Expansion</h3>
               <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.5;">
-                Manual risk-based testing forces us to compromise on quality early in the lifecycle because of limited time.
-              </p>
-              <p style="font-size: 1.1rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.5rem;">
-                <strong>Automation is like adding a parallel workforce</strong> executing high-value checks 24/7. It allows us to prioritize based on strategy, not because we ran out of hours in the sprint.
+                With more capacity, teams can test more thoroughly and focus effort where it matters most, rather than compromising due to time.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Slide 9: Automation Fallacy -->
+      <!-- Slide 10: Debunking the "Automation Is Too Expensive" Fallacy -->
       <div class="slide">
-        <h2>Debunking the "Too Expensive" Fallacy</h2>
+        <h2>Debunking the "Automation Is Too Expensive" Fallacy</h2>
         <div class="columns">
           <div class="column" style="flex: 1.2;">
             <ul>
-              <li><strong>Long-Term Math:</strong> A typical project takes 6 to 36 months to develop and runs for 5 to 10+ years in production. Monthly releases mean 72 to 120+ cycles. The upfront cost of automation pays back exponential dividends.</li>
-              <li><strong>Zero Risk Appetite:</strong> Our platforms make life-changing decisions. The cost of bugs escaping into production is massive—both in system integrity and customer trust.</li>
-              <li><strong>Protecting Customers:</strong> Our customers are our biggest asset. Preventing bugs in production is our ultimate duty of care.</li>
+              <li>Many systems are built over years to run for years and ship repeatedly, so the upfront cost of automation is recovered many many times over.</li>
+              <li>The cost of defects escaping into production is far greater than the cost of building reliable checks early.</li>
+              <li>In high-impact systems, risk appetite is often near zero and the cost of failure is unacceptable.</li>
             </ul>
           </div>
-          <div class="column" style="flex: 0.8; justify-content: center;">
-            <div class="sim-panel" style="text-align: center; padding: 2rem; border-color: var(--accent-color);">
-              <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
-              <h3 style="margin-bottom: 0.5rem;">ROI of Automation</h3>
-              <p style="font-size: 1rem; color: var(--text-muted); margin: 0;">Upfront Dev Effort &darr;</p>
-              <p style="font-size: 1rem; color: var(--accent-green); font-weight: bold; margin-top: 0.25rem;">Exponential Long-Term Savings &uarr;</p>
+          <div class="column" style="flex: 1.1; justify-content: center;">
+            <div class="sim-panel" style="padding: 1.25rem; border-color: var(--accent-color); background: rgba(14, 165, 233, 0.08); box-shadow: 0 0 20px rgba(14, 165, 233, 0.15); display: flex; flex-direction: column; gap: 0.85rem;">
+              <div style="text-align: center;">
+                <div style="font-size: 2.2rem; margin-bottom: 0.25rem;">📊</div>
+                <h3 style="margin-bottom: 0.25rem; font-size: 1.3rem; font-family: 'Space Grotesk', system-ui, sans-serif;">Release Scale Comparison</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Visualizing relative frequency & dev runs</p>
+              </div>
+              
+              <div style="display: flex; flex-direction: column; gap: 0.85rem; font-family: 'Space Grotesk', sans-serif;">
+                
+                <!-- Monthly Releases -->
+                <div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem;">
+                    <span style="color: var(--text-main); flex: 1;">Monthly Releases</span>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted);">
+                      <span style="width: 1.5rem; text-align: right;">2</span>
+                      <span>&times;</span>
+                      <span style="width: 1.5rem; text-align: left;">12</span>
+                      <span>=</span>
+                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-color);">24</span>
+                    </div>
+                  </div>
+                  <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 5.4%; height: 100%; background: var(--accent-color); border-radius: 4px; box-shadow: 0 0 8px var(--accent-glow);"></div>
+                  </div>
+                </div>
+                
+                <!-- Quarterly Releases -->
+                <div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem;">
+                    <span style="color: var(--text-main); flex: 1;">Quarterly Releases</span>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted);">
+                      <span style="width: 1.5rem; text-align: right;">10</span>
+                      <span>&times;</span>
+                      <span style="width: 1.5rem; text-align: left;">4</span>
+                      <span>=</span>
+                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-color);">40</span>
+                    </div>
+                  </div>
+                  <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                    <div style="width: 9%; height: 100%; background: var(--accent-color); border-radius: 4px; box-shadow: 0 0 8px var(--accent-glow);"></div>
+                  </div>
+                </div>
+
+                <!-- Divider -->
+                <div style="height: 1px; background: var(--glass-border); margin: 0.2rem 0;"></div>
+                
+                <!-- Total Formal Releases -->
+                <div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.2rem; font-weight: bold;">
+                    <span style="color: var(--accent-green); flex: 1;">Total Formal Releases</span>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-weight: normal;">
+                      <span style="width: 1.5rem; text-align: right;">24</span>
+                      <span>+</span>
+                      <span style="width: 1.5rem; text-align: left;">40</span>
+                      <span>=</span>
+                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-green); font-size: 1.05rem;">64</span>
+                    </div>
+                  </div>
+                  <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.06); border-radius: 5px; overflow: hidden;">
+                    <div style="width: 14.5%; height: 100%; background: var(--accent-green); border-radius: 5px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);"></div>
+                  </div>
+                </div>
+
+                <!-- Divider -->
+                <div style="height: 1px; background: var(--glass-border); margin: 0.2rem 0;"></div>
+                
+                <!-- Daily Dev & Test Runs -->
+                <div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.2rem; font-weight: bold;">
+                    <span style="color: var(--accent-orange); flex: 1;">Daily Dev & Test Runs</span>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-weight: normal;">
+                      <span style="width: 1.5rem; text-align: right;">2</span>
+                      <span>&times;</span>
+                      <span style="width: 1.5rem; text-align: left;">220</span>
+                      <span>=</span>
+                      <span style="width: 2.5rem; text-align: right; font-weight: bold; color: var(--accent-orange); font-size: 1.1rem;">440</span>
+                    </div>
+                  </div>
+                  <div style="width: 100%; height: 14px; background: rgba(255,255,255,0.06); border-radius: 7px; overflow: hidden;">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(90deg, var(--accent-orange), #ff9800); border-radius: 7px; box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);"></div>
+                  </div>
+                </div>
+
+                <!-- Highlight Question -->
+                <div style="margin-top: 1rem; text-align: center; padding: 1rem; background: rgba(14, 165, 233, 0.1); border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.3);">
+                  <p style="font-size: 1.15rem; font-weight: bold; color: var(--text-main); margin: 0;">"Do you think its worth automating something that you would do <span style="color: var(--accent-color);">over 500 times?</span>"</p>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Slide 10: First Line of Defence -->
+      <!-- Slide 11: First Line of Defence -->
       <div class="slide">
         <h2>First Line of Defence</h2>
         <div class="columns">
-          <div class="column">
+          <div class="column sparse-content">
             <p>Moving from manual judgment to systematic guardrails:</p>
-            <ul>
-              <li><strong>Old Way (QA):</strong> Relying entirely on manual tester judgment to decide what to check and what to skip under deadline pressure.</li>
-              <li><strong>New Way (QE):</strong> The automated testing framework operates as the first line of defence, the last line of defence, and everything in between.</li>
+            <ul style="margin-top: 0.5rem;">
+              <li><strong>Traditional QA:</strong> Manual judgment often decides what to test and what to skip under time pressure.</li>
+              <li><strong>Quality Engineering:</strong> Automation becomes the first line of defence, the last line of defence, and everything in between.</li>
             </ul>
             <div class="sim-panel" style="margin-top: 1rem; background: rgba(14, 165, 233, 0.05); padding: 1rem; border-left: 4px solid var(--accent-color);">
-              <strong style="color: white; font-size: 1.05rem;">QE Rule of Thumb:</strong>
+              <strong style="color: white; font-size: 1.05rem;">Guideline:</strong>
               <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0.25rem 0 0 0;">
-                Identify where you currently limit your tests due to available human effort. <strong>That is your next automation target.</strong>
+                Identify the testing you currently avoid because of effort or time, and treat that as your next automation target.
               </p>
             </div>
           </div>
@@ -327,47 +484,78 @@
         </div>
       </div>
 
-      <!-- Slide 11: How do we go about this? -->
+      <!-- Slide 12: Building Tests That Last -->
+      <div class="slide">
+        <h2>Building Tests That Last</h2>
+        <div class="columns">
+          <div class="column sparse-content">
+            <p><strong>Design for Longevity:</strong> The interesting part is not just building tests, but building them in a way that they stay useful over time.</p>
+            <ul style="margin-top: 0.75rem;">
+              <li>Good automation is resilient: it adapts as the product changes, supports new scenarios, and avoids becoming brittle.</li>
+              <li>Tests should be designed for maintainability, clarity, and reuse, not just short-term success.</li>
+              <li>A healthy automation suite grows with the product rather than collapsing under change.</li>
+              <li>The goal is not to automate everything immediately, but to create a durable foundation.</li>
+            </ul>
+          </div>
+          <div class="column" style="justify-content: center;">
+            <div class="sim-panel" style="background: rgba(168, 85, 247, 0.05); border-color: rgba(168, 85, 247, 0.2); justify-content: center; padding: 2rem; min-height: 250px;">
+              <h3 style="color: var(--accent-purple); font-size: 1.3rem; margin-bottom: 0.5rem; text-align: center;">Durable Automation Foundations</h3>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; color: var(--text-muted);">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="color: var(--accent-green);">✓</span> <span>Maintainability & Readability</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="color: var(--accent-green);">✓</span> <span>Adaptability to UI/API modifications</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="color: var(--accent-green);">✓</span> <span>High reusability of testing modules</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Action Plan: How Do We Go About This? -->
       <div class="slide">
         <h2>Action Plan: How Do We Go About This?</h2>
-        <div class="columns" style="font-size: 0.95rem;">
+        <div class="columns sparse-content">
           <div class="column">
             <h3 style="font-size: 1.25rem; color: var(--accent-color);">Technical Skillset</h3>
             <ul>
-              <li><strong>Start with Python:</strong> A powerful, accessible scripting language with a massive test automation ecosystem.</li>
-              <li><strong>Master E2E & API:</strong> Focus on browser end-to-end automation (Playwright/Selenium) and API integration verification.</li>
-              <li><strong>CI/CD Pipelines:</strong> Understand how code is built and deployed. Run tests automatically in the pipeline.</li>
+              <li><strong>Learn automation skills:</strong> Python, browser automation, API testing, and test design.</li>
+              <li><strong>Master the pipeline:</strong> CI/CD practices, deployment environments, and observability.</li>
+              <li><strong>Leverage AI thoughtfully:</strong> Use it to accelerate scripting while maintaining critical thinking.</li>
             </ul>
           </div>
           <div class="column">
-            <h3 style="font-size: 1.25rem; color: var(--accent-color);">Mindset Shift</h3>
+            <h3 style="font-size: 1.25rem; color: var(--accent-purple);">Collaborate & Execute</h3>
             <ul>
-              <li><strong>Think Big:</strong> If you had a virtual army of 1,000 parallel testers, what would you test? Automation gives you that capability.</li>
-              <li><strong>Start Small:</strong> Solve your immediate regression bottleneck first. Take small steps.</li>
-              <li><strong>Leverage AI:</strong> Use AI to assist with writing scripts where appropriate, but maintain critical thinking over the verification logic.</li>
-              <li><strong>Evaluate constantly:</strong> <em>"Are our feedback loops working?"</em></li>
+              <li><strong>Collaborate and ask:</strong> Learn from colleagues who have already made the shift.</li>
+              <li><strong>Think big, start small:</strong> Automate the highest-value checks first, then expand.</li>
+              <li><strong>Evaluate continuously:</strong> Ask whether your feedback loops are fast, useful, and actionable.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Slide 12: Call to Action -->
+      <!-- Slide 14: Call to Action -->
       <div class="slide">
         <h1 style="text-align: center; margin-bottom: 0.5rem;">Elevate Our Quality.</h1>
         <div class="sim-panel" style="align-items: center; justify-content: center; margin-top: 1.5rem; background: rgba(14, 165, 233, 0.08); border-color: var(--accent-color); padding: 2.5rem;">
           <h2 style="border: none; text-align: center; padding: 0; margin-bottom: 1rem;">Join the <span class="highlight">QE Guild</span></h2>
-          <p style="text-align: center; font-size: 1.35rem; max-width: 750px; color: var(--text-main); margin-bottom: 1.5rem;">
-            Learn to build Unit tests, Component tests, Browser tests, API tests, and Performance tests. <strong>We are here to help you grow!</strong>
+          <p style="text-align: center; font-size: 1.3rem; max-width: 750px; color: var(--text-main); margin-bottom: 1.5rem;">
+            Learn to build unit tests, component tests, browser tests, API tests, and performance tests. <strong>We are here to help!</strong>
           </p>
-          <p style="text-align: center; font-size: 1.25rem; color: var(--text-muted); margin: 0;">
+          <p style="text-align: center; font-size: 1.2rem; color: var(--text-muted); margin: 0;">
             Reach out directly to address that tricky automation problem you've been struggling with.
           </p>
         </div>
       </div>
 
-      <!-- Slide 13: Contact -->
+      <!-- Slide 15: Contact Information -->
       <div class="slide">
-        <h2>Contact</h2>
+        <h2>Contact Information</h2>
         <div style="margin-top: 3rem; font-size: 1.8rem;">
           <p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--accent-color);">Andrew Darnell</p>
           <p style="font-size: 1.5rem;">Principal Test Engineer</p>
@@ -377,9 +565,12 @@
 
       <!-- Controls Hint & Progress & Toggle Mode -->
       <div class="controls-hint" style="left: 40px; transform: none; width: calc(100% - 80px); justify-content: space-between; align-items: center;">
-        <div>
-          <span>&larr; Prev / Backspace</span>
-          <span style="margin-left: 2rem;">Next / Space &rarr;</span>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <div>
+            <span>&larr; Prev / Backspace</span>
+            <span style="margin-left: 2rem;">Next / Space &rarr;</span>
+          </div>
+          <div id="slide-nav-bar" style="display: flex; gap: 0.3rem; align-items: center; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); padding: 0.2rem 0.4rem; border-radius: 20px; margin-left: 0.5rem;"></div>
         </div>
         <div>
           <!-- Manual / Timed Option Button -->
@@ -388,7 +579,7 @@
           </button>
         </div>
       </div>
-      <div class="progress-bar" id="progress-bar" style="width: 7.69%;"></div>
+      <div class="progress-bar" id="progress-bar" style="width: 6.67%;"></div>
 
           </main>
     </div>

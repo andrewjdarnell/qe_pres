@@ -5,8 +5,11 @@
   --text-muted: #94a3b8;
   --accent-color: #0ea5e9;
   --accent-glow: rgba(14, 165, 233, 0.4);
+  --accent-purple: #a855f7;
+  --accent-orange: #f97316;
   --accent-green: #10b981;
   --accent-red: #ef4444;
+  --accent-warning: #f59e0b;
   
   --glass-bg: rgba(26, 29, 36, 0.75);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -60,8 +63,8 @@ body {
 /* Individual Slide */
 .slide {
   position: absolute;
-  width: 95%;
-  height: 90%;
+  width: 94%;
+  height: 88%;
   padding: 3rem 4rem;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -104,10 +107,10 @@ h1 {
 }
 
 h2 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   border-left: 5px solid var(--accent-color);
   padding-left: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 h3 {
@@ -144,6 +147,23 @@ li::marker {
 .highlight {
   color: var(--accent-color);
   font-weight: bold;
+}
+
+/* Scaling text for slides with more whitespace */
+.sparse-content {
+  justify-content: center !important;
+  gap: 1.5rem;
+}
+
+.sparse-content p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.sparse-content li {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
 }
 
 /* Layout Utilities */
@@ -252,15 +272,16 @@ th {
   position: relative;
   overflow: hidden;
   margin-bottom: 1rem;
+  min-height: 190px;
 }
 
 .sim-conveyor {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding: 1rem;
+  padding: 1.5rem 1rem 0;
   height: 100%;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Developer & QA/QE lanes */
@@ -279,7 +300,7 @@ th {
   content: '';
   position: absolute;
   top: 50%;
-  left: 45px;
+  left: 115px;
   right: 65px;
   height: 2px;
   background: rgba(255, 255, 255, 0.08);
@@ -452,7 +473,7 @@ button.active-btn {
 /* Controls Hint & Progress */
 .controls-hint {
   position: absolute;
-  bottom: 2rem;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   color: var(--text-muted);
@@ -575,9 +596,9 @@ h1, h2, h3, .sim-title, .sim-panel-title {
 }
 
 .pile-block {
-  width: 6px;
-  height: 6px;
-  border-radius: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
   margin: 1px;
   position: absolute;
   transition: background-color 0.3s;
@@ -592,4 +613,158 @@ h1, h2, h3, .sim-title, .sim-panel-title {
   background: var(--accent-red);
   box-shadow: 0 0 3px rgba(239, 68, 68, 0.5);
 }
+
+/* Developers container at start of lane */
+.sim-devs {
+  display: flex;
+  gap: 2px;
+  position: absolute;
+  left: 10px;
+  z-index: 2;
+}
+
+.sim-devs .sim-actor.dev {
+  margin-right: 0;
+  font-size: 1.25rem;
+}
+
+/* Automated Test Suite representation */
+.qe-test-suite-container {
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.qe-test-suite-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.qe-test-suite-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 60px;
+  overflow-y: auto;
+}
+
+.test-node {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: background 0.3s, border 0.3s;
+}
+
+.test-node.automated {
+  background: var(--accent-green);
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+  border: none;
+}
+
+.test-node.pending {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px dashed rgba(239, 68, 68, 0.6);
+}
+
+/* 3x2 stats grid and stat card */
+.sim-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 0.75rem;
+  border: 1px solid var(--glass-border);
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.stat-card .stat-val {
+  font-size: 1.6rem;
+  font-weight: bold;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  line-height: 1.1;
+}
+
+.stat-card .stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  line-height: 1.2;
+}
+
+/* Product Size & Coverage Bars */
+.prod-bar-wrap {
+  width: 90%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  margin: 0.4rem 0 0.2rem 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.prod-bar {
+  height: 100%;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.prod-bar.new {
+  background: var(--accent-color);
+}
+
+.prod-bar.reg {
+  background: var(--accent-purple);
+}
+
+/* Slide direct navigation buttons */
+.slide-nav-btn {
+  width: 22px !important;
+  height: 22px !important;
+  padding: 0 !important;
+  font-size: 0.75rem !important;
+  font-weight: normal !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-muted) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+.slide-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.slide-nav-btn.active-nav-btn {
+  background: var(--accent-color) !important;
+  color: #fff !important;
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 8px var(--accent-glow) !important;
+}
+
 

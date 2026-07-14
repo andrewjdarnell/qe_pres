@@ -58,3 +58,9 @@ Located in the bottom-right corner of the viewport, the presentation controls al
 *   **Visual Indicator:** A thin, high-contrast cyan progress bar at the very top of the viewport (`#timer-progress-bar`) animates from `0%` to `100%` over the duration of the current slide.
 *   **Auto-Loop:** After the timer on Slide 13 expires, the presentation automatically cycles back to Slide 1.
 *   **Manual Override:** Navigating manually while in Timed mode resets the active timer.
+
+### add a direct slide navigation bar so that the user can click on a slide number and go to the slide directly (bottom middle ) to the right of the next/space pill.
+
+In early slides where 'Concept:' is mentioned this is a cue to highlight the following phrase rather than repeat the word... semantic meaning vs rendering ;-)
+
+Can you also consider sizing and whitespace - making sure that there is good use of whitespace but scaling the text to fit slides there there is plenty of space

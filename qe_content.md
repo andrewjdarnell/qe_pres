@@ -69,7 +69,7 @@
 * Many systems are built over years to run for years and ship repeatedly, so the upfront cost of automation is recovered many many times over
 * The cost of defects escaping into production is far greater than the cost of building reliable checks early.
 * In high-impact systems, risk appetite is often near zero and the cost of failure is unacceptable.
-[-- Highlight box - e.g. Build 2 x 12 monthly releases + 10 x 4 quarterly releases = 24 + 40 = 64 formal releases, and 2 x 220 daily dev and test releases --] 
+[-- Highlight box - e.g. Build 2 x 12 monthly releases + 10 x 4 quarterly releases = 24 + 40 = 64 formal releases, and 2 x 220 daily dev and test releases  - make this look like a graph with bars?  and have a total releases result. Include the math too in a nicely formatted way - At the bottom of the box there shoud be a highlighted bold question - "Do you think its worth automating something that you would do over 500 times?--] 
 
 ## Slide 11: First Line of Defence
 * In traditional QA, manual judgment often decides what to test and what to skip under time pressure.
