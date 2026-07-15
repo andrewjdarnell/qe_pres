@@ -212,10 +212,10 @@ node render_posters.js poster_2_shiftleft poster_3_roi
 > ℹ️ Poster 05 depends on up-to-date slide captures (`make slides`) — unlike the others it
 > is **not** fully standalone. Run `make slides` before `make posters` after any deck change.
 
-Output PNGs are exactly **3179 × 4494 px** (true A0 ratio, ≈ 96 dpi) and
-print-ready. For a commercial printer needing higher dpi, bump
-`deviceScaleFactor` in `render_posters.js` (e.g. `2` for ~192 dpi) — the layout
-is resolution-independent.
+Output PNGs are exactly **9933 × 14043 px** (true A0 ratio, 300 dpi) and
+print-ready. The dpi is set by the `SCALE` constant in `render_posters.js`
+(`300 / 96`, applied as the Puppeteer `deviceScaleFactor`) — the layout is
+resolution-independent, so changing it only affects output resolution.
 
 ### Generated output layout
 

@@ -37,6 +37,7 @@ preview: ## Preview the production build locally
 posters: ## Render the A0 poster series -> generated/posters/
 	@echo "Rendering A0 poster series..."
 	@node render_posters.js
+	@sips -s dpiWidth 300 -s dpiHeight 300 $(POSTER_DIR)/poster_*.png >/dev/null
 	@echo "✨ Done. See $(POSTER_DIR)/poster_1_shift.png … poster_5_slides.png"
 
 # Capture the deck slides (count auto-detected) into assets/slides/.
