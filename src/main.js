@@ -309,21 +309,19 @@ function spawnBlock(lane, mode, destinationState, isRejected, index) {
 }
 
 function addToPile(lane, mode, colorClass) {
-  const pileId = `${mode}-pile`;
-  let pileContainer = document.getElementById(pileId);
+  const pileContainer = document.getElementById(`${mode}-pile`);
   if (!pileContainer) return;
-  
+
   const pileItem = document.createElement('div');
   pileItem.className = `pile-block ${colorClass}`;
-  
-  const childCount = pileContainer.children.length;
-  const cols = 4;
-  const x = (childCount % cols) * 12;
-  const y = -Math.floor(childCount / cols) * 12;
-  
-  pileItem.style.transform = `translate(${x}px, ${y}px)`;
   pileContainer.appendChild(pileItem);
-  
+
+  const label = document.getElementById(`${mode}-product-label`);
+  if (label) {
+    const count = pileContainer.children.length;
+    label.textContent = `Product — ${count} feature${count === 1 ? '' : 's'}`;
+  }
+
   gsap.from(pileItem, { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(1.5)" });
 }
 
@@ -554,7 +552,8 @@ function resetSimulation() {
   activeSimBlocks.forEach(b => { if (b.parentNode) b.remove() });
   activeSimBlocks = [];
   
-  document.querySelectorAll('.product-pile').forEach(p => p.innerHTML = '');
+  document.querySelectorAll('.product-grid').forEach(p => p.innerHTML = '');
+  document.querySelectorAll('.product-title').forEach(l => l.textContent = 'Product — 0 features');
   resetAutomatedTests();
 }
 

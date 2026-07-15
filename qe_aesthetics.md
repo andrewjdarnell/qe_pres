@@ -51,12 +51,12 @@ Located in the bottom-right corner of the viewport, the presentation controls al
     *   Click: Click the right half of the screen to go forward, left half to go back.
 
 ### 2. Timed Mode (Autoplay)
-*   Slides advance automatically based on custom durations:
-    *   **Slide 6 (Sprint Simulation):** 60 seconds (allows full simulation to play out).
-    *   **Slide 13 (Contact Slide):** 30 seconds (before looping back to Slide 1).
+*   Slides advance automatically based on custom durations (slide numbers per [qe_content.md](qe_content.md)):
+    *   **Slide 7 (Sprint Simulation):** 60 seconds (allows full simulation to play out).
+    *   **Slide 14 (Contact Slide):** 30 seconds (before looping back to Slide 1).
     *   **All other slides:** 20 seconds.
 *   **Visual Indicator:** A thin, high-contrast cyan progress bar at the very top of the viewport (`#timer-progress-bar`) animates from `0%` to `100%` over the duration of the current slide.
-*   **Auto-Loop:** After the timer on Slide 13 expires, the presentation automatically cycles back to Slide 1.
+*   **Auto-Loop:** After the timer on the final (Contact) slide expires, the presentation automatically cycles back to Slide 1.
 *   **Manual Override:** Navigating manually while in Timed mode resets the active timer.
 
 ### add a direct slide navigation bar so that the user can click on a slide number and go to the slide directly (bottom middle ) to the right of the next/space pill.

@@ -1,6 +1,6 @@
 # Interactive Slides: Sprint Timeline Simulation
 
-This document specifies the behavior, metrics, and animation flow for the interactive sprint simulation featured on **Slide 6 (The Scaling Problem vs. The Automation Engine)**.
+This document specifies the behavior, metrics, and animation flow for the interactive sprint simulation featured on **Slide 7 (The Scaling Problem vs. The Automation Engine)** (numbering per [qe_content.md](qe_content.md)).
 
 ## Visual Design & Layout
 
@@ -13,8 +13,8 @@ The core message is simple: manual testing adds a fixed amount of human capacity
 
 Each panel contains:
 1. **Conveyor Belt Board:** A lane with 5 developers (`👩‍💻`/`👨‍💻`) pushing features (code blocks `{ }`) toward a single tester. In the manual version, that tester is human-only; in the automated version, the tester is supported by an automation node (`🤖`).
-2. **Product Growth:** Each delivered feature adds to the product. As the product grows, the amount of regression work also grows, which is the core scaling challenge.
-3. **Automated Test Set:** In the automation version, the team builds a growing library of automated checks that run against the whole product, covering both new work and cumulative regression risk.
+2. **Product Growth ("Product" band):** A labelled band directly below the lane (`Product — N features`) that accumulates one small square block per delivered feature — green for verified features, red for features that shipped unverified. The band is a fixed-height container sized so a full 10-sprint run fits without overflowing (blocks wrap into rows). As the product grows, the amount of regression work also grows, which is the core scaling challenge.
+3. **Automated Test Set (QE panel only):** A second labelled band below the Product band, rendered in the **same block style as the Product band** so the two read as parallel structures: one square block per required test, solid green when automated, dashed red outline while still pending. The label shows coverage (`Automated Test Suite (n / total covered)`).
 4. **Dashboard Counters:**
    * **Built:** Cumulative features developed.
    * **Verified:** Cumulative features successfully verified.
@@ -50,7 +50,7 @@ As sprints progress from 1 to 10, the volume of features built increases, simula
 | :--- | :---: | :---: | :---: | :--- |
 | **Sprint 1** | 3 | 3 | 3 | **QA:** Keeps pace. Manual regression covers all new features.<br>**QE:** Initial automation scripts created. CI/CD set up. Initial feedback loops in place |
 | **Sprint 2** | 4 | 3 | 4 | **QA:** Codebase grows. QA manual regression takes longer. Stress builds.<br>**QE:** Automation handles regression. QE builds more scripts for new features. |
-| **Sprint 3** | 5 | 3 | 5 | **QA:** Risk-based testing starts. Minor features low risk features are skipped.<br>**QE:** Automation reaches 60% coverage. All tests run on every commit. |
+| **Sprint 3** | 5 | 3 | 5 | **QA:** Risk-based testing starts. Low-risk minor features are skipped.<br>**QE:** Automation reaches 60% coverage. All tests run on every commit. |
 | **Sprint 4** | 6 | 3 | 6 | **QA:** Bottleneck starts. Manual testing cannot keep up.<br>**QE:** Tests run in parallel. Feedback loop completes in minutes. |
 | **Sprint 5** | 7 | 3 | 7 | **QA:** Queue overflows. Some integration validations must be skipped to keep schedule.<br>**QE:** Automation hits 80%. QE works on test infrastructure. |
 | **Sprint 6** | 8 | 3 | 8 | **QA:** Devs wait days for manual results. Feedback loops break.<br>**QE:** Continuous delivery enabled. Releases are stable and frequent. |
@@ -68,13 +68,13 @@ As sprints progress from 1 to 10, the volume of features built increases, simula
   * Use a staggered spawn delay (`index * 150ms`) to simulate development flow.
 * **QA Belt Logic:**
   * Blocks move to the manual tester (`🕵️`).
-  * The first 3 blocks are verified (turn green, fade out, and are added to the product).
+  * The first 3 blocks are verified (turn green, fade out, and pop into the **Product band** as green blocks).
   * As the amount of regression work grows, the tester must split attention between new features and the existing product, so later blocks queue up.
-  * Blocks 4+ turn amber (queued), then red (skipped) and slide off the right edge of the screen, representing unchecked code reaching production. This increases the **Escaped Bugs** counter.
+  * Blocks 4+ turn red (skipped) and land in the **Product band as red blocks** — unchecked code that still ships to production. This increases the **Escaped Bugs** counter.
 * **QE Belt Logic:**
   * Blocks move to the automation node (`🕵️` + `🤖`).
   * The automated test set grows alongside the product, so the system can keep verifying new work and regression risk without the same human bottleneck.
-  * All blocks are processed rapidly, turn green, and contribute to the growing product while the automation suite continues to expand.
+  * All blocks are processed rapidly, turn green, and pop into the **Product band** while the automation suite band continues to expand in step.
   * **Escaped Bugs** stays at **0**.
 * **Autoplay:**
   * In `Timed` mode, the sprints run automatically from 1 to 10, with an `index * 2s` delay per sprint, so the full progression is visible without interaction.

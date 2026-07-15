@@ -176,8 +176,8 @@
               <span style="color: var(--accent-red); font-size: 0.85rem; font-weight: normal;">Fixed Capacity</span>
             </div>
             
-            <div class="sim-board">
-              <div class="sim-conveyor">
+            <div class="sim-board" style="display: flex; flex-direction: column;">
+              <div class="sim-conveyor" style="flex: 1;">
                 <div class="sim-lane" id="qa-lane">
                   <div class="sim-devs">
                     <span class="sim-actor dev">👩‍💻</span>
@@ -188,8 +188,11 @@
                   </div>
                   <!-- Blocks will be dynamically spawned here -->
                   <div class="sim-actor tester" id="qa-tester" aria-label="Tester">🕵️</div>
-                  <div class="product-pile" id="qa-pile"></div>
                 </div>
+              </div>
+              <div class="product-container">
+                <div class="product-title" id="qa-product-label">Product — 0 features</div>
+                <div class="product-grid" id="qa-pile"></div>
               </div>
             </div>
 
@@ -254,8 +257,11 @@
                   <div class="sim-actor tester" id="qe-tester" aria-label="Tester" style="display: flex; align-items: center; justify-content: center; gap: 2px;">
                     <span>🕵️</span><span style="margin-left:-4px;">🤖</span>
                   </div>
-                  <div class="product-pile" id="qe-pile"></div>
                 </div>
+              </div>
+              <div class="product-container">
+                <div class="product-title" id="qe-product-label">Product — 0 features</div>
+                <div class="product-grid" id="qe-pile"></div>
               </div>
               <div class="qe-test-suite-container">
                 <div class="qe-test-suite-title" id="qe-test-suite-label">Automated Test Suite (0 scripts)</div>

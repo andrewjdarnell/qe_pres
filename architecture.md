@@ -47,7 +47,7 @@ The styling implements the visual tokens defined in [qe_aesthetics.md](file:///U
 
 ---
 
-## 5. Sprint Simulation Architecture (Slide 6)
+## 5. Sprint Simulation Architecture
 The interactive conveyor belt is implemented as a stateful, event-driven module in `main.js`:
 
 *   **Data Models:** Sprint statistics and description logs are loaded from a static `sprintData` configuration object.
