@@ -11,7 +11,7 @@ fs.mkdirSync(OUT_DIR, { recursive: true });
 // We render the body at its physical mm size and capture full page.
 const posters = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : ['poster_1_shift', 'poster_2_shiftleft', 'poster_3_roi', 'poster_4_action'];
+  : ['poster_1_shift', 'poster_2_shiftleft', 'poster_3_roi', 'poster_4_action', 'poster_5_slides'];
 
 (async () => {
   const browser = await puppeteer.launch({ headless: 'new', args: ['--force-color-profile=srgb'] });
@@ -19,7 +19,7 @@ const posters = process.argv.slice(2).length
   await page.setViewport({ width: 1200, height: 1700, deviceScaleFactor: 1 });
 
   for (const name of posters) {
-    const file = 'file://' + resolve(__dirname, `${name}.html`);
+    const file = 'file://' + resolve(__dirname, 'posters', `${name}.html`);
     console.log('Rendering', name);
     await page.goto(file, { waitUntil: 'networkidle0' });
     await page.evaluate(async () => { await document.fonts.ready; });

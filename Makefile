@@ -18,7 +18,7 @@ help:
 posters: ## Render the A0 poster series -> generated/posters/
 	@echo "Rendering A0 poster series..."
 	@node render_posters.js
-	@echo "✨ Done. See $(POSTER_DIR)/poster_1_shift.png … poster_4_action.png"
+	@echo "✨ Done. See $(POSTER_DIR)/poster_1_shift.png … poster_5_slides.png"
 
 # (Legacy) Capture the 15 presentation slides into $(SLIDE_DIR).
 slides: ## Capture the 15 deck slides -> generated/slides/ (starts Vite)

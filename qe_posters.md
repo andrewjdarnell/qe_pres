@@ -1,8 +1,8 @@
 # Quality Engineering — A0 Poster Series
 
-A cohesive set of four A0 **portrait** posters (`841 × 1189 mm`) adapted from the
+A cohesive set of five A0 **portrait** posters (`841 × 1189 mm`) adapted from the
 Quality Engineering deck. They are designed as a *series*: each shares one visual
-language and is numbered `01 → 04` in the masthead so they read as a wall set.
+language and is numbered `01 → 05` in the masthead so they read as a wall set.
 
 ## 1. Design system
 
@@ -10,7 +10,7 @@ The goal was print-first design, not a blown-up slide. Everything is sized for t
 real A0 canvas (~3.2 k px wide when rasterised), so type is bold and legible from
 across a room, and whitespace is deliberate rather than accidental.
 
-- **Layout** — a fixed masthead (brand + `NN / 04` index), a large gradient
+- **Layout** — a fixed masthead (brand + `NN / 05` index), a large gradient
   headline, and content organised into a few strong horizontal bands. No
   `flex:1 + center` panels (the flaw in the previous version, which collapsed
   content into the middle of huge empty boxes).
@@ -25,14 +25,15 @@ across a room, and whitespace is deliberate rather than accidental.
   grain overlay, a vignette, and a thin inset frame. This keeps text crisp and
   never lets the background fight the content.
 
-## 2. The four posters
+## 2. The five posters
 
 | # | File | Theme | Centrepiece |
 |---|------|-------|-------------|
 | 01 | `poster_1_shift.html` | **The Shift** — QA → QE manifesto | Four "From → To" mindset shifts + pull-quote |
 | 02 | `poster_2_shiftleft.html` | **Shift Left & Feedback Loops** | Cost-of-a-late-defect bar chart (1×→100×) + test pyramid |
-| 03 | `poster_3_roi.html` | **The Economics of Automation** | Giant `504` runs/yr with the release maths + manual-vs-automated bars |
+| 03 | `poster_3_roi.html` | **The Economics of Automation** | Giant `824` lifetime runs with the release maths + manual-vs-automated bars |
 | 04 | `poster_4_action.html` | **Make the Shift** — call to action | Six-step action plan, build-skills chips, QE Guild CTA + contact |
+| 05 | `poster_5_slides.html` | **The Deck at a Glance** — slide summary | 3×5 captioned grid of all 14 slides + QE Guild CTA tile |
 
 ## 3. Poster copy (source of truth)
 
@@ -43,10 +44,10 @@ drift from this copy; known drift is flagged inline).
 Formatting conventions: *italics* mark words rendered in the gradient/accent colour
 (`<em>` in the HTML); **bold** marks emphasised words (`<strong>`).
 
-Shared elements on all four posters:
+Shared elements on all five posters:
 
 * **Masthead brand:** Quality Engineering · The Guild
-* **Masthead index:** `NN / 04`
+* **Masthead index:** `NN / 05`
 * **Footer author:** Andrew Darnell — Principal Test Engineer
 
 ### Poster 01 — The Shift (`poster_1_shift.html`)
@@ -149,8 +150,44 @@ Shared elements on all four posters:
 * **Footer:** Andrew Darnell — Principal Test Engineer · Let's connect after the session
 * **Footer CTA:** Elevate Our Quality
 
-### Poster 05 — Slide Summary (`poster_5_slides.html`)
-This poster consists of a grid of the slides
+### Poster 05 — The Deck at a Glance (`poster_5_slides.html`)
+
+> ℹ️ Implemented as `posters/poster_5_slides.html` in the series design system and included
+> in the `render_posters.js` defaults. (`posters/poster_slides.html` is the superseded
+> old-style attempt and can be deleted.) The tile images currently map the 14-slide structure
+> onto captures of the still-15-slide deck — see the mapping note below.
+
+A summary poster: every slide of the talk as a captioned thumbnail grid, so the wall set
+ends with the deck itself. Doubles as a take-away/reference sheet.
+
+* **Eyebrow:** The Full Story · Deck Summary
+* **Headline:** The whole talk, at *a glance.*
+* **Lead:** All fourteen slides from the Quality Engineering session — from shared
+  foundations, through the automation engine, to your first move. **Scan any tile** that
+  catches your eye, or start at 01 and follow the arc.
+* **Slide grid** — 3 columns × 5 rows, in deck order. Each tile is a card containing:
+  * the slide screenshot (16:9, `object-fit: contain`);
+  * a `JetBrains Mono` index chip (`S01` … `S14`);
+  * a one-line caption — the slide title per [qe_content.md](qe_content.md):
+    Quality Engineering (title) · Shared Foundations · The Traditional Approach: QA ·
+    The Evolution: QE · Key Differences · Feedback Loops & Shifting Left ·
+    The Scaling Problem vs. The Automation Engine · The Economics of Automation ·
+    Why Make the Shift? · First Line of Defence · Building Tests That Last ·
+    Action Plan · Call to Action · Contact
+* **CTA tile (15th cell):** with 14 slides the grid has one spare cell — use it as the
+  closing card rather than leaving a gap:
+  * Title: Want the *full session?*
+  * Body: Join the **QE Guild** — upskill together and bring us your trickiest automation problem.
+  * Contact line: Andrew Darnell — Principal Test Engineer
+* **Footer CTA:** One wall, whole story
+
+**Image source:** the tiles use the captured deck screenshots
+(`assets/slides/slide_NN.png`, produced by `make slides` / `capture_slides.js`). Re-capture
+after any deck change or the poster silently shows stale slides. Until `index.html` is synced
+to the 14-slide structure, the tiles remap the old 15-slide captures (S08 economics =
+`slide_10.png`, S09 why-shift = `slide_08.png`, S10–S14 = `slide_11`–`slide_15`; old
+`slide_09.png` is unused) — once the deck is synced, re-capture and renumber the `<img>`
+sources 1:1.
 
 ## 4. Regenerating the PNGs
 
@@ -159,11 +196,14 @@ The posters are standalone HTML — **no dev server or external assets required.
 captures a screenshot clipped to the exact A0 box into `generated/posters/`.
 
 ```bash
-make posters          # renders all four -> generated/posters/poster_*.png
+make posters          # renders the series -> generated/posters/poster_*.png
 make view-posters     # opens the rendered posters in Preview (macOS)
 # or render a subset:
 node render_posters.js poster_2_shiftleft poster_3_roi
 ```
+
+> ℹ️ Poster 05 depends on up-to-date slide captures (`make slides`) — unlike the others it
+> is **not** fully standalone. Run `make slides` before `make posters` after any deck change.
 
 Output PNGs are exactly **3179 × 4494 px** (true A0 ratio, ≈ 96 dpi) and
 print-ready. For a commercial printer needing higher dpi, bump
@@ -174,7 +214,7 @@ is resolution-independent.
 
 ```
 generated/
-  posters/   poster_1_shift.png … poster_4_action.png   (make posters)
+  posters/   poster_1_shift.png … poster_5_slides.png   (make posters)
   slides/    slide_1.png … slide_15.png                 (make slides)
 ```
 
