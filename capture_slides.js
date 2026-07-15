@@ -8,9 +8,8 @@ import fs from 'fs';
   // Set viewport to the presentation's 16:9 ratio
   await page.setViewport({ width: 1280, height: 720 });
   
-  // Make sure assets/slides directory exists
-  if (!fs.existsSync('assets')) fs.mkdirSync('assets');
-  if (!fs.existsSync('assets/slides')) fs.mkdirSync('assets/slides');
+  // Make sure the output directory exists
+  fs.mkdirSync('assets/slides', { recursive: true });
 
   console.log('Navigating to presentation...');
   await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' });
@@ -30,7 +29,8 @@ import fs from 'fs';
     // Wait for the CSS transition to complete (0.5s transition time)
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    await page.screenshot({ path: `assets/slides/slide_${i + 1}.png` });
+    const slideNum = String(i + 1).padStart(2, '0');
+    await page.screenshot({ path: `assets/slides/slide_${slideNum}.png` });
   }
 
   await browser.close();

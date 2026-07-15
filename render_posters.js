@@ -1,10 +1,13 @@
 import puppeteer from 'puppeteer';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const OUT_DIR = resolve(__dirname, 'generated/posters');
+fs.mkdirSync(OUT_DIR, { recursive: true });
 
-// A0 portrait at 96dpi: 841mm x 1189mm => 3178 x 4494 px.
+// A0 portrait at 300dpi: 841mm x 1189mm => 9933 x 14043 px.
 // We render the body at its physical mm size and capture full page.
 const posters = process.argv.slice(2).length
   ? process.argv.slice(2)
@@ -31,7 +34,7 @@ const posters = process.argv.slice(2).length
     });
     await page.setViewport({ width: box.width, height: box.height, deviceScaleFactor: 1 });
     await page.screenshot({
-      path: `${name}.png`,
+      path: resolve(OUT_DIR, `${name}.png`),
       clip: { x: 0, y: 0, width: box.width, height: box.height },
     });
   }

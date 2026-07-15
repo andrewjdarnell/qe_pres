@@ -38,14 +38,28 @@ across a room, and whitespace is deliberate rather than accidental.
 
 The posters are standalone HTML — **no dev server or external assets required.**
 `render_posters.js` loads each file over `file://`, waits for web fonts, and
-captures a full-page screenshot at A0 portrait resolution.
+captures a screenshot clipped to the exact A0 box into `generated/posters/`.
 
 ```bash
-make posters          # renders all four -> poster_1_shift.png … poster_4_action.png
+make posters          # renders all four -> generated/posters/poster_*.png
+make view-posters     # opens the rendered posters in Preview (macOS)
 # or render a subset:
 node render_posters.js poster_2_shiftleft poster_3_roi
 ```
 
-Output PNGs are ~3.2 k × 4.5 k px (≈ 96–110 dpi at A0) and print-ready. For a
-commercial printer needing higher dpi, bump `deviceScaleFactor` in
-`render_posters.js` (e.g. `2` for ~200 dpi) — the layout is resolution-independent.
+Output PNGs are exactly **3179 × 4494 px** (true A0 ratio, ≈ 96 dpi) and
+print-ready. For a commercial printer needing higher dpi, bump
+`deviceScaleFactor` in `render_posters.js` (e.g. `2` for ~192 dpi) — the layout
+is resolution-independent.
+
+### Generated output layout
+
+```
+generated/
+  posters/   poster_1_shift.png … poster_4_action.png   (make posters)
+  slides/    slide_1.png … slide_15.png                 (make slides)
+```
+
+`make view-posters` / `make view-slides` open each set in Preview on macOS.
+`make slides` re-captures the deck (needs the Vite dev server, started
+automatically by the target).
