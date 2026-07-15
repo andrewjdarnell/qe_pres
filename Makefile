@@ -1,4 +1,4 @@
-.PHONY: help install run dev build preview posters slides view-posters view-slides clean
+.PHONY: help install run dev build preview posters posters-preview posters-full slides view-posters view-slides clean
 .DEFAULT_GOAL := help
 
 POSTER_DIR := generated/posters
@@ -31,12 +31,23 @@ preview: ## Preview the production build locally
 # ---------- Posters & slide captures ----------
 
 # Render the A0 poster series (poster_1..5) straight from the HTML files.
-# render_posters.js loads them over file:// and captures full-page screenshots
-# at A0 portrait resolution into $(POSTER_DIR). Poster 5 embeds the slide
-# captures, so run `make slides` first after any deck change.
-posters: ## Render the A0 poster series -> generated/posters/
-	@echo "Rendering A0 poster series..."
-	@node render_posters.js
+# render_posters.js loads them over file:// and captures scrolling viewport
+# tiles at POSTER_DPI, stitching them into one PNG per poster in $(POSTER_DIR)
+# (a single full-page capture at 300 dpi exceeds Chromium's raster limits).
+# Poster 5 embeds the slide captures, so run `make slides` first after any
+# deck change. `sips` stamps the dpi metadata so Preview/print dialogs report
+# the true 841 x 1189 mm physical size.
+posters: posters-full ## Render the print-ready A0 posters (alias for posters-full)
+
+posters-preview: ## Render the posters at 96 dpi -> fast, small files for review
+	@echo "Rendering A0 poster series (96 dpi preview)..."
+	@POSTER_DPI=96 node render_posters.js
+	@sips -s dpiWidth 96 -s dpiHeight 96 $(POSTER_DIR)/poster_*.png >/dev/null
+	@echo "✨ Done. See $(POSTER_DIR)/poster_1_shift.png … poster_5_slides.png"
+
+posters-full: ## Render the posters at 300 dpi -> print-ready (~25 MB each)
+	@echo "Rendering A0 poster series (300 dpi, print-ready)..."
+	@POSTER_DPI=300 node render_posters.js
 	@sips -s dpiWidth 300 -s dpiHeight 300 $(POSTER_DIR)/poster_*.png >/dev/null
 	@echo "✨ Done. See $(POSTER_DIR)/poster_1_shift.png … poster_5_slides.png"
 

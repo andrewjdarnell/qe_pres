@@ -14,8 +14,10 @@ const posters = process.argv.slice(2).length
   ? process.argv.slice(2)
   : ['poster_1_shift', 'poster_2_shiftleft', 'poster_3_roi', 'poster_4_action', 'poster_5_slides'];
 
-// 300 dpi: CSS renders at 96 dpi, so scale by 300/96.
-const SCALE = 300 / 96;
+// Output resolution, settable via POSTER_DPI (default 300 — print-ready).
+// CSS renders at 96 dpi, so the capture scale is dpi/96.
+const DPI = Number(process.env.POSTER_DPI) || 300;
+const SCALE = DPI / 96;
 
 // A single ~140-megapixel capture exceeds Chromium's raster surface limits
 // (black patches / truncated output), so capture in viewport-sized horizontal
@@ -29,7 +31,7 @@ const TILE_CSS_HEIGHT = 1200;
 
   for (const name of posters) {
     const file = 'file://' + resolve(__dirname, 'posters', `${name}.html`);
-    console.log('Rendering', name);
+    console.log(`Rendering ${name} at ${DPI} dpi`);
     await page.goto(file, { waitUntil: 'networkidle0' });
     await page.evaluate(async () => { await document.fonts.ready; });
     await new Promise(r => setTimeout(r, 400));

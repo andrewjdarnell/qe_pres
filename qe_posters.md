@@ -200,22 +200,26 @@ or the poster silently shows stale slides.
 
 The posters are standalone HTML — **no dev server or external assets required.**
 `render_posters.js` loads each file over `file://`, waits for web fonts, and
-captures a screenshot clipped to the exact A0 box into `generated/posters/`.
+captures the exact A0 box into `generated/posters/`. At print resolution a
+single full-page screenshot exceeds Chromium's raster limits, so the script
+captures scrolling viewport tiles and stitches them into one PNG per poster.
 
 ```bash
-make posters          # renders the series -> generated/posters/poster_*.png
+make posters-full     # 300 dpi print-ready renders (~25 MB each; alias: make posters)
+make posters-preview  # fast 96 dpi renders for design review (~5 MB each)
 make view-posters     # opens the rendered posters in Preview (macOS)
-# or render a subset:
-node render_posters.js poster_2_shiftleft poster_3_roi
+# or render a subset (POSTER_DPI defaults to 300):
+POSTER_DPI=96 node render_posters.js poster_2_shiftleft poster_3_roi
 ```
 
 > ℹ️ Poster 05 depends on up-to-date slide captures (`make slides`) — unlike the others it
 > is **not** fully standalone. Run `make slides` before `make posters` after any deck change.
 
-Output PNGs are exactly **9933 × 14043 px** (true A0 ratio, 300 dpi) and
-print-ready. The dpi is set by the `SCALE` constant in `render_posters.js`
-(`300 / 96`, applied as the Puppeteer `deviceScaleFactor`) — the layout is
-resolution-independent, so changing it only affects output resolution.
+Full renders are exactly **9934 × 14044 px** (true A0 ratio, 300 dpi,
+dpi-stamped via `sips` so Preview reports 841 × 1189 mm) and print-ready;
+previews are 3179 × 4494 px at 96 dpi. The dpi comes from the `POSTER_DPI`
+env var (default 300) — the layout is resolution-independent, so it only
+affects output resolution.
 
 ### Generated output layout
 
