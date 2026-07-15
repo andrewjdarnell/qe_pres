@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+import { PNG } from 'pngjs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
@@ -7,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = resolve(__dirname, 'generated/posters');
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
-// A0 portrait at 300dpi: 841mm x 1189mm => 9933 x 14043 px.
+// A0 portrait at 300dpi: 841mm x 1189mm => 9934 x 14044 px.
 // We render the body at its physical mm size and capture full page.
 const posters = process.argv.slice(2).length
   ? process.argv.slice(2)
@@ -16,15 +17,15 @@ const posters = process.argv.slice(2).length
 // 300 dpi: CSS renders at 96 dpi, so scale by 300/96.
 const SCALE = 300 / 96;
 
+// A single ~140-megapixel capture exceeds Chromium's raster surface limits
+// (black patches / truncated output), so capture in viewport-sized horizontal
+// tiles by scrolling, then stitch the tiles into one PNG.
+const TILE_CSS_HEIGHT = 1200;
+
 (async () => {
-  // Software rendering: GPU raster produces black patches / truncated output
-  // at 300 dpi surface sizes (~9934 x 14043 px).
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ['--force-color-profile=srgb', '--disable-gpu', '--use-angle=swiftshader'],
-  });
+  const browser = await puppeteer.launch({ headless: 'new', args: ['--force-color-profile=srgb'] });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1200, height: 1700, deviceScaleFactor: SCALE });
+  await page.setViewport({ width: 1200, height: 1700, deviceScaleFactor: 1 });
 
   for (const name of posters) {
     const file = 'file://' + resolve(__dirname, 'posters', `${name}.html`);
@@ -33,18 +34,37 @@ const SCALE = 300 / 96;
     await page.evaluate(async () => { await document.fonts.ready; });
     await new Promise(r => setTimeout(r, 400));
 
-    // The body is a fixed A0 box (841 x 1189 mm). Clip to its exact rendered
-    // box so every poster comes out at an identical, true-A0 aspect ratio
-    // (fullPage would otherwise include sub-pixel overflow from the glows).
+    // The body is a fixed A0 box (841 x 1189 mm). Its rendered CSS-pixel box
+    // defines the capture area, so every poster comes out at an identical,
+    // true-A0 aspect ratio.
     const box = await page.evaluate(() => {
       const r = document.body.getBoundingClientRect();
       return { width: Math.round(r.width), height: Math.round(r.height) };
     });
-    await page.setViewport({ width: box.width, height: box.height, deviceScaleFactor: SCALE });
-    await page.screenshot({
-      path: resolve(OUT_DIR, `${name}.png`),
-      clip: { x: 0, y: 0, width: box.width, height: box.height },
-    });
+
+    await page.setViewport({ width: box.width, height: TILE_CSS_HEIGHT, deviceScaleFactor: SCALE });
+
+    const tiles = [];
+    for (let cssY = 0; cssY < box.height; cssY += TILE_CSS_HEIGHT) {
+      const scrollY = await page.evaluate(y => {
+        window.scrollTo(0, y);
+        return window.scrollY; // clamped on the last tile
+      }, cssY);
+      await new Promise(r => setTimeout(r, 150));
+      const buf = await page.screenshot({ captureBeyondViewport: false });
+      tiles.push({ png: PNG.sync.read(Buffer.from(buf)), scrollY });
+      if (scrollY < cssY) break; // reached the bottom
+    }
+
+    const width = tiles[0].png.width;
+    const height = Math.round(box.height * SCALE);
+    const out = new PNG({ width, height });
+    for (const { png, scrollY } of tiles) {
+      const destY = Math.round(scrollY * SCALE);
+      const rows = Math.min(png.height, height - destY);
+      png.data.copy(out.data, destY * width * 4, 0, rows * width * 4);
+    }
+    fs.writeFileSync(resolve(OUT_DIR, `${name}.png`), PNG.sync.write(out));
   }
 
   await browser.close();
