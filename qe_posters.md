@@ -24,6 +24,10 @@ across a room, and whitespace is deliberate rather than accidental.
   blueprint grid, a few soft colour glows placed to support the layout, a fine
   grain overlay, a vignette, and a thin inset frame. This keeps text crisp and
   never lets the background fight the content.
+  - **Space** — Let the design breath, but keep a sensible balance between the size of the text and the available space. Don't be afraid to use the whole page. (with a 5% gutter)
+  - **Balance** — use the golden ratio when planning the size of boxes and the position of elements.
+  - **Consistency** — The posters should read as a cohesive series, so they should all have the same masthead, index, and footer.
+  - **Focal Point** — Each poster should have a clear focal point, drawing the eye to the most important element on the page. 
 
 ## 2. The five posters
 
@@ -58,10 +62,11 @@ Shared elements on all five posters:
   the customer** — Quality Engineering simply moves that expertise upstream, into every
   commit, every pipeline, every day.
 * **Shared Foundations strip** — chips: Understand requirements · Identify risk ·
-  Design mitigations · Communicate clearly
-* **Pull-quote:** "The difference is never the *goal.* It's the *method*, the *timing*, and
-  the level of *integration.*"
-  * Attribution line: Shared purpose · Different practice
+  Design mitigations · Communicate clearly · Execute relentlessly
+* **Pull-quote:** We have shared goals, the same core skills and the same commitment to the customer. The difference is approach, timing and execution.
+*We build software to test software, and automate the feedback loops so we can move on to the creating the next set of tests, and the developers can focus on the next feature.*
+
+  * Attribution line: Shared purpose · Different practices
 * **The four shifts** — column headers **From · Quality Assurance** → **To · Quality Engineering**:
   1. Reactively finding bugs → Proactively mitigating risk
   2. Manual test execution → Automation & observability
