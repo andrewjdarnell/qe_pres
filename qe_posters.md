@@ -154,8 +154,7 @@ Shared elements on all five posters:
 
 > ℹ️ Implemented as `posters/poster_5_slides.html` in the series design system and included
 > in the `render_posters.js` defaults. (`posters/poster_slides.html` is the superseded
-> old-style attempt and can be deleted.) The tile images currently map the 14-slide structure
-> onto captures of the still-15-slide deck — see the mapping note below.
+> old-style attempt and can be deleted.) The tiles map 1:1 onto the 14-slide deck.
 
 A summary poster: every slide of the talk as a captioned thumbnail grid, so the wall set
 ends with the deck itself. Doubles as a take-away/reference sheet.
@@ -171,7 +170,7 @@ ends with the deck itself. Doubles as a take-away/reference sheet.
   * a one-line caption — the slide title per [qe_content.md](qe_content.md):
     Quality Engineering (title) · Shared Foundations · The Traditional Approach: QA ·
     The Evolution: QE · Key Differences · Feedback Loops & Shifting Left ·
-    The Scaling Problem vs. The Automation Engine · The Economics of Automation ·
+    The Regression Scaling Problem · The Economics of Automation ·
     Why Make the Shift? · First Line of Defence · Building Tests That Last ·
     Action Plan · Call to Action · Contact
 * **CTA tile (15th cell):** with 14 slides the grid has one spare cell — use it as the
@@ -182,12 +181,9 @@ ends with the deck itself. Doubles as a take-away/reference sheet.
 * **Footer CTA:** One wall, whole story
 
 **Image source:** the tiles use the captured deck screenshots
-(`assets/slides/slide_NN.png`, produced by `make slides` / `capture_slides.js`). Re-capture
-after any deck change or the poster silently shows stale slides. Until `index.html` is synced
-to the 14-slide structure, the tiles remap the old 15-slide captures (S08 economics =
-`slide_10.png`, S09 why-shift = `slide_08.png`, S10–S14 = `slide_11`–`slide_15`; old
-`slide_09.png` is unused) — once the deck is synced, re-capture and renumber the `<img>`
-sources 1:1.
+(`assets/slides/slide_01.png` … `slide_14.png`, produced by `make slides` /
+`capture_slides.js`, which auto-detects the slide count). Re-capture after any deck change
+or the poster silently shows stale slides.
 
 ## 4. Regenerating the PNGs
 
@@ -214,8 +210,9 @@ is resolution-independent.
 
 ```
 generated/
-  posters/   poster_1_shift.png … poster_5_slides.png   (make posters)
-  slides/    slide_1.png … slide_15.png                 (make slides)
+  posters/        poster_1_shift.png … poster_5_slides.png   (make posters)
+assets/
+  slides/         slide_01.png … slide_14.png                (make slides)
 ```
 
 `make view-posters` / `make view-slides` open each set in Preview on macOS.

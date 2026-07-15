@@ -169,11 +169,11 @@ const sprintData = {
   3: { built: 5, qaLimit: 3, qeLimit: 5, qaDesc: "Risk-based testing starts. Minor features (low risk) are skipped.", qeDesc: "Automation reaches 60% coverage. All tests run on every commit." },
   4: { built: 6, qaLimit: 3, qeLimit: 6, qaDesc: "Bottleneck starts. Manual testing cannot keep up.", qeDesc: "Tests run in parallel. Feedback loop completes in minutes." },
   5: { built: 7, qaLimit: 3, qeLimit: 7, qaDesc: "Queue overflows. Some integration validations must be skipped to keep schedule.", qeDesc: "Automation hits 80%. QE works on test infrastructure." },
-  6: { built: 8, qaLimit: 3, qeLimit: 8, qaDesc: "Devs wait days for manual results. Feedback loops break.", qeDesc: "Continuous delivery enabled. Releases are stable and frequent." },
-  7: { built: 9, qaLimit: 3, qeLimit: 9, qaDesc: "Only critical path verified. Escaped bugs rise rapidly.", qeDesc: "No manual gatekeepers needed. Framework scales instantly." },
-  8: { built: 10, qaLimit: 3, qeLimit: 10, qaDesc: "QA overwhelmed. Bug fixes slow down as context is lost. Regressions appear in unusual places.", qeDesc: "100% of critical paths automated. Devs build quality in." },
-  9: { built: 11, qaLimit: 3, qeLimit: 11, qaDesc: "Testing quality drops. Production incidents rise.", qeDesc: "Capacity matches development growth. No friction." },
-  10: { built: 13, qaLimit: 3, qeLimit: 13, qaDesc: "Siloed model fails. High costs, slow releases, bugs in wild.", qeDesc: "Predictable, safe, scalable releases. Quality-driven culture. People sleep at night." }
+  6: { built: 8, qaLimit: 3, qeLimit: 8, qaDesc: "Devs wait days for manual results. Feedback loops break. Product has bugs, users are disappointed.", qeDesc: "Continuous delivery enabled. Releases are stable and frequent." },
+  7: { built: 9, qaLimit: 3, qeLimit: 9, qaDesc: "Only critical path verified. Escaped bugs rise rapidly. Product has bugs, users are disappointed.", qeDesc: "No manual gatekeepers needed. Framework scales instantly." },
+  8: { built: 10, qaLimit: 3, qeLimit: 10, qaDesc: "QA overwhelmed. Bug fixes slow down as context is lost. Product has bugs, users are disappointed.", qeDesc: "100% of critical paths automated. Devs build quality in." },
+  9: { built: 11, qaLimit: 3, qeLimit: 11, qaDesc: "Testing quality drops. Production incidents rise. Product has bugs, users are disappointed.", qeDesc: "Capacity matches development growth. No friction." },
+  10: { built: 13, qaLimit: 3, qeLimit: 13, qaDesc: "Siloed model fails. High costs, slow releases, bugs in wild. Product has bugs, users are disappointed.", qeDesc: "Predictable, safe, scalable releases. Quality-driven culture. People sleep at night." }
 };
 
 let stats = {
@@ -224,7 +224,7 @@ function runSprint(sprint) {
 }
 
 function spawnBlock(lane, mode, destinationState, isRejected, index) {
-  const startPos = 120;
+  const startPos = 150;
   const testerPos = 430;
   const pilePos = 490;
 
@@ -316,13 +316,37 @@ function addToPile(lane, mode, colorClass) {
   pileItem.className = `pile-block ${colorClass}`;
   pileContainer.appendChild(pileItem);
 
-  const label = document.getElementById(`${mode}-product-label`);
-  if (label) {
-    const count = pileContainer.children.length;
-    label.textContent = `Product — ${count} feature${count === 1 ? '' : 's'}`;
-  }
+  updateProductLabel(mode);
 
   gsap.from(pileItem, { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(1.5)" });
+}
+
+function updateProductLabel(mode) {
+  const pile = document.getElementById(`${mode}-pile`);
+  const label = document.getElementById(`${mode}-product-label`);
+  if (!pile || !label) return;
+  const count = pile.children.length;
+  label.textContent = `Product — ${count} feature${count === 1 ? '' : 's'} · ${stats[mode].verified} working`;
+}
+
+// Test coverage = verified / accepted features (accepted = built - rejected).
+function updateCoverage(mode) {
+  const s = stats[mode];
+  const accepted = s.built - s.rejected;
+  const cov = accepted > 0 ? Math.min(100, Math.round((s.verified / accepted) * 100)) : 100;
+  let color = 'var(--accent-green)';
+  if (cov < 20) color = 'var(--accent-red)';
+  else if (cov < 50) color = 'var(--accent-warning)';
+  const valEl = document.getElementById(`${mode}-stat-coverage`);
+  const barEl = document.getElementById(`${mode}-cov-bar`);
+  if (valEl) {
+    valEl.textContent = `${cov}%`;
+    valEl.style.color = color;
+  }
+  if (barEl) {
+    barEl.style.width = `${cov}%`;
+    barEl.style.background = color;
+  }
 }
 
 function updateStat(mode, statKey) {
@@ -335,11 +359,16 @@ function animateCounters() {
   qaStatVerified.textContent = stats.qa.verified;
   qaStatEscaped.textContent = stats.qa.escaped;
   if (qaStatRejected) qaStatRejected.textContent = stats.qa.rejected;
-  
+
   qeStatBuilt.textContent = stats.qe.built;
   qeStatVerified.textContent = stats.qe.verified;
   qeStatEscaped.textContent = stats.qe.escaped;
   if (qeStatRejected) qeStatRejected.textContent = stats.qe.rejected;
+
+  updateCoverage('qa');
+  updateCoverage('qe');
+  updateProductLabel('qa');
+  updateProductLabel('qe');
 }
 
 function updateSprintStats() {
@@ -354,28 +383,9 @@ function updateSprintStats() {
   
   const qaReg = currentSprint > 1 ? qaCumulativeBuilt - config.built : 0;
   const qeReg = currentSprint > 1 ? qeCumulativeBuilt - config.built : 0;
-  
+
   const totalQAWork = config.built + qaReg;
-  let qaCoverage = 100;
-  if (currentSprint > 0) {
-    qaCoverage = Math.min(100, Math.round((config.qaLimit / totalQAWork) * 100));
-  }
-  
-  const qeCoverageMap = {
-    0: 0,
-    1: 30,
-    2: 45,
-    3: 60,
-    4: 70,
-    5: 80,
-    6: 85,
-    7: 90,
-    8: 100,
-    9: 100,
-    10: 100
-  };
-  const qeCoverage = qeCoverageMap[currentSprint] || 0;
-  
+
   const qaProdVal = document.getElementById('qa-stat-prod-size');
   const qaProdDetails = document.getElementById('qa-stat-prod-details');
   const qaBarNew = document.getElementById('qa-prod-bar-new');
@@ -384,21 +394,7 @@ function updateSprintStats() {
   if (qaProdDetails) qaProdDetails.innerHTML = `New: <span style="color:#fff">${config.built}</span> | Reg: <span style="color:#fff">${qaReg}</span>`;
   if (qaBarNew) qaBarNew.style.width = `${(config.built / 80) * 100}%`;
   if (qaBarReg) qaBarReg.style.width = `${(qaReg / 80) * 100}%`;
-  
-  const qaCoverageVal = document.getElementById('qa-stat-coverage');
-  const qaCovBar = document.getElementById('qa-cov-bar');
-  if (qaCoverageVal) {
-    qaCoverageVal.textContent = `${qaCoverage}%`;
-    let color = 'var(--accent-green)';
-    if (qaCoverage < 20) color = 'var(--accent-red)';
-    else if (qaCoverage < 50) color = 'var(--accent-warning)';
-    qaCoverageVal.style.color = color;
-    if (qaCovBar) {
-      qaCovBar.style.width = `${qaCoverage}%`;
-      qaCovBar.style.background = color;
-    }
-  }
-  
+
   const qeProdVal = document.getElementById('qe-stat-prod-size');
   const qeProdDetails = document.getElementById('qe-stat-prod-details');
   const qeBarNew = document.getElementById('qe-prod-bar-new');
@@ -408,18 +404,6 @@ function updateSprintStats() {
   if (qeProdDetails) qeProdDetails.innerHTML = `New: <span style="color:#fff">${config.built}</span> | Reg: <span style="color:#fff">${qeReg}</span>`;
   if (qeBarNew) qeBarNew.style.width = `${(config.built / 80) * 100}%`;
   if (qeBarReg) qeBarReg.style.width = `${(qeReg / 80) * 100}%`;
-  
-  const qeCoverageVal = document.getElementById('qe-stat-coverage');
-  const qeCovBar = document.getElementById('qe-cov-bar');
-  if (qeCoverageVal) {
-    qeCoverageVal.textContent = `${qeCoverage}%`;
-    let color = qeCoverage >= 80 ? 'var(--accent-green)' : 'var(--accent-color)';
-    qeCoverageVal.style.color = color;
-    if (qeCovBar) {
-      qeCovBar.style.width = `${qeCoverage}%`;
-      qeCovBar.style.background = color;
-    }
-  }
 }
 
 function updateAutomatedTests(totalRequired, automatedCount) {
@@ -508,52 +492,32 @@ function resetSimulation() {
   
   const qaProdVal = document.getElementById('qa-stat-prod-size');
   const qaProdDetails = document.getElementById('qa-stat-prod-details');
-  const qaCoverageVal = document.getElementById('qa-stat-coverage');
   const qaBarNew = document.getElementById('qa-prod-bar-new');
   const qaBarReg = document.getElementById('qa-prod-bar-reg');
-  const qaCovBar = document.getElementById('qa-cov-bar');
-  
+
   if (qaProdVal) qaProdVal.textContent = '0';
   if (qaProdDetails) qaProdDetails.innerHTML = 'New: 0 | Reg: 0';
   if (qaBarNew) qaBarNew.style.width = '0%';
   if (qaBarReg) qaBarReg.style.width = '0%';
-  if (qaCoverageVal) {
-    qaCoverageVal.textContent = '100%';
-    qaCoverageVal.style.color = 'var(--accent-green)';
-  }
-  if (qaCovBar) {
-    qaCovBar.style.width = '100%';
-    qaCovBar.style.background = 'var(--accent-green)';
-  }
-  
+
   const qeProdVal = document.getElementById('qe-stat-prod-size');
   const qeProdDetails = document.getElementById('qe-stat-prod-details');
-  const qeCoverageVal = document.getElementById('qe-stat-coverage');
   const qeBarNew = document.getElementById('qe-prod-bar-new');
   const qeBarReg = document.getElementById('qe-prod-bar-reg');
-  const qeCovBar = document.getElementById('qe-cov-bar');
-  
+
   if (qeProdVal) qeProdVal.textContent = '0';
   if (qeProdDetails) qeProdDetails.innerHTML = 'New: 0 | Reg: 0';
   if (qeBarNew) qeBarNew.style.width = '0%';
   if (qeBarReg) qeBarReg.style.width = '0%';
-  if (qeCoverageVal) {
-    qeCoverageVal.textContent = '0%';
-    qeCoverageVal.style.color = 'var(--accent-color)';
-  }
-  if (qeCovBar) {
-    qeCovBar.style.width = '0%';
-    qeCovBar.style.background = 'var(--accent-color)';
-  }
-  
-  qaExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
-  qeExplanation.textContent = 'Press "Next Sprint" to start development and testing simulation.';
-  
+
+  qaExplanation.innerHTML = 'Press &ldquo;Next Sprint&rdquo; to start development and testing simulation.';
+  qeExplanation.innerHTML = 'Press &ldquo;Next Sprint&rdquo; to start development and testing simulation.';
+
   activeSimBlocks.forEach(b => { if (b.parentNode) b.remove() });
   activeSimBlocks = [];
-  
+
   document.querySelectorAll('.product-grid').forEach(p => p.innerHTML = '');
-  document.querySelectorAll('.product-title').forEach(l => l.textContent = 'Product — 0 features');
+  document.querySelectorAll('.product-title').forEach(l => l.textContent = 'Product — 0 features · 0 working');
   resetAutomatedTests();
 }
 

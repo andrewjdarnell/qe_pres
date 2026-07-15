@@ -14,8 +14,9 @@ import fs from 'fs';
   console.log('Navigating to presentation...');
   await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' });
 
-  // There are 15 slides
-  for (let i = 0; i < 15; i++) {
+  const slideCount = await page.evaluate(() => document.querySelectorAll('.slide').length);
+  console.log(`Found ${slideCount} slides.`);
+  for (let i = 0; i < slideCount; i++) {
     console.log(`Capturing slide ${i + 1}...`);
     
     // Click the nav button to jump directly to the slide
