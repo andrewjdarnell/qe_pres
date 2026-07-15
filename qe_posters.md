@@ -38,8 +38,8 @@ across a room, and whitespace is deliberate rather than accidental.
 ## 3. Poster copy (source of truth)
 
 The full text of each poster, ready for hand-tweaking. **Edit here first**, then sync the
-wording into the `posters/poster_*.html` files (a follow-up pass — until then the HTML may
-drift from this copy; known drift is flagged inline).
+wording into the `posters/poster_*.html` files and re-run `make posters`. The HTML is
+currently in sync with this copy.
 
 Formatting conventions: *italics* mark words rendered in the gradient/accent colour
 (`<em>` in the HTML); **bold** marks emphasised words (`<strong>`).
@@ -98,9 +98,6 @@ Shared elements on all five posters:
 * **Footer CTA:** Fast feedback, by design
 
 ### Poster 03 — The Economics of Automation (`poster_3_roi.html`)
-
-> ⚠️ **Drift:** the HTML still shows the old maths (`504` / "500+" / "per year", no
-> maintenance-phase row). Update `poster_3_roi.html` to match the copy below.
 
 * **Eyebrow:** The Economics of Automation
 * **Headline:** Would you run it *800+ times* by hand?
