@@ -24,10 +24,19 @@ across a room, and whitespace is deliberate rather than accidental.
   blueprint grid, a few soft colour glows placed to support the layout, a fine
   grain overlay, a vignette, and a thin inset frame. This keeps text crisp and
   never lets the background fight the content.
-  - **Space** — Let the design breath, but keep a sensible balance between the size of the text and the available space. Don't be afraid to use the whole page. (with a 5% gutter)
+  - **Space** — with the practiced eye of an expert designer, let the design breathe, but keep a sensible balance between the size of the text and the available space. Don't be afraid to use the whole page. (with a 5% gutter). This may mean tweaking individual slides where there is too much whitespace and the size of the elements could be increased without sacrifice.
   - **Balance** — use the golden ratio when planning the size of boxes and the position of elements.
   - **Consistency** — The posters should read as a cohesive series, so they should all have the same masthead, index, and footer.
   - **Focal Point** — Each poster should have a clear focal point, drawing the eye to the most important element on the page. 
+  - **Contrast** — Use contrast to create visual interest and hierarchy. 
+  - **Alignment** — Use alignment to create a sense of order and unity. 
+  - **Proximity** — Use proximity to create relationships between elements. 
+  - **Repetition** — Use repetition to create a sense of unity and consistency. 
+  - **White Space** — Use white space to create a sense of balance and visual interest. 
+  - **Color** — Use color to create a sense of visual interest and hierarchy. 
+  - **Typography** — Use typography to create a sense of visual interest and hierarchy. 
+
+
 
 ## 2. The five posters
 
@@ -64,7 +73,7 @@ Shared elements on all five posters:
 * **Shared Foundations strip** — chips: Understand requirements · Identify risk ·
   Design mitigations · Communicate clearly · Execute relentlessly
 * **Pull-quote:** We have shared goals, the same core skills and the same commitment to the customer. The difference is approach, timing and execution.
-*We build software to test software, and automate the feedback loops so we can move on to the creating the next set of tests, and the developers can focus on the next feature.*
+*We build software to test software, and automate the feedback loops so we can move on to creating the next set of tests, and the developers can focus on the next feature.*
 
   * Attribution line: Shared purpose · Different practices
 * **The four shifts** — column headers **From · Quality Assurance** → **To · Quality Engineering**:
